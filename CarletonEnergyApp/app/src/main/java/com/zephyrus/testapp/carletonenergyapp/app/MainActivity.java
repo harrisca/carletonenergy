@@ -8,6 +8,8 @@ import android.view.MenuItem;
 
 
 // Is git working?
+// It is for me. -Michael
+
 
 
 
