@@ -10,7 +10,7 @@ import android.view.MenuItem;
 // Is git working?
 // It is for me. -Michael
 
-
+// Hi, I'm trying to test this thing. - Richard
 
 
 
