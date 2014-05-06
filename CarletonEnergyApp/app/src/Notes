@@ -1,4 +1,4 @@
-For xml file pointing at current weather:
+For xml file pointing at current weather around NoFo:
 http://w1.weather.gov/xml/current_obs/KSYN.xml
 
 For graph api:
