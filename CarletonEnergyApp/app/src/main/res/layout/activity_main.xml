@@ -14,3 +14,9 @@
         android:layout_height="wrap_content" />
 
 </RelativeLayout>
+
+
+    <!-- --
+<XmlTag variable="0" />
+    # This is a Comment
+    <!-- -->

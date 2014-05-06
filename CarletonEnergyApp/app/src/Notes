@@ -1,0 +1,8 @@
+For xml file pointing at current weather around NoFo:
+http://w1.weather.gov/xml/current_obs/KSYN.xml
+
+For graph api:
+http://androidplot.com/
+
+For working with xml files:
+http://www.sitepoint.com/learning-to-parse-xml-data-in-your-android-app/

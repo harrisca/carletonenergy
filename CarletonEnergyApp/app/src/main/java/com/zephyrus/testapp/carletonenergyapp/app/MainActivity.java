@@ -6,6 +6,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+// Is git working?
+// It is for me. -Michael
+
+// Hi, I'm trying to test this thing. - Richard L
+
+// Now I'm uploading another thing - M
+
+
 public class MainActivity extends Activity {
 
     @Override
