@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-
 // Is git working?
 // It is for me. -Michael
 
