@@ -14,8 +14,6 @@ import android.view.MenuItem;
 // Now I'm uploading another thing - M
 
 
-
-
 public class MainActivity extends Activity {
 
     @Override
