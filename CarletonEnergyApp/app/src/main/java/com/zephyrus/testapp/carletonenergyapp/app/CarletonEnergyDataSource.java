@@ -1,4 +1,14 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
+
+import android.util.JsonReader;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.InputStreamReader;
+import java.net.URLConnection;
+
+import java.io.InputStream;
+import java.net.*;
 import java.util.Date;
 
 /**
@@ -35,8 +45,37 @@ public class CarletonEnergyDataSource {
 
     void sync() {
 
+        /*URL url = new URL("https://graph.facebook.com/search?q=java&type=post");
+        try (InputStream is = url.openStream();
+            JsonParser parser = Json.createParser(is)) {
+            while (parser.hasNext()) {
+                EventLog.Event e = parser.next();
+                if (e == EventLog.Event.KEY_NAME) {
+
+                }
+
+            }
+
+        }*/
+
+        URL url = null;
+        try {
+            url = new URL("https://rest.buildingos.com/reports/timeseries/?start=2014/05/07+20:00:00&resolution=hour&end=2014/5/07+20:00:00&name=carleton_campus_en_use");
+            URLConnection urlConnection = url.openConnection();
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            InputStreamReader reader = new InputStreamReader(in);
+            int max_size = 200000;
+            char[] buffer = new char[max_size];
+            reader.read(buffer, max_size, 0);
+            String json_string = new String(buffer);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
-
-
 
 }

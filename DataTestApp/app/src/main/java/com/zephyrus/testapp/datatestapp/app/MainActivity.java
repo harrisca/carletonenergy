@@ -1,18 +1,16 @@
-package com.zephyrus.testapp.carletonenergyapp.app;
+package com.zephyrus.testapp.datatestapp.app;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
-
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(android.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
     }
 
 
