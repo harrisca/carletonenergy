@@ -13,3 +13,6 @@ https://rest.buildingos.com/reports/timeseries/?start=2014/03/01+00:00:00&resolu
 
 Daily energy data:
 https://rest.buildingos.com/reports/timeseries/?start=2014/03/01+00:00:00&resolution=day&end=2014/4/30+00:00:00&name=carleton_campus_en_use
+
+Swipe navigation between pages:
+http://developer.android.com/training/implementing-navigation/lateral.html
