@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#6bb6ff"
-            android:id="t1"></LinearLayout>
+            android:id="@+id/t1"></LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#4affd0"
-            android:id="t2"></LinearLayout>
+            android:id="@+id/t2"></LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -33,7 +33,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#1f4fde"
-            android:id="t3"></LinearLayout>
+            android:id="@+id/t3"></LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -41,7 +41,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="#ffbe80"
-            android:id="t4"></LinearLayout>
+            android:id="@+id/t4"></LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -113,7 +113,7 @@
         android:layout_height="40dp"
         android:layout_weight="0.15"
         android:background="#ff3b3e"
-        android:id="pe"></LinearLayout>
+        android:id="@+id/pe"></LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -129,6 +129,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
         android:background="#fffa47"
-        android:id="lu"></LinearLayout>
+        android:id="@+id/lu"></LinearLayout>
 
 </LinearLayout>
