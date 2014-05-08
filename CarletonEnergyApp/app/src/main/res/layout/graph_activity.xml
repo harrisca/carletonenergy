@@ -9,7 +9,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="284dp">
+        android:layout_height="270dp">
 
         <FrameLayout
             android:layout_width="fill_parent"
