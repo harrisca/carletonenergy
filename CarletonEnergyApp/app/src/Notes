@@ -6,3 +6,10 @@ http://androidplot.com/
 
 For working with xml files:
 http://www.sitepoint.com/learning-to-parse-xml-data-in-your-android-app/
+
+Hourly energy data:
+https://rest.buildingos.com/reports/timeseries/?start=2014/05/07+20:00:00&resolution=hour&end=2014/5/07+20:00:00&name=carleton_campus_en_use
+https://rest.buildingos.com/reports/timeseries/?start=2014/03/01+00:00:00&resolution=hour&end=2014/4/30+00:00:00&name=carleton_campus_en_use
+
+Daily energy data:
+https://rest.buildingos.com/reports/timeseries/?start=2014/03/01+00:00:00&resolution=day&end=2014/4/30+00:00:00&name=carleton_campus_en_use
