@@ -32,6 +32,10 @@
             android:name="com.zephyrus.testapp.carletonenergyapp.app.GraphActivity"
             android:label="@string/title_activity_graph" >
         </activity>
+        <activity
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>
