@@ -7,5 +7,9 @@
     <string name="title_activity_load_screen">LoadScreen</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_wind_activity">wind_activity</string>
+    <string name="title_activity_wind">WindActivity</string>
+    <string name="title_activity_data">DataActivity</string>
+    <string name="title_activity_energy">EnergyActivity</string>
+    <string name="title_activity_graph">GraphActivity</string>
 
 </resources>
