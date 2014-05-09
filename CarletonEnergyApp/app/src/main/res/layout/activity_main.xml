@@ -6,16 +6,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.zephyrus.testapp.carletonenergyapp.app.MainActivity">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/imageView"
-        android:src="@drawable/windmill_pic_1"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+    tools:context="com.zephyrus.testapp.carletonenergyapp.app.MainActivity"
+    android:background="@drawable/windmill_pic_1">
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,11 +15,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Carleton Energy App"
         android:id="@+id/textView"
-        android:layout_alignTop="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="46dp"
         android:textColor="#080150"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
 

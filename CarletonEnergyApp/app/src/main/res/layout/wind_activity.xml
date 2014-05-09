@@ -4,7 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:background="#8f8f8f">
+    android:background="@drawable/windmill_anim">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -17,7 +17,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#6bb6ff"
-            android:id="@+id/t1"></LinearLayout>
+            android:id="@+id/t1"
+            android:alpha="0.4"></LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -25,7 +26,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#4affd0"
-            android:id="@+id/t2"></LinearLayout>
+            android:id="@+id/t2"
+            android:alpha="0.4"></LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -33,7 +35,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#1f4fde"
-            android:id="@+id/t3"></LinearLayout>
+            android:id="@+id/t3"
+            android:alpha="0.4"></LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -41,7 +44,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="#ffbe80"
-            android:id="@+id/t4"></LinearLayout>
+            android:id="@+id/t4"
+            android:alpha="0.4"></LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -70,7 +74,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.00"
                 android:background="#3fff60"
-                android:layout_gravity="left"></LinearLayout>
+                android:layout_gravity="left"
+                android:alpha="0.4"></LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
@@ -85,7 +90,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:layout_weight="0.50"
-                android:background="#ffe843"></LinearLayout>
+                android:background="#ffe843"
+                android:alpha="0.4"></LinearLayout>
 
         </LinearLayout>
 
@@ -104,7 +110,8 @@
             android:layout_weight="0.60"
             android:background="#6c41ff"
             android:clickable="true"
-            android:layoutMode="opticalBounds"></LinearLayout>
+            android:layoutMode="opticalBounds"
+            android:alpha="0.4"></LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -112,6 +119,7 @@
             android:layout_height="4dp"
             android:background="#070707"
             android:layout_gravity="center_horizontal"></LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -119,7 +127,8 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="#ff3b3e"
-        android:id="@+id/pe"></LinearLayout>
+        android:id="@+id/pe"
+        android:alpha="0.4"></LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -135,6 +144,7 @@
         android:layout_height="fill_parent"
         android:layout_weight="0.25"
         android:background="#fffa47"
-        android:id="@+id/lu"></LinearLayout>
+        android:id="@+id/lu"
+        android:alpha="0.4"></LinearLayout>
 
 </LinearLayout>
