@@ -9,51 +9,102 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:background="#ffffd225"
+        android:baselineAligned="false"
+        android:id="@+id/linearLayout8">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#6bb6ff"
-            android:id="@+id/t1"
-            android:alpha="0.4"
+            android:id="@+id/linearLayout4"
+            android:alpha="1"
             android:onClick="switchWind"
-            android:clickable="true"></LinearLayout>
+            android:clickable="true" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Wind"
+                android:id="@+id/textView"
+                android:textAlignment="gravity"
+                android:gravity="center"
+                android:textColor="#ff3b21ff"
+                android:typeface="sans"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#4affd0"
-            android:id="@+id/t2"
-            android:alpha="0.4"
+            android:id="@+id/linearLayout5"
+            android:alpha="1"
             android:onClick="switchEnergy"
-            android:clickable="true"></LinearLayout>
+            android:clickable="true" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Energy"
+                android:id="@+id/textView2"
+                android:textAlignment="gravity"
+                android:gravity="center"
+                android:textColor="#ff3b21ff"
+                android:typeface="sans"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#1f4fde"
-            android:id="@+id/t3"
-            android:alpha="0.4"
+            android:id="@+id/linearLayout6"
+            android:alpha="1"
             android:onClick="switchData"
-            android:clickable="true"></LinearLayout>
+            android:clickable="true" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Graphs"
+                android:id="@+id/textView3"
+                android:textAlignment="gravity"
+                android:gravity="center"
+                android:textColor="#ff3b21ff"
+                android:typeface="sans"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="#ffbe80"
-            android:id="@+id/t4"
-            android:alpha="0.4"
+            android:id="@+id/linearLayout7"
+            android:alpha="1"
             android:onClick="switchSettings"
-            android:clickable="true"></LinearLayout>
+            android:clickable="true" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Settings"
+                android:id="@+id/textView4"
+                android:textAlignment="gravity"
+                android:gravity="center"
+                android:textColor="#ff3b21ff"
+                android:typeface="sans"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
