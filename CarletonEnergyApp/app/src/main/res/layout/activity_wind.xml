@@ -1,124 +1,204 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:background="@drawable/windmill_anim"
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.WindActivity">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="40dp">
+        android:layout_height="fill_parent"
+        android:id="@+id/windmillAnim"
+        android:src="@drawable/windmill_anim"
+        android:scaleType="fitXY"
+        android:alpha=".5"
+        android:baselineAlignBottom="false" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#6bb6ff"
-            android:id="@+id/t1"
-            android:alpha="0.4"
-            android:onClick="switchWind"
-            android:clickable="true"></LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#4affd0"
-            android:id="@+id/t2"
-            android:alpha="0.4"
-            android:onClick="switchEnergy"
-            android:clickable="true"></LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#1f4fde"
-            android:id="@+id/t3"
-            android:alpha="0.4"
-            android:onClick="switchData"
-            android:clickable="true"></LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="#ffbe80"
-            android:id="@+id/t4"
-            android:alpha="0.4"
-            android:onClick="switchSettings"
-            android:clickable="true"></LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
+    <LinearLayout android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="4dp"
-        android:background="#070707"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/linearLayout3" />
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="360dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="0.15"
-            android:weightSum="1">
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+
+            android:background="#ffffd225"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.00"
-                android:background="#3fff60"
-                android:layout_gravity="left"
-                android:alpha="0.4"></LinearLayout>
+                android:layout_weight="1"
+                android:id="@+id/t1"
+                android:alpha="1"
+                android:onClick="switchWind"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Wind"
+                    android:id="@+id/textView"
+                    android:textAlignment="gravity"
+                    android:gravity="center"
+                    android:textColor="#ff3b21ff"
+                    android:typeface="sans"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="4dp"
-                android:layout_height="70dp"
-                android:background="#010101"
-                android:layout_gravity="center_vertical"></LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="130dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:layout_weight="0.50"
-                android:background="#ffe843"
-                android:alpha="0.4"></LinearLayout>
+                android:layout_weight="1"
+                android:id="@+id/t2"
+                android:alpha="1"
+                android:onClick="switchEnergy"
+                android:clickable="true">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Energy"
+                    android:id="@+id/textView2"
+                    android:textAlignment="gravity"
+                    android:gravity="center"
+                    android:textColor="#ff3b21ff"
+                    android:typeface="sans"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/t3"
+                android:alpha="1"
+                android:onClick="switchData"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Graphs"
+                    android:id="@+id/textView3"
+                    android:textAlignment="gravity"
+                    android:gravity="center"
+                    android:textColor="#ff3b21ff"
+                    android:typeface="sans"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/t4"
+                android:alpha="1"
+                android:onClick="switchSettings"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Settings"
+                    android:id="@+id/textView4"
+                    android:textAlignment="gravity"
+                    android:gravity="center"
+                    android:textColor="#ff3b21ff"
+                    android:typeface="sans"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="300dp"
+            android:layout_width="fill_parent"
             android:layout_height="4dp"
             android:background="#070707"
-            android:id="@+id/linearLayout"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/linearLayout3" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="360dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="0.15"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.00"
+                    android:background="#3fff60"
+                    android:layout_gravity="left"
+                    android:alpha="0.4"></LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="4dp"
+                    android:layout_height="70dp"
+                    android:background="#010101"
+                    android:layout_gravity="center_vertical"></LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="130dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="0.50"
+                    android:background="#ffe843"
+                    android:alpha="0.4"></LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="300dp"
+                android:layout_height="4dp"
+                android:background="#070707"
+                android:id="@+id/linearLayout"
+                android:layout_gravity="center_horizontal" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.60"
+                android:background="#6c41ff"
+                android:clickable="true"
+                android:layoutMode="opticalBounds"
+                android:alpha="0.4"></LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="300dp"
+                android:layout_height="4dp"
+                android:background="#070707"
+                android:layout_gravity="center_horizontal"></LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.60"
-            android:background="#6c41ff"
-            android:clickable="true"
-            android:layoutMode="opticalBounds"
+            android:layout_height="70dp"
+            android:background="#ff3b3e"
+            android:id="@+id/pe"
             android:alpha="0.4"></LinearLayout>
 
         <LinearLayout
@@ -126,33 +206,18 @@
             android:layout_width="300dp"
             android:layout_height="4dp"
             android:background="#070707"
-            android:layout_gravity="center_horizontal"></LinearLayout>
+            android:id="@+id/linearLayout2"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.25"
+            android:background="#fffa47"
+            android:id="@+id/lu"
+            android:alpha="0.4"></LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#ff3b3e"
-        android:id="@+id/pe"
-        android:alpha="0.4"></LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="300dp"
-        android:layout_height="4dp"
-        android:background="#070707"
-        android:id="@+id/linearLayout2"
-        android:layout_gravity="center_horizontal" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.25"
-        android:background="#fffa47"
-        android:id="@+id/lu"
-        android:alpha="0.4"></LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

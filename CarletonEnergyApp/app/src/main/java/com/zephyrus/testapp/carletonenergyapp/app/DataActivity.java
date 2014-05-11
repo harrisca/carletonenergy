@@ -2,9 +2,9 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Display;
 import android.view.View;
 
 
@@ -14,24 +14,12 @@ public class DataActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
-    }
 
+        if(!orientationCheck()){
+            Intent intent = new Intent(this, GraphActivity.class);
+            startActivity(intent);
+        }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.data, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void switchWind(View view){
@@ -45,7 +33,7 @@ public class DataActivity extends Activity {
     }
 
     public void switchSettings(View view){
-        Intent intent = new Intent(this, GraphActivity.class);
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
@@ -53,4 +41,13 @@ public class DataActivity extends Activity {
         Intent intent = new Intent(this, EnergyActivity.class);
         startActivity(intent);
     }
+
+    public boolean orientationCheck() {
+        Display getOrient = getWindowManager().getDefaultDisplay();
+        if (getOrient.getWidth() >= getOrient.getHeight())
+            return false;
+        else
+            return true;
+    }
+
 }
