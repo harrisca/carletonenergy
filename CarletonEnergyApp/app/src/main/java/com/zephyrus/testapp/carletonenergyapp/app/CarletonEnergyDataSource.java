@@ -3,11 +3,11 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import android.util.JsonReader;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.InputStreamReader;
-import java.net.URLConnection;
+//import java.io.BufferedInputStream;
+//import java.io.InputStreamReader;
+//import java.net.URLConnection;
 
-import java.io.InputStream;
+import java.io.*;
 import java.net.*;
 import java.util.Date;
 
@@ -28,7 +28,11 @@ public class CarletonEnergyDataSource {
     }
 
     double getCurrentTemperature() {
-        return 0.0;
+        try {
+            return getHulingsTemperature("F");
+        } catch (IOException e) {
+            return -999.9;
+        }
     }
 
     double getCurrentWindSpeed() {
@@ -37,6 +41,51 @@ public class CarletonEnergyDataSource {
 
     void getGraphData(int thing_to_graph, Date start_time, Date end_time, int increment) {
         // figure this out later
+    }
+
+    double getHulingsTemperature(String unit) throws IOException {
+        URL carleton = new URL("http://weather.carleton.edu");
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(carleton.openStream()));
+        String inputLine;
+        int lineNum = 0;
+        String tempString = new String();
+        while ((inputLine = in.readLine()) != null){
+            if (unit == "F") {
+                if (lineNum == 126) {
+                    tempString = inputLine;
+                }
+            }
+            if (unit == "C"){
+                if (lineNum == 127) {
+                    tempString = inputLine;
+                }
+            }
+            lineNum++;
+        }
+        double temp = parseHTMLForTemp(tempString);
+        in.close();
+        return temp;
+    }
+
+    double parseHTMLForTemp(String line){
+        String output = "";
+        int end = 0;
+        char charInt;
+        for (int i=0; i<line.length(); i++){
+            charInt=line.charAt(i);
+            if(charInt>=45 && charInt<=57){
+                output = output + charInt;
+                end+=1;
+            }
+            else{
+                if (end > 1){
+                    break;
+                }
+            }
+        }
+
+        return Double.parseDouble(output.substring(1));
     }
 
     int checkForAlert() {
