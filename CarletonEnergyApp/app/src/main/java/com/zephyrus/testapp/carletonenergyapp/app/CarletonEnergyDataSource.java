@@ -49,7 +49,9 @@ public class CarletonEnergyDataSource {
 
         return 0.0;
     }
-
+    /*
+    * Returns a double representing the current temperature according to the weather.carleton.edu units depend on string input - F or C
+    */
     double getHulingsTemperature(String unit) throws IOException {
         URL carleton = new URL("http://weather.carleton.edu");
         BufferedReader in = new BufferedReader(
@@ -74,7 +76,37 @@ public class CarletonEnergyDataSource {
         in.close();
         return temp;
     }
+    /*
+    * Returns a int representing the current wind speed according to the weather.carleton.edu in MPH
+    */
+    int getHulingsWindSpeed(String unit) throws IOException {
+        URL carleton = new URL("http://weather.carleton.edu");
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(carleton.openStream()));
+        String inputLine;
+        int lineNum = 0;
+        String speedString = new String();
+        while ((inputLine = in.readLine()) != null){
+            if (unit == "US") {
+                if (lineNum == 152) {
+                    speedString = inputLine;
+                }
+            }
+            if (unit == "SI"){
+                if (lineNum == 153) {
+                    speedString = inputLine;
+                }
+            }
+            lineNum++;
+        }
+        int speed = parseHTMLForSpeed(speedString);
+        in.close();
+        return speed;
+    }
 
+    /*
+    * Returns a double from a line of html code received from weather.carleton.edu
+    */
     double parseHTMLForTemp(String line){
         String output = "";
         int end = 0;
@@ -94,9 +126,32 @@ public class CarletonEnergyDataSource {
 
         return Double.parseDouble(output.substring(1));
     }
+    /*
+    * Returns a int from a line of html code received from weather.carleton.edu
+    */
+    int parseHTMLForSpeed(String line){
+        String output = "";
+        int end = 0;
+        char charInt;
+        for (int i=0; i<line.length(); i++){
+            charInt=line.charAt(i);
+            if(charInt>=45 && charInt<=57){
+                output = output + charInt;
+                end+=1;
+            }
+            else{
+                if (end > 1){
+                    break;
+                }
+            }
+        }
+
+        return Integer.parseInt(output.substring(1));
+    }
 
     /*
      * Returns a double representing the current temp according to weather.carleton.edu in degrees C
+     * Error when returns -999.9
      */
     double getCurrentTemperature() {
         try {
@@ -104,12 +159,18 @@ public class CarletonEnergyDataSource {
         } catch (IOException e) {
             return -999.9;
         }
+    }
 
     /*
-     * Returns a double representing the current wind speed according to the NWS in MPH
+     * Returns a double representing the current wind speed according to the weather.carleton.edu in MPH
+     * Error when returns -1.0
      */
     public double getCurrentWindSpeed() {
-        return 0.0;
+        try {
+            return 1.0*getHulingsWindSpeed("US");
+        } catch (IOException e) {
+            return -1.0;
+        }
     }
 
     /*
