@@ -227,6 +227,7 @@ public class CarletonEnergyDataSource {
             } else if(eventType == XmlPullParser.START_TAG) {
                 String tag_name = xpp.getName();
                 if (tag_name.equals("temp_f")) {
+                    Log.i("xml", "temp_f exists");
                     read_next = true;
                 }
                 //System.out.println("Start tag "+xpp.getName());
