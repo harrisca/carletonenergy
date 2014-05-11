@@ -73,8 +73,8 @@ public class CarletonEnergyDataSource {
         int lineNum = 0;
         String temp = new String();
         try {
-            while ((inputLine = in.readLine()) != null){
-                if (lineNum == 23){
+            while ((inputLine = in.readLine()) != null) {
+                if (lineNum == 23) {
                     temp = inputLine;
                 }
                 lineNum++;
@@ -91,19 +91,20 @@ public class CarletonEnergyDataSource {
         String degreesF = "";
         int end = 0;
         String numbers = temp.substring(temp.length() - 25);
-        for (int i=0; i<numbers.length(); i++){
-            charInt=numbers.charAt(i);
-            if(charInt>=48 && charInt<=57){
+        for (int i = 0; i < numbers.length(); i++) {
+            charInt = numbers.charAt(i);
+            if (charInt >= 48 && charInt <= 57) {
                 degreesF = degreesF + charInt;
                 end = 1;
-            }
-            else{
-                if (end == 1){
+            } else {
+                if (end == 1) {
                     break;
                 }
             }
         }
         return Integer.parseInt(degreesF);
+    }
+
     /*
      * Returns a double representing the current temp according to the NWS in degrees C
      */
@@ -145,12 +146,7 @@ public class CarletonEnergyDataSource {
         syncEnergyData();
         syncWeatherData();
 
-        /*URL url = new URL("https://graph.facebook.com/search?q=java&type=post");
-        try (InputStream is = url.openStream();
-            JsonParser parser = Json.createParser(is)) {
-            while (parser.hasNext()) {
-                EventLog.Event e = parser.next();
-                if (e == EventLog.Event.KEY_NAME) {
+    }
 
     /*
      * Will retrieve energy data from lucid and update data stored in a file
