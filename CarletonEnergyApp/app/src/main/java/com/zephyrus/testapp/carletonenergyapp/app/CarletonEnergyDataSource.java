@@ -32,6 +32,7 @@ public class CarletonEnergyDataSource {
      * given windmill(s) in kW
      */
     public double getLiveProduction(int windmill) {
+
         return 0.0;
     }
 
@@ -40,6 +41,7 @@ public class CarletonEnergyDataSource {
      * whole campus in kW
      */
     public double getLiveConsumption() {
+
         return 0.0;
     }
 
@@ -47,6 +49,7 @@ public class CarletonEnergyDataSource {
      * Returns a double representing the current temp according to the NWS in degrees C
      */
     public double getCurrentTemperature() {
+
         return 0.0;
     }
 
