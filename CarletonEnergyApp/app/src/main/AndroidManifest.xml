@@ -17,8 +17,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.zephyrus.testapp.carletonenergyapp.app.wind_activity"
-            android:label="@string/title_activity_wind_activity" >
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.WindActivity"
+            android:label="@string/title_activity_wind"
+            android:screenOrientation="sensorPortrait">
+        </activity>
+        <activity
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.DataActivity"
+            android:label="@string/title_activity_data" >
+        </activity>
+        <activity
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.EnergyActivity"
+            android:label="@string/title_activity_energy"
+            android:screenOrientation="sensorPortrait">
+        </activity>
+        <activity
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.GraphActivity"
+            android:label="@string/title_activity_graph" >
+        </activity>
+        <activity
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="sensorPortrait">
         </activity>
     </application>
 

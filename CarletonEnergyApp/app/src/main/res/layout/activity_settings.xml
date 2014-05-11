@@ -1,0 +1,149 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="#8f8f8f"
+    tools:context="com.zephyrus.testapp.carletonenergyapp.app.SettingsActivity">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="#ffffd225"
+        android:baselineAligned="false"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/t1"
+            android:alpha="1"
+            android:onClick="switchWind"
+            android:clickable="true" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Wind"
+                android:id="@+id/textView"
+                android:textAlignment="gravity"
+                android:gravity="center"
+                android:textColor="#ff3b21ff"
+                android:typeface="sans"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/t2"
+            android:alpha="1"
+            android:onClick="switchEnergy"
+            android:clickable="true" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Energy"
+                android:id="@+id/textView2"
+                android:textAlignment="gravity"
+                android:gravity="center"
+                android:textColor="#ff3b21ff"
+                android:typeface="sans"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/t3"
+            android:alpha="1"
+            android:onClick="switchData"
+            android:clickable="true" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Graphs"
+                android:id="@+id/textView3"
+                android:textAlignment="gravity"
+                android:gravity="center"
+                android:textColor="#ff3b21ff"
+                android:typeface="sans"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:id="@+id/t4"
+            android:alpha="1"
+            android:onClick="switchSettings"
+            android:clickable="true" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Settings"
+                android:id="@+id/textView4"
+                android:textAlignment="gravity"
+                android:gravity="center"
+                android:textColor="#ff3b21ff"
+                android:typeface="sans"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">
+
+        <FrameLayout
+            android:layout_width="277dp"
+            android:layout_height="373dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="#29ff4c"
+            android:alpha="0.4">
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New ToggleButton"
+                android:id="@+id/toggleButton"
+                android:layout_gravity="right|center_vertical" />
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New ToggleButton"
+                android:id="@+id/toggleButton2"
+                android:layout_gravity="right|top" />
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New ToggleButton"
+                android:id="@+id/toggleButton3"
+                android:layout_gravity="right|bottom" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
