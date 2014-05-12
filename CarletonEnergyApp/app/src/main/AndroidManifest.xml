@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="Loading..." >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,12 +18,12 @@
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.WindActivity"
-            android:label="@string/title_activity_wind"
+            android:label="Wind"
             android:screenOrientation="sensorPortrait">
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.DataActivity"
-            android:label="@string/title_activity_data" >
+            android:label="Data" >
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.EnergyActivity"
@@ -32,11 +32,11 @@
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.GraphActivity"
-            android:label="@string/title_activity_graph" >
+            android:label="Graph" >
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.SettingsActivity"
-            android:label="@string/title_activity_settings"
+            android:label="Settings"
             android:screenOrientation="sensorPortrait">
         </activity>
     </application>
