@@ -33,4 +33,8 @@ public class WindActivity extends Activity {
         Intent intent = new Intent(this, EnergyActivity.class);
         startActivity(intent);
     }
+
+    public void switchAnimation(View view){
+
+    }
 }
