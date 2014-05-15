@@ -31,13 +31,39 @@ import java.util.List;
 /**
  */
 public class CarletonEnergyDataSource {
+    String speedUnits;
+    String degreeUnits;
+    double currentTemperature;
+    double currentWindspeed;
+    double liveProduction1;
+    double liveProduction2;
+    double liveConsumption;
+    ArrayList oldData;
+
+    public CarletonEnergyDataSource(){
+        speedUnits = "US";
+        degreeUnits = "C";
+        currentTemperature = 0.0;
+        currentWindspeed = 0.0;
+        liveProduction1 = 0.0;
+        liveProduction2 = 0.0;
+        liveConsumption = 0.0;
+    }
 
     /*
      * Returns a double representing the most up-to-date live energy production for the
      * given windmill(s) in kW
      */
     public double getLiveProduction(int windmill) {
-
+        if (windmill == 1){
+            return liveProduction1;
+        }
+        if (windmill == 2) {
+            return liveProduction2;
+        }
+        if (windmill == 0)  {
+            return liveProduction1 + liveProduction2;
+        }
         return 0.0;
     }
 
@@ -154,11 +180,7 @@ public class CarletonEnergyDataSource {
      * Error when returns -999.9
      */
     double getCurrentTemperature() {
-        try {
-            return getHulingsTemperature("C");
-        } catch (IOException e) {
-            return -999.9;
-        }
+        return this.currentTemperature;
     }
 
     /*
@@ -166,11 +188,7 @@ public class CarletonEnergyDataSource {
      * Error when returns -1.0
      */
     public double getCurrentWindSpeed() {
-        try {
-            return 1.0*getHulingsWindSpeed("US");
-        } catch (IOException e) {
-            return -1.0;
-        }
+        return this.currentWindspeed;
     }
 
     /*
@@ -195,10 +213,11 @@ public class CarletonEnergyDataSource {
     /*
      * Get data from the internet (the weather website and lucid), update data files on phone
      */
-    public void sync() {
-        syncEnergyData();
-        syncWeatherData();
-
+    public void sync() throws IOException {
+//        syncEnergyData();
+//        syncWeatherData();
+        this.currentTemperature = getHulingsTemperature(this.degreeUnits);
+        this.currentWindspeed = getHulingsWindSpeed(this.speedUnits);
     }
 
     /*
