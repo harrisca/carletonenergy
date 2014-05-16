@@ -182,7 +182,8 @@
                 android:background="#6c41ff"
                 android:clickable="true"
                 android:layoutMode="opticalBounds"
-                android:alpha="0.4"></LinearLayout>
+                android:alpha="0.4"
+                android:onClick="switchAnimation"></LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
