@@ -9,6 +9,7 @@ import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,7 +47,7 @@ public class CarletonEnergyDataSource {
         if (windmill == 0)  {
             return liveProduction1 + liveProduction2;
         }
-        return 0.0;
+        return -1.0;
     }
 
     /*
@@ -228,16 +229,27 @@ public class CarletonEnergyDataSource {
      * Get data from the internet (the weather website and lucid), update data files on phone
      */
     public void sync()  {
-//        syncEnergyData();
-//        syncWeatherData();
-        System.out.println("In sync function");
+
         new Thread(new Runnable() {
             public void run() {
-                System.out.println("In run function");
+                //System.out.println("In run function");
                 currentTemperature = getHulingsTemperature();
-                System.out.println("In run function");
+                //System.out.println("In run function");
                 currentWindspeed = getHulingsWindSpeed();
-                System.out.println("Current Temperature: " + currentTemperature);
+                //System.out.println("Current Temperature: " + currentTemperature);
+
+                try {
+                    syncEnergyData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    syncWeatherData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 lastUpdated = new Date();
             }
         }).start();
@@ -249,12 +261,27 @@ public class CarletonEnergyDataSource {
      * Will retrieve energy data from lucid and update data stored in a file
      * not implemented yet!
      */
-    private void syncEnergyData() {
+    private int syncEnergyData() throws IOException {
+        URL url;
 
-        // test string for json parsing
-        String json_string = "{\"startTimestamp\": \"2014/05/10 00:00:00\", \"results\": [{\"startTimestamp\": \"2014/05/10 00:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 972.3778}}, {\"startTimestamp\": \"2014/05/10 01:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1241.7904}}, {\"startTimestamp\": \"2014/05/10 02:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1234.8372}}, {\"startTimestamp\": \"2014/05/10 03:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1120.8208}}, {\"startTimestamp\": \"2014/05/10 04:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 936.2695}}, {\"startTimestamp\": \"2014/05/10 05:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1203.0469}}], \"endTimestamp\": \"2014/05/10 05:00:00\", \"page\": 1}";
+        url = new URL("https://rest.buildingos.com/reports/timeseries/?start=2014/05/07+20:00:00&resolution=hour&end=2014/5/07+20:00:00&name=carleton_campus_en_use");
+        InputStream in = url.openStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String result, line = reader.readLine();
+        result = line;
+        while((line=reader.readLine())!=null){
+            result+=line;
+        }
+        System.out.println(result);
+        String json_string = result;
 
+        //String response = String.format("%d", urlConnection.getResponseCode());
+        //urlConnection.getResponseMessage();
+
+
+        //String json_string = "{\"startTimestamp\": \"2014/05/10 00:00:00\", \"results\": [{\"startTimestamp\": \"2014/05/10 00:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 972.3778}}, {\"startTimestamp\": \"2014/05/10 01:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1241.7904}}, {\"startTimestamp\": \"2014/05/10 02:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1234.8372}}, {\"startTimestamp\": \"2014/05/10 03:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1120.8208}}, {\"startTimestamp\": \"2014/05/10 04:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 936.2695}}, {\"startTimestamp\": \"2014/05/10 05:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1203.0469}}], \"endTimestamp\": \"2014/05/10 05:00:00\", \"page\": 1}";
         JSONObject all_electricity_page = null;
+
         try {
             all_electricity_page = (JSONObject) new JSONTokener(json_string).nextValue();
             JSONArray results = (JSONArray)all_electricity_page.get("results");
@@ -264,6 +291,9 @@ public class CarletonEnergyDataSource {
                 //Log.i("value", String.format("value = %f", value));
 
             }
+
+            // successfully retrieved data
+            return 0;
 
 
         } catch (JSONException e) {
@@ -275,13 +305,15 @@ public class CarletonEnergyDataSource {
 
         }
 
+        return -1;
+
     }
 
     /*
      * Will retrieve weather data from http://w1.weather.gov/ and update data stored in a file
      * not implemented yet!
      */
-    private void syncWeatherData() {
+    private void syncWeatherData() throws IOException {
 //        try {
 //
 //            // testing XML parsing right now
