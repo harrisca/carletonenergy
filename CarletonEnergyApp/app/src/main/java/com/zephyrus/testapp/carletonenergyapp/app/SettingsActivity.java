@@ -55,7 +55,7 @@ public class SettingsActivity extends Activity {
         PendingIntent pending=PendingIntent.getActivity(this, 0, intent, 0);
         Notification notification = new Notification.Builder(this).setContentTitle("Pwr").setContentText("Omg this worked? that cray")
                 .setSmallIcon(R.drawable.launcher)
-                .setContentIntent(pending).setWhen(when).setAutoCancel(true).build();
+                .setContentIntent(pending).setWhen(when).setAutoCancel(true).getNotification();
 
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notification.defaults |= Notification.DEFAULT_SOUND;
