@@ -4,11 +4,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/launcher"
-        android:label="Carleton on Wind Power"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.zephyrus.testapp.carletonenergyapp.app.LoadActivity"
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.SettingsActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,25 +17,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.zephyrus.testapp.carletonenergyapp.app.WindActivity"
-            android:label="Wind" >
-            </activity>
-        <activity
-            android:name="com.zephyrus.testapp.carletonenergyapp.app.EnergyActivity"
-            android:label="Energy" >
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.DataActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.zephyrus.testapp.carletonenergyapp.app.DataActivity"
-            android:label="Data" >
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.EnergyActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.WindActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.GraphActivity"
-            android:label="Graph" >
+            android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.zephyrus.testapp.carletonenergyapp.app.SettingsActivity"
-            android:label="Settings" >
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.MainActivity"
+            android:label="@string/app_name" >
         </activity>
+
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
