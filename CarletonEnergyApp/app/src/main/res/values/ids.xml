@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="windspeed_label" type="id" />
+    <item name="temperature_label" type="id" />
+    <item name="windspeed_display" type="id" />
+    <item name="temperature_display" type="id" />
+    <item name="percent_wind_label" type="id" />
+    <item name="percent_wind_display" type="id" />
+    <item name="temperature_type" type="id" />
+    <item name="last_updated_label" type="id" />
+    <item name="last_updated_display" type="id" />
+    <item name="consumption_label" type="id" />
+    <item name="production_label" type="id" />
+    <item name="consumption_display" type="id" />
+    <item name="kWH_consumption" type="id" />
+    <item name="production_display" type="id" />
+    <item name="kWh_production" type="id" />
+</resources>

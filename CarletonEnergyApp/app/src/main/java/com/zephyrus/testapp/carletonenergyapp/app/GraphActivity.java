@@ -14,13 +14,13 @@ public class GraphActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
-        if(!orientationCheck()){
+        if(!isLandscape()){
             Intent intent = new Intent(this, DataActivity.class);
             startActivity(intent);
         }
     }
 
-    public boolean orientationCheck() {
+    public boolean isLandscape() {
         Display getOrient = getWindowManager().getDefaultDisplay();
         if (getOrient.getWidth() >= getOrient.getHeight())
             return true;
