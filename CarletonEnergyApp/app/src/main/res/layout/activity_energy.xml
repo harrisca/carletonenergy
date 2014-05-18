@@ -1,28 +1,23 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:background="#8f8f8f"
-    tools:context="com.zephyrus.testapp.carletonenergyapp.app.EnergyActivity">
+    tools:context="com.zephyrus.testapp.carletonenergyapp.app.WindActivity"
+    android:background="#ff40567a">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:background="#ffffd225"
-        android:baselineAligned="false"
-        android:id="@+id/linearLayout8">
+    <LinearLayout android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/linearLayout4"
-            android:alpha="1"
-            android:onClick="switchWind"
-            android:clickable="true" >
+
+            android:background="#ff000000"
+            android:baselineAligned="false"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="match_parent"
@@ -30,22 +25,13 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Wind"
                 android:id="@+id/textView"
-                android:textAlignment="gravity"
                 android:gravity="center"
-                android:textColor="#ff3b21ff"
+                android:textColor="#ffffffff"
                 android:typeface="sans"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/linearLayout5"
-            android:alpha="1"
-            android:onClick="switchEnergy"
-            android:clickable="true" >
+                android:textStyle="bold"
+                android:layout_weight=".25"
+                android:clickable="true"
+                android:onClick="switchWind" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -53,22 +39,14 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Energy"
                 android:id="@+id/textView2"
-                android:textAlignment="gravity"
                 android:gravity="center"
-                android:textColor="#ff3b21ff"
+                android:textColor="#ffffffff"
                 android:typeface="sans"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/linearLayout6"
-            android:alpha="1"
-            android:onClick="switchData"
-            android:clickable="true" >
+                android:textStyle="bold"
+                android:layout_weight=".25"
+                android:clickable="true"
+                android:onClick="switchEnergy"
+                android:background="#ff2b2b2b" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -76,22 +54,13 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Graphs"
                 android:id="@+id/textView3"
-                android:textAlignment="gravity"
                 android:gravity="center"
-                android:textColor="#ff3b21ff"
+                android:textColor="#ffffffff"
                 android:typeface="sans"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:id="@+id/linearLayout7"
-            android:alpha="1"
-            android:onClick="switchSettings"
-            android:clickable="true" >
+                android:textStyle="bold"
+                android:layout_weight=".25"
+                android:clickable="true"
+                android:onClick="switchData"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -99,84 +68,155 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Settings"
                 android:id="@+id/textView4"
-                android:textAlignment="gravity"
                 android:gravity="center"
-                android:textColor="#ff3b21ff"
+                android:textColor="#ffffffff"
                 android:typeface="sans"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="4dp"
-        android:background="#070707"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/linearLayout3" />
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="360dp">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:weightSum="1"
-            android:background="#5cf1ff">
+                android:textStyle="bold"
+                android:layout_weight=".25"
+                android:clickable="true"
+                android:onClick="switchSettings"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="300dp"
-            android:layout_height="4dp"
-            android:background="#070707"
-            android:id="@+id/linearLayout"
-            android:layout_gravity="center_horizontal" />
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight=".1">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#6c41ff"
-            android:clickable="true"
-            android:layoutMode="opticalBounds"></LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Current Energy Consumption"
+                android:id="@id/consumption_label"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="25dp"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="1220"
+                    android:id="@id/consumption_display"
+                    android:layout_below="@id/consumption_label"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="kWh"
+                    android:id="@id/kWH_consumption"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="35sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Current Energy Production"
+                android:id="@id/production_label"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="50dp"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="987"
+                    android:id="@id/production_display"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="kWh"
+                    android:id="@id/kWh_production"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="35sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="80%"
+                    android:id="@id/percent_wind_display"
+                    android:layout_weight="0.5"
+                    android:gravity="right"
+                    android:textSize="50sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Wind Power"
+                    android:id="@id/percent_wind_label"
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="25sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Last Updated:"
+                    android:id="@id/last_updated_label"
+                    android:textStyle="bold"
+                    android:gravity="right"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="12:14pm 4/26/2014"
+                    android:id="@id/last_updated_display"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="300dp"
-        android:layout_height="4dp"
-        android:background="#070707"
-        android:layout_gravity="center_horizontal"></LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#ff3b3e"
-        android:id="@+id/pe"></LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="300dp"
-        android:layout_height="4dp"
-        android:background="#070707"
-        android:id="@+id/linearLayout2"
-        android:layout_gravity="center_horizontal" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.25"
-        android:background="#fffa47"
-        android:id="@+id/lu"></LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
