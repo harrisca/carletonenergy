@@ -1,5 +1,6 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -20,7 +21,7 @@ import java.util.Date;
  */
 public class CarletonEnergyDataSource {
     String speedUnits = "US";
-    String degreeUnits = "C";
+    String degreeUnits;
     double currentTemperature = 0.0;
     double currentWindspeed = 0.0;
     double liveProduction1 = 0.0;
@@ -29,8 +30,13 @@ public class CarletonEnergyDataSource {
     Date lastUpdated = null;
     ArrayList oldData = null;
 
-    public CarletonEnergyDataSource(){
+    public static final String PREFS_NAME = "prefrences";
+    SharedPreferences sharedPref;
+    int notificationToggle;
 
+    public CarletonEnergyDataSource(){
+        degreeUnits = sharedPref.getString("degreeUnits", "C");
+        notificationToggle = sharedPref.getInt("notifications",0);
     }
 
     /*
