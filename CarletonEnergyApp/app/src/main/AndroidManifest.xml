@@ -8,29 +8,32 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.zephyrus.testapp.carletonenergyapp.app.SettingsActivity"
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.LoadActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.DataActivity"
-            android:label="@string/app_name" >
+            android:label="Data" >
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.EnergyActivity"
-            android:label="@string/app_name" >
+            android:label="Energy" >
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.WindActivity"
-            android:label="@string/app_name" >
+            android:label="Wind" >
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.GraphActivity"
-            android:label="@string/app_name" >
+            android:label="Graph" >
+        </activity>
+        <activity
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.SettingsActivity"
+            android:label="Settings" >
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.MainActivity"
