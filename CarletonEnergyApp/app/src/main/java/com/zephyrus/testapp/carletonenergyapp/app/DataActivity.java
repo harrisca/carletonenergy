@@ -15,7 +15,7 @@ public class DataActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
 
-        if(!orientationCheck()){
+        if(!isPortrait()){
             Intent intent = new Intent(this, GraphActivity.class);
             startActivity(intent);
         }
@@ -42,7 +42,7 @@ public class DataActivity extends Activity {
         startActivity(intent);
     }
 
-    public boolean orientationCheck() {
+    public boolean isPortrait() {
         Display getOrient = getWindowManager().getDefaultDisplay();
         if (getOrient.getWidth() >= getOrient.getHeight())
             return false;
