@@ -125,9 +125,9 @@
             <ToggleButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New ToggleButton"
+                android:text="Nu ToggleButton"
                 android:id="@+id/toggleButton"
-                android:layout_gravity="right|center_vertical" />
+                android:layout_gravity="right|center_vertical"/>
 
             <ToggleButton
                 android:layout_width="wrap_content"
@@ -142,6 +142,15 @@
                 android:text="New ToggleButton"
                 android:id="@+id/toggleButton3"
                 android:layout_gravity="right|bottom" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NotificationTest"
+                android:id="@+id/notificationbutton"
+                android:layout_gravity="center_horizontal|top"
+                android:clickable="true"
+                android:onClick="notificationTest"/>
         </FrameLayout>
 
     </LinearLayout>
