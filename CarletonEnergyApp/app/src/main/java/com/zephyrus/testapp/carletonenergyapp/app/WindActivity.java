@@ -22,7 +22,7 @@ public class WindActivity extends Activity {
         setContentView(R.layout.activity_wind);
 
         //creates datasource
-        CarletonEnergyDataSource source = new CarletonEnergyDataSource();
+        CarletonEnergyDataSource source = new CarletonEnergyDataSource(this);
         source.sync();
 
         //sets temperature and windspeed

@@ -16,7 +16,7 @@ public class EnergyActivity extends Activity {
         setContentView(R.layout.activity_energy);
 
         //creates datasource
-        CarletonEnergyDataSource source = new CarletonEnergyDataSource();
+        CarletonEnergyDataSource source = new CarletonEnergyDataSource(this);
         source.sync();
 
         //sets consumption and production
