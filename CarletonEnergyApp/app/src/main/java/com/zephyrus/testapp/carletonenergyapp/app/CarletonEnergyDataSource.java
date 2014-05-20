@@ -44,8 +44,8 @@ public class CarletonEnergyDataSource {
 
     public CarletonEnergyDataSource(Context context) {
         this.context = context;
-        degreeUnits = sharedPref.getString("degreeUnits", "C");
-        notificationToggle = sharedPref.getInt("notifications", 0);
+        //degreeUnits = sharedPref.getString("degreeUnits", "C");
+        //notificationToggle = sharedPref.getInt("notifications", 0);
     }
 
     /*
@@ -339,21 +339,6 @@ public class CarletonEnergyDataSource {
         } catch (IOException e) {
             Log.i("Data Input Sample", "I/O Error");
         }
-
-
-
-
-
-
-
-        // NEXT STEP: CHECK THAT SAVING TO A FILE IS WORKING, THEN READ FROM FILE IN GET_GRAPH_DATA()
-
-
-        // ALMOST THERE!!!!!
-
-
-
-
 
         return 0;
 

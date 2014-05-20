@@ -35,6 +35,7 @@ public class LoadActivity extends Activity {
         start_date.add(Calendar.YEAR, -1);
         Date start = start_date.getTime();
 
+        Log.i("getGraphData", "about to get graph data");
         ArrayList<Double> graph_data = source.getGraphData(1, start, new Date(), "day");
         Log.i("getGraphData", "Final result: " + graph_data);
 
