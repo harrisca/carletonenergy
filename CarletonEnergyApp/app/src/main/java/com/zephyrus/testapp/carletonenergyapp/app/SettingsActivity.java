@@ -14,7 +14,7 @@ import android.widget.ToggleButton;
 
 public class SettingsActivity extends Activity {
 
-    public static final String PREFS_NAME = "corgiPreferences";
+    public static final String PREFS_NAME = "prefrences";
     SharedPreferences sharedPref;
     int notificationToggle;
 
@@ -54,7 +54,7 @@ public class SettingsActivity extends Activity {
         Intent intent=new Intent(this, WindActivity.class);
         PendingIntent pending=PendingIntent.getActivity(this, 0, intent, 0);
         Notification notification = new Notification.Builder(this).setContentTitle("Pwr").setContentText("Omg this worked? that cray")
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.launcher)
                 .setContentIntent(pending).setWhen(when).setAutoCancel(true).build();
 
         notification.flags |= Notification.FLAG_AUTO_CANCEL;

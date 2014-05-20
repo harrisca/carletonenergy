@@ -1,6 +1,7 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -28,7 +29,7 @@ import java.util.Date;
  */
 public class CarletonEnergyDataSource {
     String speedUnits = "US";
-    String degreeUnits = "C";
+    String degreeUnits;
     double currentTemperature = 0.0;
     double currentWindspeed = 0.0;
     double liveProduction1 = 0.0;
@@ -37,9 +38,14 @@ public class CarletonEnergyDataSource {
     Date lastUpdated = null;
     ArrayList oldData = null;
     Context context;
+    public static final String PREFS_NAME = "prefrences";
+    SharedPreferences sharedPref;
+    int notificationToggle;
 
-    public CarletonEnergyDataSource(Context context){
+    public CarletonEnergyDataSource(Context context) {
         this.context = context;
+        degreeUnits = sharedPref.getString("degreeUnits", "C");
+        notificationToggle = sharedPref.getInt("notifications", 0);
     }
 
     /*
@@ -370,6 +376,11 @@ public class CarletonEnergyDataSource {
         // System.out.println(result);
         String json_string = result;
 
+        //String response = String.format("%d", urlConnection.getResponseCode());
+        //urlConnection.getResponseMessage();
+
+
+        //String json_string = "{\"startTimestamp\": \"2014/05/10 00:00:00\", \"results\": [{\"startTimestamp\": \"2014/05/10 00:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 972.3778}}, {\"startTimestamp\": \"2014/05/10 01:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1241.7904}}, {\"startTimestamp\": \"2014/05/10 02:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1234.8372}}, {\"startTimestamp\": \"2014/05/10 03:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1120.8208}}, {\"startTimestamp\": \"2014/05/10 04:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 936.2695}}, {\"startTimestamp\": \"2014/05/10 05:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1203.0469}}], \"endTimestamp\": \"2014/05/10 05:00:00\", \"page\": 1}";
         JSONObject all_electricity_page = null;
 
         String return_string = "";
