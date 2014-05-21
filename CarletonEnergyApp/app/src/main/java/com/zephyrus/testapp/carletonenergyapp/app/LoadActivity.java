@@ -31,15 +31,20 @@ public class LoadActivity extends Activity {
         CarletonEnergyDataSource source = new CarletonEnergyDataSource(this);
         source.sync();
 
-        Calendar start_date = Calendar.getInstance();
+        /*
+         * This should not be here, but I wanted to test getGraphData() and I'm leaving
+         * it for now as an example of how to call it
+         */
+        /*Calendar start_date = Calendar.getInstance();
         start_date.add(Calendar.YEAR, -1);
         Date start = start_date.getTime();
 
         Log.i("getGraphData", "about to get graph data");
-        ArrayList<Double> graph_data = source.getGraphData(1, start, new Date(), "day");
+        ArrayList<Double> graph_data = source.getGraphData("consumption", start, new Date(), "day");
         Log.i("getGraphData", "Final result: " + graph_data);
-        graph_data = source.getGraphData(0, start, new Date(), "quarter_hour");
+        graph_data = source.getGraphData("production1", start, new Date(), "quarterhour");
         Log.i("getGraphData", "Final result: " + graph_data);
+        */
 
         // show splash screen for 3 seconds
         new Handler().postDelayed(new Runnable() {

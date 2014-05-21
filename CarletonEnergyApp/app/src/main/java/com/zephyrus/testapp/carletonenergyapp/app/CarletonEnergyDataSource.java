@@ -28,6 +28,7 @@ import java.util.Date;
 /**
  */
 public class CarletonEnergyDataSource {
+
     String speedUnits = "US";
     String degreeUnits;
     double currentTemperature = 0.0;
@@ -222,64 +223,31 @@ public class CarletonEnergyDataSource {
     }
 
     /*
-     * Returns a double array with a value for each time increment from start_time to end_time,
+     * Returns a double ArrayList with a value for each time increment from start_time to end_time
+     * (inclusive to the second if applicable),
      * where the value represents the energy production (or consumption) at that time in kWh.
      *
      * The dependent_variable could be production for either or both windmills or consumption
-     * for the school.
+     * for the school. ex. "consumption", "production1"
+     *
+     * The increment should be "day", "hour", or "quarterhour".
      */
-    public ArrayList<Double> getGraphData(int dependent_variable, Date start_time, Date end_time, String increment) {
+    public ArrayList<Double> getGraphData(String dependent_variable, Date start_time, Date end_time, String increment) {
         ArrayList<Double> valueList = new ArrayList<Double>();
 
-        String scale = "";
-        String d_variable_string = "";
-        if (increment.equals("day")) {
-            scale = "daily";
-        }
-        else if (increment.equals("hour")) {
-            scale = "hourly";
-        }
-        else if (increment.equals("quarter_hour")) {
-            scale = "quarter_hourly";
-        }
-        else {
-            Log.i("getGraphData", "bad inpput: increment should be day, hour, or quarter_hour");
-            // throw an exception?
-        }
-
-        if (dependent_variable == 0) {
-            d_variable_string = "consumption";
-        }
-        else if (dependent_variable == 1) {
-            d_variable_string = "production1";
-        }
-        else if (dependent_variable == 2) {
-            d_variable_string = "production2";
-        }
-        else {
-            Log.i("getGraphData", "bad inpput: dependent_variable should be 0, 1, or 2");
-        }
-
-        //Log.i("getGraphData", "We're here!");
         try {
-
-            FileInputStream in = context.openFileInput(scale + "_" + d_variable_string + "_data");
+            FileInputStream in = context.openFileInput(increment + "_" + dependent_variable + "_data");
             InputStreamReader inputStreamReader = new InputStreamReader(in);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String line;
 
-            //Log.i("getGraphData", "start_time, end_time" + start_time + " " + end_time);
             while ((line = bufferedReader.readLine()) != null) {
                 try {
-                    //Log.i("getGraphData", "line = " + line);
                     String time_string = line.substring(0, line.indexOf(';'));
                     DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                     Date time = df.parse(time_string);
                     Double value = Double.parseDouble(line.substring(line.indexOf(';') + 1, line.length()));
-                    //Log.i("getGraphData", time.getMonth() + " < " + end_time.getYear() + ": " + time.before(end_time));
-                    //Log.i("getGraphData", time.getYear() + " < " + start_time.getYear() + ": " + (time.before(start_time)));
                     if (!time.after(end_time) && !time.before(start_time)) {
-                        //Log.i("getGraphData", "getting here!");
                         valueList.add(value);
                     }
                 }
@@ -287,7 +255,6 @@ public class CarletonEnergyDataSource {
                     Log.i("getGraphData", "exception: line = " + line);
                     e.printStackTrace();
                 }
-
             }
         }
         catch (Exception e){
@@ -336,7 +303,9 @@ public class CarletonEnergyDataSource {
     }
 
     /*
-     * Retrieve energy data from lucid and update data stored in a file
+     * Retrieve energy data from lucid and update data stored in files
+     *
+     * TODO: could use neatening (maybe a loop or another helper function, or at least fewer try/catch blocks)
      *
      */
     private int syncEnergyData() throws IOException {
@@ -351,7 +320,7 @@ public class CarletonEnergyDataSource {
         String daily_consumption = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_campus_en_use");
         try {
             DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("daily_consumption_data", Context.MODE_PRIVATE));
+                    new DataOutputStream(context.openFileOutput("day_consumption_data", Context.MODE_PRIVATE));
             out.writeUTF(daily_consumption);
             out.close();
         } catch (IOException e) {
@@ -360,7 +329,7 @@ public class CarletonEnergyDataSource {
         String daily_production1 = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_turbine1_produced_power");
         try {
             DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("daily_production1_data", Context.MODE_PRIVATE));
+                    new DataOutputStream(context.openFileOutput("day_production1_data", Context.MODE_PRIVATE));
             out.writeUTF(daily_production1);
             out.close();
         } catch (IOException e) {
@@ -369,7 +338,7 @@ public class CarletonEnergyDataSource {
         String hourly_consumption = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_campus_en_use");
         try {
             DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("hourly_consumption_data", Context.MODE_PRIVATE));
+                    new DataOutputStream(context.openFileOutput("hour_consumption_data", Context.MODE_PRIVATE));
             out.writeUTF(hourly_consumption);
             out.close();
         } catch (IOException e) {
@@ -378,7 +347,7 @@ public class CarletonEnergyDataSource {
         String hourly_production1 = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_turbine1_produced_power");
         try {
             DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("hourly_production1_data", Context.MODE_PRIVATE));
+                    new DataOutputStream(context.openFileOutput("hour_production1_data", Context.MODE_PRIVATE));
             out.writeUTF(hourly_production1);
             out.close();
         } catch (IOException e) {
@@ -387,7 +356,7 @@ public class CarletonEnergyDataSource {
         String quarter_hourly_consumption = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_campus_en_use");
         try {
             DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("quarter_hourly_consumption_data", Context.MODE_PRIVATE));
+                    new DataOutputStream(context.openFileOutput("quarterhour_consumption_data", Context.MODE_PRIVATE));
             out.writeUTF(quarter_hourly_consumption);
             out.close();
         } catch (IOException e) {
@@ -396,7 +365,7 @@ public class CarletonEnergyDataSource {
         String quarter_hourly_production1 = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
         try {
             DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("quarter_hourly_production1_data", Context.MODE_PRIVATE));
+                    new DataOutputStream(context.openFileOutput("quarterhour_production1_data", Context.MODE_PRIVATE));
             out.writeUTF(quarter_hourly_production1);
             out.close();
         } catch (IOException e) {
@@ -409,36 +378,32 @@ public class CarletonEnergyDataSource {
 
     }
 
+    /*
+     * Constructs a url for buildingos rest query based on arguments, then makes query and returns
+     * results as a string in the format:
+     *
+     * timeStamp;value\n
+     * timeStamp;value\n
+     * etc.
+     */
     private String readEnergyJSON(Date start, Date end, String resolution, String point) throws IOException {
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd+HH:mm:ss");
-        //System.out.println(df.format(start) + start + end);
         String url_string = "https://rest.buildingos.com/reports/timeseries/?start=" + df.format(start) + "&resolution=" + resolution + "&end=" + df.format(end) + "&name=" + point;
-        //System.out.println(url_string);
         URL consumption_url = new URL(url_string);
         InputStream in = consumption_url.openStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String result, line = reader.readLine();
         result = line;
-        while((line=reader.readLine())!=null){
-            result+=line;
+        while((line=reader.readLine())!=null) {
+            result += line;
         }
-        //
-        // System.out.println(result);
         String json_string = result;
-
-        //String response = String.format("%d", urlConnection.getResponseCode());
-        //urlConnection.getResponseMessage();
-
-
-        //String json_string = "{\"startTimestamp\": \"2014/05/10 00:00:00\", \"results\": [{\"startTimestamp\": \"2014/05/10 00:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 972.3778}}, {\"startTimestamp\": \"2014/05/10 01:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1241.7904}}, {\"startTimestamp\": \"2014/05/10 02:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1234.8372}}, {\"startTimestamp\": \"2014/05/10 03:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1120.8208}}, {\"startTimestamp\": \"2014/05/10 04:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 936.2695}}, {\"startTimestamp\": \"2014/05/10 05:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1203.0469}}], \"endTimestamp\": \"2014/05/10 05:00:00\", \"page\": 1}";
         JSONObject all_electricity_page = null;
-
         String return_string = "";
 
         try {
             all_electricity_page = (JSONObject) new JSONTokener(json_string).nextValue();
             JSONArray results = (JSONArray)all_electricity_page.get("results");
-            //Log.i("results", results.toString());
             for (int i = 0; i < results.length(); i++) {
                 try {
                     Double value = ((JSONObject) ((JSONObject) results.get(i)).get(point)).getDouble("value");
@@ -449,25 +414,14 @@ public class CarletonEnergyDataSource {
                     //System.out.println(results.get(i));
                     //e.printStackTrace();
                 }
-
-                //System.out.println("time: " + timestamp + "; value: " + value);
-                // time string in this format:
-                // 2014/04/08 23:00:00
-                //Date timestamp_date = new Date(timestamp_string);
-                //System.out.println(timestamp_date);
-
             }
 
 
         } catch (JSONException e) {
-
-            //didn't find something it was supposed to
+            //didn't find any results - url must have been wrong, or bad connection
             e.printStackTrace();
-            Log.i("JSONException", e.toString());
-
-
+            Log.i("readEnergyJSON", "bad url? " + e.toString());
         }
-
         return return_string;
     }
 
