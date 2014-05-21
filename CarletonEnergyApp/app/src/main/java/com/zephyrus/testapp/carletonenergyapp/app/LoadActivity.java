@@ -38,6 +38,8 @@ public class LoadActivity extends Activity {
         Log.i("getGraphData", "about to get graph data");
         ArrayList<Double> graph_data = source.getGraphData(1, start, new Date(), "day");
         Log.i("getGraphData", "Final result: " + graph_data);
+        graph_data = source.getGraphData(0, start, new Date(), "quarter_hour");
+        Log.i("getGraphData", "Final result: " + graph_data);
 
         // show splash screen for 3 seconds
         new Handler().postDelayed(new Runnable() {

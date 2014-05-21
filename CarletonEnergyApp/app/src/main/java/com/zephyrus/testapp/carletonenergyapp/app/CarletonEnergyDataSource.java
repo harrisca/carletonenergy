@@ -231,44 +231,68 @@ public class CarletonEnergyDataSource {
     public ArrayList<Double> getGraphData(int dependent_variable, Date start_time, Date end_time, String increment) {
         ArrayList<Double> valueList = new ArrayList<Double>();
 
-        if (dependent_variable == 1 && increment.equals("day")) {
-            //Log.i("getGraphData", "We're here!");
-            try {
-                FileInputStream in = context.openFileInput("daily_consumption_data");
-                InputStreamReader inputStreamReader = new InputStreamReader(in);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String line;
-
-                //Log.i("getGraphData", "start_time, end_time" + start_time + " " + end_time);
-                while ((line = bufferedReader.readLine()) != null) {
-                    try {
-                        //Log.i("getGraphData", "line = " + line);
-                        String time_string = line.substring(0, line.indexOf(';'));
-                        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                        Date time = df.parse(time_string);
-                        Double value = Double.parseDouble(line.substring(line.indexOf(';') + 1, line.length()));
-                        //Log.i("getGraphData", time.getMonth() + " < " + end_time.getYear() + ": " + time.before(end_time));
-                        //Log.i("getGraphData", time.getYear() + " < " + start_time.getYear() + ": " + (time.before(start_time)));
-                        if (!time.after(end_time) && !time.before(start_time)) {
-                            //Log.i("getGraphData", "getting here!");
-                            valueList.add(value);
-                        }
-                    }
-                    catch (Exception e){
-                        Log.i("getGraphData", "exception: line = " + line);
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-
+        String scale = "";
+        String d_variable_string = "";
+        if (increment.equals("day")) {
+            scale = "daily";
+        }
+        else if (increment.equals("hour")) {
+            scale = "hourly";
+        }
+        else if (increment.equals("quarter_hour")) {
+            scale = "quarter_hourly";
+        }
+        else {
+            Log.i("getGraphData", "bad inpput: increment should be day, hour, or quarter_hour");
+            // throw an exception?
         }
 
+        if (dependent_variable == 0) {
+            d_variable_string = "consumption";
+        }
+        else if (dependent_variable == 1) {
+            d_variable_string = "production1";
+        }
+        else if (dependent_variable == 2) {
+            d_variable_string = "production2";
+        }
+        else {
+            Log.i("getGraphData", "bad inpput: dependent_variable should be 0, 1, or 2");
+        }
 
+        //Log.i("getGraphData", "We're here!");
+        try {
 
+            FileInputStream in = context.openFileInput(scale + "_" + d_variable_string + "_data");
+            InputStreamReader inputStreamReader = new InputStreamReader(in);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+
+            //Log.i("getGraphData", "start_time, end_time" + start_time + " " + end_time);
+            while ((line = bufferedReader.readLine()) != null) {
+                try {
+                    //Log.i("getGraphData", "line = " + line);
+                    String time_string = line.substring(0, line.indexOf(';'));
+                    DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date time = df.parse(time_string);
+                    Double value = Double.parseDouble(line.substring(line.indexOf(';') + 1, line.length()));
+                    //Log.i("getGraphData", time.getMonth() + " < " + end_time.getYear() + ": " + time.before(end_time));
+                    //Log.i("getGraphData", time.getYear() + " < " + start_time.getYear() + ": " + (time.before(start_time)));
+                    if (!time.after(end_time) && !time.before(start_time)) {
+                        //Log.i("getGraphData", "getting here!");
+                        valueList.add(value);
+                    }
+                }
+                catch (Exception e){
+                    Log.i("getGraphData", "exception: line = " + line);
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return valueList;
     }
 
@@ -325,20 +349,61 @@ public class CarletonEnergyDataSource {
         Calendar week_ago = Calendar.getInstance();
         week_ago.add(Calendar.DATE, -7);
         String daily_consumption = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_campus_en_use");
-        String daily_production = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_turbine1_produced_power");
-        String hourly_consumption = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_campus_en_use");
-        String hourly_production = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_turbine1_produced_power");
-        String quarter_hourly_consumption = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_campus_en_use");
-        String quarter_hourly_production = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
-
         try {
             DataOutputStream out =
                     new DataOutputStream(context.openFileOutput("daily_consumption_data", Context.MODE_PRIVATE));
             out.writeUTF(daily_consumption);
             out.close();
         } catch (IOException e) {
-            Log.i("Data Input Sample", "I/O Error");
+            Log.i("syncEnergyData", "I/O Error");
         }
+        String daily_production1 = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_turbine1_produced_power");
+        try {
+            DataOutputStream out =
+                    new DataOutputStream(context.openFileOutput("daily_production1_data", Context.MODE_PRIVATE));
+            out.writeUTF(daily_production1);
+            out.close();
+        } catch (IOException e) {
+            Log.i("syncEnergyData", "I/O Error");
+        }
+        String hourly_consumption = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_campus_en_use");
+        try {
+            DataOutputStream out =
+                    new DataOutputStream(context.openFileOutput("hourly_consumption_data", Context.MODE_PRIVATE));
+            out.writeUTF(hourly_consumption);
+            out.close();
+        } catch (IOException e) {
+            Log.i("syncEnergyData", "I/O Error");
+        }
+        String hourly_production1 = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_turbine1_produced_power");
+        try {
+            DataOutputStream out =
+                    new DataOutputStream(context.openFileOutput("hourly_production1_data", Context.MODE_PRIVATE));
+            out.writeUTF(hourly_production1);
+            out.close();
+        } catch (IOException e) {
+            Log.i("syncEnergyData", "I/O Error");
+        }
+        String quarter_hourly_consumption = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_campus_en_use");
+        try {
+            DataOutputStream out =
+                    new DataOutputStream(context.openFileOutput("quarter_hourly_consumption_data", Context.MODE_PRIVATE));
+            out.writeUTF(quarter_hourly_consumption);
+            out.close();
+        } catch (IOException e) {
+            Log.i("syncEnergyData", "I/O Error");
+        }
+        String quarter_hourly_production1 = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
+        try {
+            DataOutputStream out =
+                    new DataOutputStream(context.openFileOutput("quarter_hourly_production1_data", Context.MODE_PRIVATE));
+            out.writeUTF(quarter_hourly_production1);
+            out.close();
+        } catch (IOException e) {
+            Log.i("syncEnergyData", "I/O Error");
+        }
+
+
 
         return 0;
 
