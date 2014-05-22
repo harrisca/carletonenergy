@@ -17,7 +17,7 @@ import android.widget.ToggleButton;
 
 public class SettingsFragment extends Fragment {
 
-    public static final String PREFS_NAME = "corgiPreferences";
+    public static final String PREFS_NAME = "prefrences";
     SharedPreferences sharedPref;
     int notificationToggle;
 
@@ -39,7 +39,7 @@ public class SettingsFragment extends Fragment {
         PendingIntent pending=PendingIntent.getActivity(this.getActivity(), 0, intent, 0);
         Notification notification = new Notification.Builder(this.getActivity()).setContentTitle("Pwr").setContentText("Omg this worked? that cray")
                 .setSmallIcon(R.drawable.launcher)
-                .setContentIntent(pending).setWhen(when).setAutoCancel(true).getNotification();
+                .setContentIntent(pending).setWhen(when).setAutoCancel(true).build();
 
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notification.defaults |= Notification.DEFAULT_SOUND;
