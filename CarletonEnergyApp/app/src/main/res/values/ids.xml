@@ -15,4 +15,6 @@
     <item name="kWH_consumption" type="id" />
     <item name="production_display" type="id" />
     <item name="kWh_production" type="id" />
+    <item name="windspeed_unit" type="id" />
+    <item name="divider" type="id" />
 </resources>

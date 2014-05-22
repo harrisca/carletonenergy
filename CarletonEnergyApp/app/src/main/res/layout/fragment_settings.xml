@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zephyrus.testapp.carletonenergyapp.app.SettingsFragment"
+    android:background="#ff40567a">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">
+
+        <FrameLayout
+            android:layout_width="277dp"
+            android:layout_height="373dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="#29ff4c"
+            android:alpha="0.4">
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nu ToggleButton"
+                android:id="@+id/toggleButton"
+                android:layout_gravity="right|center_vertical"/>
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New ToggleButton"
+                android:id="@+id/toggleButton2"
+                android:layout_gravity="right|top" />
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New ToggleButton"
+                android:id="@+id/toggleButton3"
+                android:layout_gravity="right|bottom" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NotificationTest!"
+                android:id="@+id/notificationbutton"
+                android:layout_gravity="center_horizontal|top"
+                android:clickable="true"
+                android:onClick="notificationTest"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
