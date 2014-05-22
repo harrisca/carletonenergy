@@ -24,7 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.SimpleTimeZone;
 
-
+//This is a class for dealing with energy
 public class CarletonEnergyDataSource {
 
     String speedUnits = "US";
