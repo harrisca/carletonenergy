@@ -10,10 +10,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,9 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.SimpleTimeZone;
 
-/**
- */
+
 public class CarletonEnergyDataSource {
 
     String speedUnits = "US";
@@ -74,143 +72,12 @@ public class CarletonEnergyDataSource {
 
         return liveConsumption;
     }
-    /*
-    * Returns a double representing the current temperature according to the weather.carleton.edu units depend on string input - F or C
-    */
-    double getHulingsTemperature() {
-        URL carleton = null;
-        try {
-            carleton = new URL("http://weather.carleton.edu");
-        } catch (MalformedURLException e) {
-            System.out.println("malformed URL Exception getHulingsTemperature");
-            return -999.9;
-        }
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(
-                    new InputStreamReader(carleton.openStream()));
-        } catch (IOException e) {
-            System.out.println("IO Exception getHulingsTemperature");
-            return -999.9;
-        }
-        String inputLine;
-        int lineNum = 0;
-        String tempString = new String();
-        try {
-            while ((inputLine = in.readLine()) != null){
-                if (lineNum == 126) {
-                    tempString = inputLine;
-                }
 
-
-                lineNum++;
-            }
-        } catch (IOException e) {
-            System.out.println("IO Exception getHulingsTemperature");
-            return -999.9;
-        }
-        double temp = parseHTMLForTemp(tempString);
-        try {
-            in.close();
-        } catch (IOException e) {
-            System.out.println("IO Exception getHulingsTemperature");
-            return -999.9;
-        }
-        return temp;
-    }
-    /*
-    * Returns a int representing the current wind speed according to the weather.carleton.edu in MPH
-    */
-    double getHulingsWindSpeed() {
-        URL carleton = null;
-        try {
-            carleton = new URL("http://weather.carleton.edu");
-        } catch (MalformedURLException e) {
-            System.out.println("malformed URL Exception getHulingsWindSpeed");
-            return -1.0;
-        }
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(
-                    new InputStreamReader(carleton.openStream()));
-        } catch (IOException e) {
-            System.out.println("IO Exception getHulingsWindSpeed");
-            return -1.0;
-        }
-        String inputLine;
-        int lineNum = 0;
-        String speedString = new String();
-        try {
-            while ((inputLine = in.readLine()) != null){
-                if (lineNum == 152) {
-                    speedString = inputLine;
-                }
-                lineNum++;
-            }
-        } catch (IOException e) {
-            System.out.println("IO Exception getHulingsWindSpeed");
-            return -1.0;
-        }
-        int speed = parseHTMLForSpeed(speedString);
-        try {
-            in.close();
-        } catch (IOException e) {
-            System.out.println("IO Exception getHulingsWindSpeed");
-            return -1.0;
-        }
-        return speed*1.0;
-    }
-
-    /*
-    * Returns a double from a line of html code received from weather.carleton.edu
-    */
-    double parseHTMLForTemp(String line){
-        String output = "";
-        int end = 0;
-        char charInt;
-        for (int i=0; i<line.length(); i++){
-            charInt=line.charAt(i);
-            if(charInt>=45 && charInt<=57){
-                output = output + charInt;
-                end+=1;
-            }
-            else{
-                if (end > 1){
-                    break;
-                }
-            }
-        }
-
-        return Double.parseDouble(output.substring(1));
-    }
-    /*
-    * Returns a int from a line of html code received from weather.carleton.edu
-    */
-    int parseHTMLForSpeed(String line){
-        String output = "";
-        int end = 0;
-        char charInt;
-        for (int i=0; i<line.length(); i++){
-            charInt=line.charAt(i);
-            if(charInt>=45 && charInt<=57){
-                output = output + charInt;
-                end+=1;
-            }
-            else{
-                if (end > 1){
-                    break;
-                }
-            }
-        }
-
-        return Integer.parseInt(output.substring(1));
-    }
 
     /*
      * Returns a double representing the current temp according to weather.carleton.edu in degrees C
-     * Error when returns -999.9
      */
-    double getCurrentTemperature() {
+    public double getCurrentTemperature() {
         return this.currentTemperature;
     }
 
@@ -245,6 +112,7 @@ public class CarletonEnergyDataSource {
                 try {
                     String time_string = line.substring(0, line.indexOf(';'));
                     DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
                     Date time = df.parse(time_string);
                     Double value = Double.parseDouble(line.substring(line.indexOf(';') + 1, line.length()));
                     if (!time.after(end_time) && !time.before(start_time)) {
@@ -277,14 +145,21 @@ public class CarletonEnergyDataSource {
         new Thread(new Runnable() {
             public void run() {
                 //System.out.println("In run function");
-                currentTemperature = getHulingsTemperature();
+                //currentTemperature = getHulingsTemperature();
                 //System.out.println("In run function");
-                currentWindspeed = getHulingsWindSpeed();
+                //currentWindspeed = getHulingsWindSpeed();
                 //System.out.println("Current Temperature: " + currentTemperature);
 
                 try {
+                    syncWeatherData();
+                } catch (IOException e) {
+                    Log.i("sync", "error syncing weather data");
+                    e.printStackTrace();
+                }
+                try {
                     syncEnergyData();
                 } catch (IOException e) {
+                    Log.i("sync", "error syncing energy data");
                     e.printStackTrace();
                 }
 
@@ -295,9 +170,16 @@ public class CarletonEnergyDataSource {
                 }*/
 
                 lastUpdated = new Date();
+                DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
 
-                Log.i("sync", "" + getLiveConsumption());
-                Log.i("sync", "" + getLiveProduction(1));
+                Log.i("sync", "synced at: " + lastUpdated);
+                Log.i("sync/time", "local time: " + df.format(lastUpdated));
+                Log.i("sync", "consumption " + getLiveConsumption());
+                Log.i("sync", "windmill1 " + getLiveProduction(1));
+                Log.i("sync", "temp " + getCurrentTemperature());
+                Log.i("sync", "wind " + getCurrentWindSpeed());
+                //Log.i("sync", "" + getGraphData("consumption", ));
             }
         }).start();
         //System.out.println(this.currentTemperature);
@@ -307,9 +189,6 @@ public class CarletonEnergyDataSource {
 
     /*
      * Retrieve energy data from lucid and update data stored in files
-     *
-     * TODO: could use neatening (maybe a loop or another helper function, or at least fewer try/catch blocks)
-     *
      */
     private int syncEnergyData() throws IOException {
 
@@ -323,6 +202,8 @@ public class CarletonEnergyDataSource {
         week_ago.add(Calendar.DATE, -7);
 
         // get data and store in separate files for each time-range and data point
+
+        // daily consumption for past year
         String daily_consumption = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_campus_en_use");
         try {
             DataOutputStream out =
@@ -333,6 +214,7 @@ public class CarletonEnergyDataSource {
             Log.i("syncEnergyData", "I/O Error");
         }
 
+        // daily windmill 1 production for past year
         String daily_production1 = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_turbine1_produced_power");
         try {
             DataOutputStream out =
@@ -343,6 +225,7 @@ public class CarletonEnergyDataSource {
             Log.i("syncEnergyData", "I/O Error");
         }
 
+        // hourly consumption for past month
         String hourly_consumption = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_campus_en_use");
         try {
             DataOutputStream out =
@@ -353,6 +236,7 @@ public class CarletonEnergyDataSource {
             Log.i("syncEnergyData", "I/O Error");
         }
 
+        // hourly windmill1 production for past month
         String hourly_production1 = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_turbine1_produced_power");
         try {
             DataOutputStream out =
@@ -363,13 +247,14 @@ public class CarletonEnergyDataSource {
             Log.i("syncEnergyData", "I/O Error");
         }
 
+        // quarter-hourly consumption for past week
         String quarter_hourly_consumption = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_campus_en_use");
-
         // update liveConsumption based on data from most recent complete 1/4 hour
         String[] consumption_list = quarter_hourly_consumption.split("[\n|\r]");
         String recent_consumption_line = consumption_list[consumption_list.length - 2];
-        liveConsumption = (Double.parseDouble(recent_consumption_line.substring(recent_consumption_line.indexOf(';') + 1, recent_consumption_line.length())))/.25;
-
+        Log.i("syncEnergyData", recent_consumption_line);
+        // lucid data is returned in average kW over time period - this is ok for live
+        liveConsumption = (Double.parseDouble(recent_consumption_line.substring(recent_consumption_line.indexOf(';') + 1, recent_consumption_line.length())));
         // update graph data file
         try {
             DataOutputStream out =
@@ -380,14 +265,14 @@ public class CarletonEnergyDataSource {
             Log.i("syncEnergyData", "I/O Error");
         }
 
+        // quarter-hourly windmill1 production for past week
         String quarter_hourly_production1 = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
-
         // update liveProduction based on data from most recent complete 1/4 hour
         String[] production1_list = quarter_hourly_production1.split("[\n|\r]");
         String recent_production1_line = production1_list[production1_list.length - 2];
-        liveProduction1 = (Double.parseDouble(recent_production1_line.substring(recent_production1_line.indexOf(';') + 1, recent_production1_line.length())))/.25;
+        Log.i("syncEnergyData", recent_production1_line);
+        liveProduction1 = (Double.parseDouble(recent_production1_line.substring(recent_production1_line.indexOf(';') + 1, recent_production1_line.length())));
         Log.i("energyData", "" + liveProduction1);
-
         try {
             DataOutputStream out =
                     new DataOutputStream(context.openFileOutput("quarterhour_production1_data", Context.MODE_PRIVATE));
@@ -409,8 +294,9 @@ public class CarletonEnergyDataSource {
      * timeStamp;value\n
      * etc.
      */
-    private String readEnergyJSON(Date start, Date end, String resolution, String point) throws IOException {
+    private static String readEnergyJSON(Date start, Date end, String resolution, String point) throws IOException {
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd+HH:mm:ss");
+        df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
         String url_string = "https://rest.buildingos.com/reports/timeseries/?start=" + df.format(start) + "&resolution=" + resolution + "&end=" + df.format(end) + "&name=" + point;
         URL consumption_url = new URL(url_string);
         InputStream in = consumption_url.openStream();
@@ -448,25 +334,99 @@ public class CarletonEnergyDataSource {
     }
 
     /*
-     * Will retrieve weather data from http://w1.weather.gov/ and update data stored in a file
-     * not implemented yet!
+     * Retrieves weather data from weather.carleton.edu and sets current temperature,
+     * wind fields
      */
-    private void syncWeatherData() throws IOException {
-//        try {
-//
-//            // testing XML parsing right now
-//            readFeed();
-//
-//
-//        } catch (Exception e) {
-//
-//            //didn't find something it was supposed to
-//            e.printStackTrace();
-//            Log.i("xml_error", e.toString());
-//
-//
-//        }
+    private int syncWeatherData() throws IOException {
+        URL carleton = null;
+        try {
+            carleton = new URL("http://weather.carleton.edu");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            Log.i("syncWeatherData", "malformed URL for carleton weather");
+            return -1;
+        }
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(
+                    new InputStreamReader(carleton.openStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.i("syncWeatherData", "openSteam IOException for carleton weather");
+            return -1;
+        }
+        String inputLine;
+        int lineNum = 0;
+        String speedString = new String();
+        String tempString = new String();
+        try {
+            while ((inputLine = in.readLine()) != null){
+                if (lineNum == 126) {
+                    tempString = inputLine;
+                }
+                else if (lineNum == 152) {
+                    speedString = inputLine;
+                }
+                lineNum++;
+            }
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.i("syncWeatherData", "parsing IOException for carleton weather");
+            return -1;
+        }
+        double temp = parseHTMLForTemp(tempString);
+        int speed = parseHTMLForSpeed(speedString);
 
+        currentTemperature = temp;
+        currentWindspeed = speed;
+        return 0;
+
+    }
+
+    /*
+    * Returns a double from a line of html code received from weather.carleton.edu
+    */
+    private double parseHTMLForTemp(String line){
+        String output = "";
+        int end = 0;
+        char charInt;
+        for (int i=0; i<line.length(); i++){
+            charInt=line.charAt(i);
+            if(charInt>=45 && charInt<=57){
+                output = output + charInt;
+                end+=1;
+            }
+            else{
+                if (end > 1){
+                    break;
+                }
+            }
+        }
+
+        return Double.parseDouble(output.substring(1));
+    }
+    /*
+    * Returns a int from a line of html code received from weather.carleton.edu
+    */
+    private int parseHTMLForSpeed(String line){
+        String output = "";
+        int end = 0;
+        char charInt;
+        for (int i=0; i<line.length(); i++){
+            charInt=line.charAt(i);
+            if(charInt>=45 && charInt<=57){
+                output = output + charInt;
+                end+=1;
+            }
+            else{
+                if (end > 1){
+                    break;
+                }
+            }
+        }
+
+        return Integer.parseInt(output.substring(1));
     }
 
     /*
@@ -477,54 +437,6 @@ public class CarletonEnergyDataSource {
 //        XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 //        factory.setNamespaceAware(true);
 //        XmlPullParser xpp = factory.newPullParser();
-//
-//        String xml_string = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \n" +
-//                "<?xml-stylesheet href=\"latest_ob.xsl\" type=\"text/xsl\"?>\n" +
-//                "<current_observation version=\"1.0\"\n" +
-//                "\t xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n" +
-//                "\t xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-//                "\t xsi:noNamespaceSchemaLocation=\"http://www.weather.gov/view/current_observation.xsd\">\n" +
-//                "\t<credit>NOAA's National Weather Service</credit>\n" +
-//                "\t<credit_URL>http://weather.gov/</credit_URL>\n" +
-//                "\t<image>\n" +
-//                "\t\t<url>http://weather.gov/images/xml_logo.gif</url>\n" +
-//                "\t\t<title>NOAA's National Weather Service</title>\n" +
-//                "\t\t<link>http://weather.gov</link>\n" +
-//                "\t</image>\n" +
-//                "\t<suggested_pickup>15 minutes after the hour</suggested_pickup>\n" +
-//                "\t<suggested_pickup_period>60</suggested_pickup_period>\n" +
-//                "\t<location>Stanton Airfield, MN</location>\n" +
-//                "\t<station_id>KSYN</station_id>\n" +
-//                "\t<latitude>44.467</latitude>\n" +
-//                "\t<longitude>-93.017</longitude>\n" +
-//                "\t<observation_time>Last Updated on May 10 2014, 7:52 pm CDT</observation_time>\n" +
-//                "        <observation_time_rfc822>Sat, 10 May 2014 19:52:00 -0500</observation_time_rfc822>\n" +
-//                "\t<weather>Light Rain</weather>\n" +
-//                "\t<temperature_string>60.0 F (15.3 C)</temperature_string>\n" +
-//                "\t<temp_f>60.0</temp_f>\n" +
-//                "\t<temp_c>15.3</temp_c>\n" +
-//                "\t<relative_humidity>74</relative_humidity>\n" +
-//                "\t<wind_string>East at 11.5 MPH (10 KT)</wind_string>\n" +
-//                "\t<wind_dir>East</wind_dir>\n" +
-//                "\t<wind_degrees>110</wind_degrees>\n" +
-//                "\t<wind_mph>11.5</wind_mph>\n" +
-//                "\t<wind_kt>10</wind_kt>\n" +
-//                "\t<pressure_in>29.78</pressure_in>\n" +
-//                "\t<dewpoint_string>51.1 F (10.6 C)</dewpoint_string>\n" +
-//                "\t<dewpoint_f>51.1</dewpoint_f>\n" +
-//                "\t<dewpoint_c>10.6</dewpoint_c>\n" +
-//                "\t<windchill_string>58 F (14 C)</windchill_string>\n" +
-//                "      \t<windchill_f>58</windchill_f>\n" +
-//                "      \t<windchill_c>14</windchill_c>\n" +
-//                "\t<visibility_mi>10.00</visibility_mi>\n" +
-//                " \t<icon_url_base>http://forecast.weather.gov/images/wtf/small/</icon_url_base>\n" +
-//                "\t<two_day_history_url>http://www.weather.gov/data/obhistory/KSYN.html</two_day_history_url>\n" +
-//                "\t<icon_url_name>ra.png</icon_url_name>\n" +
-//                "\t<ob_url>http://www.weather.gov/data/METAR/KSYN.1.txt</ob_url>\n" +
-//                "\t<disclaimer_url>http://weather.gov/disclaimer.html</disclaimer_url>\n" +
-//                "\t<copyright_url>http://weather.gov/disclaimer.html</copyright_url>\n" +
-//                "\t<privacy_policy_url>http://weather.gov/notice.html</privacy_policy_url>\n" +
-//                "</current_observation>\n";
 //
 //        xpp.setInput(new StringReader(xml_string));
 //        int eventType = xpp.getEventType();
