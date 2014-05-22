@@ -15,7 +15,7 @@ public class GraphActivity extends Activity {
         setContentView(R.layout.activity_graph);
 
         if(!isLandscape()){
-            Intent intent = new Intent(this, DataActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
     }
