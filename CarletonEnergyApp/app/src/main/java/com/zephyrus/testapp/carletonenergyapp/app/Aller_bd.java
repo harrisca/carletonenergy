@@ -26,7 +26,7 @@ public class Aller_bd extends TextView {
         private void init(AttributeSet attrs) {
             if (attrs!=null) {
                 TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Aller_bd);
-                String fontName = a.getString(R.styleable.Aller_bd_fontName);
+                String fontName = "Aller_bd";
                 if (fontName!=null) {
                     Typeface myTypeface = Typeface.createFromAsset(getContext().getAssets(), fontName);
                     setTypeface(myTypeface);
