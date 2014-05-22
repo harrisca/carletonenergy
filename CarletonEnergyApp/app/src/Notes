@@ -16,3 +16,6 @@ https://rest.buildingos.com/reports/timeseries/?start=2014/03/01+00:00:00&resolu
 
 Swipe navigation between pages:
 http://developer.android.com/training/implementing-navigation/lateral.html
+
+Android Singleton info/example:
+http://www.devahead.com/blog/2011/06/extending-the-android-application-class-and-dealing-with-singleton/

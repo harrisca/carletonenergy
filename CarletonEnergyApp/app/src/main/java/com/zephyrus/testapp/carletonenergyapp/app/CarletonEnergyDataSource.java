@@ -72,7 +72,7 @@ public class CarletonEnergyDataSource {
      */
     public double getLiveConsumption() {
 
-        return 0.0;
+        return liveConsumption;
     }
     /*
     * Returns a double representing the current temperature according to the weather.carleton.edu units depend on string input - F or C
@@ -274,7 +274,6 @@ public class CarletonEnergyDataSource {
      * Get data from the internet (the weather website and lucid), update data files on phone
      */
     public void sync()  {
-
         new Thread(new Runnable() {
             public void run() {
                 //System.out.println("In run function");
@@ -296,10 +295,14 @@ public class CarletonEnergyDataSource {
                 }*/
 
                 lastUpdated = new Date();
+
+                Log.i("sync", "" + getLiveConsumption());
+                Log.i("sync", "" + getLiveProduction(1));
             }
         }).start();
         //System.out.println(this.currentTemperature);
         //System.out.println(this.currentWindspeed);
+
     }
 
     /*
@@ -310,6 +313,7 @@ public class CarletonEnergyDataSource {
      */
     private int syncEnergyData() throws IOException {
 
+        // initialize some useful dates
         Calendar today = Calendar.getInstance();
         Calendar year_ago = Calendar.getInstance();
         year_ago.add(Calendar.YEAR, -1);
@@ -317,6 +321,8 @@ public class CarletonEnergyDataSource {
         month_ago.add(Calendar.MONTH, -1);
         Calendar week_ago = Calendar.getInstance();
         week_ago.add(Calendar.DATE, -7);
+
+        // get data and store in separate files for each time-range and data point
         String daily_consumption = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_campus_en_use");
         try {
             DataOutputStream out =
@@ -326,6 +332,7 @@ public class CarletonEnergyDataSource {
         } catch (IOException e) {
             Log.i("syncEnergyData", "I/O Error");
         }
+
         String daily_production1 = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_turbine1_produced_power");
         try {
             DataOutputStream out =
@@ -335,6 +342,7 @@ public class CarletonEnergyDataSource {
         } catch (IOException e) {
             Log.i("syncEnergyData", "I/O Error");
         }
+
         String hourly_consumption = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_campus_en_use");
         try {
             DataOutputStream out =
@@ -344,6 +352,7 @@ public class CarletonEnergyDataSource {
         } catch (IOException e) {
             Log.i("syncEnergyData", "I/O Error");
         }
+
         String hourly_production1 = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_turbine1_produced_power");
         try {
             DataOutputStream out =
@@ -353,7 +362,15 @@ public class CarletonEnergyDataSource {
         } catch (IOException e) {
             Log.i("syncEnergyData", "I/O Error");
         }
+
         String quarter_hourly_consumption = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_campus_en_use");
+
+        // update liveConsumption based on data from most recent complete 1/4 hour
+        String[] consumption_list = quarter_hourly_consumption.split("[\n|\r]");
+        String recent_consumption_line = consumption_list[consumption_list.length - 2];
+        liveConsumption = (Double.parseDouble(recent_consumption_line.substring(recent_consumption_line.indexOf(';') + 1, recent_consumption_line.length())))/.25;
+
+        // update graph data file
         try {
             DataOutputStream out =
                     new DataOutputStream(context.openFileOutput("quarterhour_consumption_data", Context.MODE_PRIVATE));
@@ -362,7 +379,15 @@ public class CarletonEnergyDataSource {
         } catch (IOException e) {
             Log.i("syncEnergyData", "I/O Error");
         }
+
         String quarter_hourly_production1 = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
+
+        // update liveProduction based on data from most recent complete 1/4 hour
+        String[] production1_list = quarter_hourly_production1.split("[\n|\r]");
+        String recent_production1_line = production1_list[production1_list.length - 2];
+        liveProduction1 = (Double.parseDouble(recent_production1_line.substring(recent_production1_line.indexOf(';') + 1, recent_production1_line.length())))/.25;
+        Log.i("energyData", "" + liveProduction1);
+
         try {
             DataOutputStream out =
                     new DataOutputStream(context.openFileOutput("quarterhour_production1_data", Context.MODE_PRIVATE));
@@ -371,8 +396,6 @@ public class CarletonEnergyDataSource {
         } catch (IOException e) {
             Log.i("syncEnergyData", "I/O Error");
         }
-
-
 
         return 0;
 
@@ -415,7 +438,6 @@ public class CarletonEnergyDataSource {
                     //e.printStackTrace();
                 }
             }
-
 
         } catch (JSONException e) {
             //didn't find any results - url must have been wrong, or bad connection

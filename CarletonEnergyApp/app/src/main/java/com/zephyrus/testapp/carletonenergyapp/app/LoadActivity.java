@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,8 +29,9 @@ public class LoadActivity extends Activity {
         setContentView(R.layout.activity_load);
 
         // This should be the only CarletonEnergyDataSource in the app
-        CarletonEnergyDataSource source = new CarletonEnergyDataSource(this);
+        final CarletonEnergyDataSource source = new CarletonEnergyDataSource(this);
         source.sync();
+
 
         /*
          * This should not be here, but I wanted to test getGraphData() and I'm leaving
