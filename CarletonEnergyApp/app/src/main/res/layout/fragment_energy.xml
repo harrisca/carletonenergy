@@ -1,82 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
-    tools:context="com.zephyrus.testapp.carletonenergyapp.app.WindActivity"
+    tools:context="com.zephyrus.testapp.carletonenergyapp.app.EnergyFragment"
     android:background="#ff40567a">
 
     <LinearLayout android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:background="#ff000000"
-            android:baselineAligned="false"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Wind"
-                android:id="@+id/textView"
-                android:gravity="center"
-                android:textColor="#ffffffff"
-                android:typeface="sans"
-                android:textStyle="bold"
-                android:layout_weight=".25"
-                android:clickable="true"
-                android:onClick="switchWind" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Energy"
-                android:id="@+id/textView2"
-                android:gravity="center"
-                android:textColor="#ffffffff"
-                android:typeface="sans"
-                android:textStyle="bold"
-                android:layout_weight=".25"
-                android:clickable="true"
-                android:onClick="switchEnergy"
-                android:background="#ff2b2b2b" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Graphs"
-                android:id="@+id/textView3"
-                android:gravity="center"
-                android:textColor="#ffffffff"
-                android:typeface="sans"
-                android:textStyle="bold"
-                android:layout_weight=".25"
-                android:clickable="true"
-                android:onClick="switchData"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Settings"
-                android:id="@+id/textView4"
-                android:gravity="center"
-                android:textColor="#ffffffff"
-                android:typeface="sans"
-                android:textStyle="bold"
-                android:layout_weight=".25"
-                android:clickable="true"
-                android:onClick="switchSettings"/>
-
-        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -88,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Current Energy Consumption"
+                android:text="@string/consumption_label"
                 android:id="@id/consumption_label"
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="25dp"
@@ -115,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="kWh"
+                    android:text="@string/kWH_consumption"
                     android:id="@id/kWH_consumption"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="10dp"
@@ -127,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Current Energy Production"
+                android:text="@string/production_label"
                 android:id="@id/production_label"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="50dp"
@@ -153,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="kWh"
+                    android:text="@string/kWh_production"
                     android:id="@id/kWh_production"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
@@ -181,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Wind Power"
+                    android:text="@string/percent_wind_label"
                     android:id="@id/percent_wind_label"
                     android:layout_weight="0.5"
                     android:layout_marginLeft="10dp"
@@ -199,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Last Updated:"
+                    android:text="@string/last_updated_label"
                     android:id="@id/last_updated_label"
                     android:textStyle="bold"
                     android:gravity="right"

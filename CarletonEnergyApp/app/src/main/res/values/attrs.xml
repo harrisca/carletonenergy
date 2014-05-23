@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <declare-styleable name="Aller_bd">
+        <attr name="Aller_Bd" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="Aller_Lt">
+        <attr name="Aller_Lt" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="Aller_Rg">
+        <attr name="Aller_Rg" format="string" />
+    </declare-styleable>
+</resources>
