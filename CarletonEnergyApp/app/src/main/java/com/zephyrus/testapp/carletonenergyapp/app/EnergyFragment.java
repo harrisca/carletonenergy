@@ -28,7 +28,7 @@ public class EnergyFragment extends Fragment {
     }
 
     public void updateTextFields(){
-        CarletonEnergyDataSource source = ((MainActivity) this.getActivity()).getDataSrc();
+        CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
 
         fragView.invalidate();
 

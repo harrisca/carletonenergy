@@ -36,7 +36,7 @@ public class WindFragment extends Fragment {
     }
 
     public void updateTextFields(){
-        CarletonEnergyDataSource source = ((MainActivity) this.getActivity()).getDataSrc();
+        CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
 
         TextView windSpeedView = (TextView)fragView.findViewById(R.id.windspeed_display);
         windSpeedView.setText(Double.toString(source.getCurrentWindSpeed()));

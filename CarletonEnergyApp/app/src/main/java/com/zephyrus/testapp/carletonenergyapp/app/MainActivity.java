@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         * The data source available to all fragments
                 */
 
-        CarletonEnergyDataSource dataSrc;
+        //CarletonEnergyDataSource dataSrc;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             setContentView(R.layout.activity_main);
 
             //creates datasource
-            dataSrc = CarletonEnergyDataSource.getSingleton();
-            dataSrc.sync();
+            //dataSrc = CarletonEnergyDataSource.getSingleton();
+            //dataSrc.sync();
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -126,7 +126,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager.setCurrentItem(viewNum,true);
     }
 
-    public CarletonEnergyDataSource getDataSrc(){ return dataSrc; }
+    //public CarletonEnergyDataSource getDataSrc(){ return dataSrc; }
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
