@@ -96,6 +96,7 @@ public class SyncAlerts extends IntentService {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    /*
     public void sync()  {
 
         new Thread(new Runnable() {
@@ -112,12 +113,11 @@ public class SyncAlerts extends IntentService {
                     e.printStackTrace();
                 }
 
-                /*try {
+                try {
                     syncWeatherData();
                 } catch (IOException e) {
                     e.printStackTrace();
-                }*/
-
+                }
                 lastUpdated = new Date();
             }
         }).start();
@@ -126,11 +126,13 @@ public class SyncAlerts extends IntentService {
     }
 
 
+
     private void publishResults(String outputPath, int result) {
         Intent intent = new Intent(NOTIFICATION);
         intent.putExtra(FILEPATH, outputPath);
         intent.putExtra(RESULT, result);
         sendBroadcast(intent);
     }
+    */
 
 }

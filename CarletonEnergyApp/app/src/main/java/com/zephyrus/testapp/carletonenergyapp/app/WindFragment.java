@@ -19,6 +19,7 @@ import android.widget.TextView;
 public class WindFragment extends Fragment {
 
     private boolean windmillOneOnly;
+    View fragView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,33 +27,35 @@ public class WindFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_wind, container, false);
 
-        //creates datasource
-        CarletonEnergyDataSource source = new CarletonEnergyDataSource();
-        source.sync();
-
-        /*
-        //sets temperature and windspeed
-        TextView temperatureView = (TextView)getView().findViewById(R.id.temperature_display);
-        temperatureView.setText(Double.toString(source.getCurrentTemperature()));
-        TextView windspeedView = (TextView)getView().findViewById(R.id.windspeed_display);
-        windspeedView.setText(Double.toString(source.getCurrentWindSpeed()));
-        */
+        fragView = rootView;
         //sets default animation to single windmill
         windmillOneOnly = true;
+        updateTextFields();
 
         return rootView;
     }
 
+    public void updateTextFields(){
+        CarletonEnergyDataSource source = ((MainActivity) this.getActivity()).getDataSrc();
+
+        TextView windSpeedView = (TextView)fragView.findViewById(R.id.windspeed_display);
+        windSpeedView.setText(Double.toString(source.getCurrentWindSpeed()));
+        TextView temperatureView = (TextView)fragView.findViewById(R.id.temperature_display);
+        temperatureView.setText(Double.toString(source.getCurrentTemperature()));
+        TextView lastUpdatedView = (TextView)fragView.findViewById(R.id.last_updated_display);
+//        lastUpdatedView.setText(source.lastUpdated.toString());
+
+    }
 
     //switches windmill animation on tap
     public void switchAnimation(View view){
         if(windmillOneOnly) {
-            ImageView anim = (ImageView) getView().findViewById(R.id.windmillAnim);
+            ImageView anim = (ImageView) fragView.findViewById(R.id.windmillAnim);
             anim.setImageResource(R.drawable.windmill_twin_anim);
             windmillOneOnly = false;
         }
         else{
-            ImageView anim = (ImageView) getView().findViewById(R.id.windmillAnim);
+            ImageView anim = (ImageView) fragView.findViewById(R.id.windmillAnim);
             anim.setImageResource(R.drawable.windmill_anim);
             windmillOneOnly = true;
         }

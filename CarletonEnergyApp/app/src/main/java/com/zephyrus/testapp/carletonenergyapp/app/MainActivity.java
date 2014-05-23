@@ -38,10 +38,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    /**
+        * The data source available to all fragments
+                */
+
+        CarletonEnergyDataSource dataSrc;
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+
+            //creates datasource
+            dataSrc = new CarletonEnergyDataSource(this);
+            dataSrc.sync();
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -116,6 +126,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager.setCurrentItem(viewNum,true);
     }
 
+    public CarletonEnergyDataSource getDataSrc(){ return dataSrc; }
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.

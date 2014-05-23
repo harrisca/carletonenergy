@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <declare-styleable name="Aller_bd">
+    <declare-styleable name="CustomBoldFont">
         <attr name="Aller_Bd" format="string" />
     </declare-styleable>
 
-    <declare-styleable name="Aller_Lt">
+    <declare-styleable name="CustomLightFont">
         <attr name="Aller_Lt" format="string" />
     </declare-styleable>
 
-    <declare-styleable name="Aller_Rg">
+    <declare-styleable name="CustomFont">
         <attr name="Aller_Rg" format="string" />
     </declare-styleable>
 </resources>

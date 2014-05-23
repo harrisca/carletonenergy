@@ -13,17 +13,20 @@
         android:alpha=".8"
         android:baselineAlignBottom="false" />
 
-    <LinearLayout android:layout_width="match_parent"
+    <LinearLayout
         android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:onClick="switchAnimation"
+        android:clickable="true"
+        android:weightSum="4">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight=".1"
-            android:onClick="switchAnimation"
-            android:clickable="true">
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,6 +77,14 @@
                     android:layout_marginTop="20dp"
                     android:textIsSelectable="false" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -113,62 +124,63 @@
                     android:textSize="25sp" />
 
             </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_weight="1.3">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp">
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="80%"
+                android:id="@id/percent_wind_display"
+                android:layout_weight="0.5"
+                android:gravity="right"
+                android:textSize="50sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="80%"
-                    android:id="@id/percent_wind_display"
-                    android:layout_weight="0.5"
-                    android:gravity="right"
-                    android:textSize="50sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/percent_wind_label"
-                    android:id="@id/percent_wind_label"
-                    android:layout_weight="0.5"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="25sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp">
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/percent_wind_label"
+                android:id="@id/percent_wind_label"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="10dp"
+                android:textSize="25sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/last_updated_label"
-                    android:id="@id/last_updated_label"
-                    android:textStyle="bold"
-                    android:gravity="right"
-                    android:layout_marginLeft="30dp"
-                    android:textSize="20sp" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="12:14pm 4/26/2014"
-                    android:id="@id/last_updated_display"
-                    android:textSize="20sp" />
-            </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_weight="0.7">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/last_updated_label"
+                android:id="@id/last_updated_label"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:layout_marginLeft="30dp"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="12:14pm 4/26/2014"
+                android:id="@id/last_updated_display"
+                android:textSize="20sp" />
         </LinearLayout>
 
     </LinearLayout>

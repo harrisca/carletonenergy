@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zephyrus.testapp.carletonenergyapp.app" >
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/launcher"
@@ -18,16 +17,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DataFragment"
-            android:label="Data" >
-        </activity>
-        <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.GraphActivity"
             android:label="Graph" >
-        </activity>
-        <activity
-            android:name=".SettingsFragment"
-            android:label="Settings" >
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.MainActivity"
