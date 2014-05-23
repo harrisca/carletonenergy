@@ -15,8 +15,7 @@ public class EnergyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_energy);
 
-        //creates datasource
-        CarletonEnergyDataSource source = new CarletonEnergyDataSource(this);
+        CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
         source.sync();
 
         //sets consumption and production

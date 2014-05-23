@@ -26,7 +26,7 @@ import java.util.SimpleTimeZone;
 
 
 public class CarletonEnergyDataSource {
-
+    public static CarletonEnergyDataSource singleton;
     String speedUnits = "US";
     String degreeUnits;
     double currentTemperature = 0.0;
@@ -45,6 +45,13 @@ public class CarletonEnergyDataSource {
         this.context = context;
         //degreeUnits = sharedPref.getString("degreeUnits", "C");
         //notificationToggle = sharedPref.getInt("notifications", 0);
+    }
+
+    public static CarletonEnergyDataSource getSingleton() {
+        return singleton;
+    }
+    public static void setSingleton(CarletonEnergyDataSource newSource) {
+        singleton = newSource;
     }
 
     /*

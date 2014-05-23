@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        CarletonEnergyDataSource dataSource = new CarletonEnergyDataSource(this);
+        CarletonEnergyDataSource dataSource = CarletonEnergyDataSource.getSingleton();
         //dataSource.sync();
         //System.out.println(dataSource.getCurrentTemperature());
 
