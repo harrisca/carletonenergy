@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             setContentView(R.layout.activity_main);
 
             //creates datasource
-            dataSrc = new CarletonEnergyDataSource(this);
+            dataSrc = CarletonEnergyDataSource.getSingleton();
             dataSrc.sync();
 
         // Set up the action bar.
