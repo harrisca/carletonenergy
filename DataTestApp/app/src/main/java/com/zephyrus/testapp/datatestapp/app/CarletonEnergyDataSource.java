@@ -12,6 +12,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
@@ -55,14 +56,39 @@ public class CarletonEnergyDataSource {
     Get data from the internet (the weather website and lucid), update data files on phone
      */
     public void sync() {
-        syncEnergyData();
-        syncWeatherData();
+        try {
+            syncEnergyData();
+        } catch (IOException e) {
+            // what should we do if syncEnergyData doesn't work?
+            e.printStackTrace();
+        }
+        //syncWeatherData();
 
     }
 
 
 
-    private int syncEnergyData() {
+    private int syncEnergyData() throws IOException {
+        URL url = null;
+
+        url = new URL("https://rest.buildingos.com/reports/timeseries/?start=2014/05/07+20:00:00&resolution=hour&end=2014/5/07+20:00:00&name=carleton_campus_en_use");
+        InputStream in = url.openStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String result, line = reader.readLine();
+        result = line;
+        while((line=reader.readLine())!=null){
+            result+=line;
+        }
+        System.out.println(result);
+
+
+
+            //String response = String.format("%d", urlConnection.getResponseCode());
+            //urlConnection.getResponseMessage();
+
+
+
+
         String json_string = "{\"startTimestamp\": \"2014/05/10 00:00:00\", \"results\": [{\"startTimestamp\": \"2014/05/10 00:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 972.3778}}, {\"startTimestamp\": \"2014/05/10 01:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1241.7904}}, {\"startTimestamp\": \"2014/05/10 02:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1234.8372}}, {\"startTimestamp\": \"2014/05/10 03:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1120.8208}}, {\"startTimestamp\": \"2014/05/10 04:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 936.2695}}, {\"startTimestamp\": \"2014/05/10 05:00:00\", \"carleton_campus_en_use\": {\"hoursElapsed\": 1.0, \"weight\": 1.0, \"value\": 1203.0469}}], \"endTimestamp\": \"2014/05/10 05:00:00\", \"page\": 1}";
         JSONObject all_electricity_page = null;
 

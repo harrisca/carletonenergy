@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,17 +27,16 @@ public class WindFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_wind, container, false);
 
-        //creates datasource
-        CarletonEnergyDataSource source = new CarletonEnergyDataSource();
+        //gets datasource
+        CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
         source.sync();
 
-        /*
-        //sets temperature and windspeed
+        /*//sets temperature and windspeed
         TextView temperatureView = (TextView)getView().findViewById(R.id.temperature_display);
         temperatureView.setText(Double.toString(source.getCurrentTemperature()));
         TextView windspeedView = (TextView)getView().findViewById(R.id.windspeed_display);
-        windspeedView.setText(Double.toString(source.getCurrentWindSpeed()));
-        */
+        windspeedView.setText(Double.toString(source.getCurrentWindSpeed()));*/
+
         //sets default animation to single windmill
         windmillOneOnly = true;
 

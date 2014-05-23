@@ -28,7 +28,7 @@ public class LoadActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
 
-        // This should be the only CarletonEnergyDataSource in the app
+        // This should be the only time a new CarletonEnergyDataSource is instantiated
         final CarletonEnergyDataSource source = new CarletonEnergyDataSource(this);
         CarletonEnergyDataSource.setSingleton(source);
         source.sync();
