@@ -20,7 +20,7 @@ import java.util.Date;
 
 public class LoadActivity extends Activity {
 
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,9 @@ public class LoadActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
 
-        // This should be the only CarletonEnergyDataSource in the app
+        // This should be the only time a new CarletonEnergyDataSource is instantiated
         final CarletonEnergyDataSource source = new CarletonEnergyDataSource(this);
+        CarletonEnergyDataSource.setSingleton(source);
         source.sync();
 
 
