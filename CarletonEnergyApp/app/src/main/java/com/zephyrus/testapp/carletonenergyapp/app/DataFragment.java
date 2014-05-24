@@ -64,6 +64,7 @@ public class DataFragment extends Fragment {
         //plot.addSeries(series1, series1Format);
         //------
 
+
         //Method 2 -------
         plot.addSeries(
                 series1,
