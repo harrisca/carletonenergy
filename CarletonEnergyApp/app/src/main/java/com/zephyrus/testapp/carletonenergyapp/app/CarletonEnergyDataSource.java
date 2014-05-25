@@ -53,6 +53,9 @@ public class CarletonEnergyDataSource {
     public static void setSingleton(CarletonEnergyDataSource newSource) {
         singleton = newSource;
     }
+    public Date getTimeUpdated() {
+        return lastUpdated;
+    }
 
     /*
      * Returns a double representing the most up-to-date live energy production for the
@@ -151,11 +154,6 @@ public class CarletonEnergyDataSource {
     public void sync()  {
         new Thread(new Runnable() {
             public void run() {
-                //System.out.println("In run function");
-                //currentTemperature = getHulingsTemperature();
-                //System.out.println("In run function");
-                //currentWindspeed = getHulingsWindSpeed();
-                //System.out.println("Current Temperature: " + currentTemperature);
 
                 try {
                     syncWeatherData();
@@ -170,12 +168,6 @@ public class CarletonEnergyDataSource {
                     e.printStackTrace();
                 }
 
-                /*try {
-                    syncWeatherData();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
-
                 lastUpdated = new Date();
                 DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
@@ -189,8 +181,6 @@ public class CarletonEnergyDataSource {
                 //Log.i("sync", "" + getGraphData("consumption", ));
             }
         }).start();
-        //System.out.println(this.currentTemperature);
-        //System.out.println(this.currentWindspeed);
 
     }
 
