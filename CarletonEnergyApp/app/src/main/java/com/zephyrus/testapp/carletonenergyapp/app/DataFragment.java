@@ -22,6 +22,7 @@ import java.util.Arrays;
 public class DataFragment extends Fragment {
 
     private XYPlot plot;
+    private View fragView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,9 +36,10 @@ public class DataFragment extends Fragment {
             startActivity(intent);
         }
         */
+        fragView = rootView;
 
         // initialize our XYPlot reference:
-        plot = (XYPlot) getActivity().findViewById(R.id.mySimpleXYPlot);
+        plot = (XYPlot) fragView.findViewById(R.id.mySimpleXYPlot);
 
         // Create a couple arrays of y-values to plot:
         Number[] series1Numbers = {1, 8, 5, 2, 7, 4};
@@ -66,6 +68,8 @@ public class DataFragment extends Fragment {
 
 
         //Method 2 -------
+
+
         plot.addSeries(
                 series1,
                 new LineAndPointFormatter(Color.rgb(0, 0, 200), Color.rgb(0, 0, 100),
@@ -78,15 +82,18 @@ public class DataFragment extends Fragment {
         //series2Format.configure(getActivity().getApplicationContext(), R.xml.line_point_formatter_with_plf2);
         //plot.addSeries(series2, series2Format);
 
+
         plot.addSeries(
                 series2,
                 new LineAndPointFormatter(Color.rgb(0, 0, 200), Color.rgb(0, 0, 100),
                         null,
                         (PointLabelFormatter) null));
 
+
+
         // reduce the number of range labels
-        plot.setTicksPerRangeLabel(3);
-        plot.getGraphWidget().setDomainLabelOrientation(-45);
+        //plot.setTicksPerRangeLabel(3);
+        //plot.getGraphWidget().setDomainLabelOrientation(-45);
 
 
 
