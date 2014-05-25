@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
         android:oneshot="false">
-        <item android:drawable="@drawable/windmill_twin_1" android:duration="100" />
-        <item android:drawable="@drawable/windmill_twin_2" android:duration="100" />
-        <item android:drawable="@drawable/windmill_twin_3" android:duration="100" />
-        <item android:drawable="@drawable/windmill_twin_4" android:duration="100" />
-        <item android:drawable="@drawable/windmill_twin_5" android:duration="100" />
-        <item android:drawable="@drawable/windmill_twin_6" android:duration="100" />
-        <item android:drawable="@drawable/windmill_twin_7" android:duration="100" />
-        <item android:drawable="@drawable/windmill_twin_8" android:duration="100" />
+        <item android:drawable="@drawable/windmill2_post"/>
+        <item android:drawable="@drawable/windmill2_blade1" android:duration="100" />
+        <item android:drawable="@drawable/windmill2_blade2" android:duration="100" />
+        <item android:drawable="@drawable/windmill2_blade3" android:duration="100" />
+        <item android:drawable="@drawable/windmill2_blade4" android:duration="100" />
+        <item android:drawable="@drawable/windmill2_blade5" android:duration="100" />
+        <item android:drawable="@drawable/windmill2_blade6" android:duration="100" />
+        <item android:drawable="@drawable/windmill2_blade7" android:duration="100" />
     </animation-list>
