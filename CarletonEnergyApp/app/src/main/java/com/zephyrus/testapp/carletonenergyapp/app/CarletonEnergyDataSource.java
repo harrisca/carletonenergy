@@ -312,7 +312,14 @@ public class CarletonEnergyDataSource {
             JSONArray results = (JSONArray)all_electricity_page.get("results");
             for (int i = 0; i < results.length(); i++) {
                 try {
-                    Double value = ((JSONObject) ((JSONObject) results.get(i)).get(point)).getDouble("value");
+                    Double value;
+                    if ((((JSONObject)results.get(i)).get(point)) != null) {
+                        value = ((JSONObject) ((JSONObject) results.get(i)).get(point)).getDouble("value");
+                    }
+                    else {
+                        value = -1.0;
+                    }
+
                     String timestamp_string = ((JSONObject) results.get(i)).getString("startTimestamp");
                     return_string += timestamp_string + ";" + value + "\n";
                 }

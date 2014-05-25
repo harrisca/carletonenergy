@@ -9,6 +9,7 @@ import android.graphics.Shader;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,6 +81,8 @@ public class DataFragment extends Fragment {
 
         ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, yesterday.getTime(), today.getTime(), increment);
         ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", yesterday.getTime(), today.getTime(), "hour");
+        Log.i("graph_data", productionGraphData.size() + "");
+        Log.i("graph_data", productionGraphData.size() + "");
 
         //Converting ArrayList<Double> to Number[]
         Number[] productionNums = new Number[productionGraphData.size()];
