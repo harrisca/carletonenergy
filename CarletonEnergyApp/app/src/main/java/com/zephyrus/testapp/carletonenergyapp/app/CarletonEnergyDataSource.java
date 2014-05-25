@@ -53,6 +53,9 @@ public class CarletonEnergyDataSource {
     public static void setSingleton(CarletonEnergyDataSource newSource) {
         singleton = newSource;
     }
+    public Date getTimeUpdated() {
+        return lastUpdated;
+    }
 
     /*
      * Returns a double representing the most up-to-date live energy production for the

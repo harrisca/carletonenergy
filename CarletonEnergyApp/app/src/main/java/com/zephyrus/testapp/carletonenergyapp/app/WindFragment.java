@@ -15,6 +15,11 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 
 public class WindFragment extends Fragment {
 
@@ -43,7 +48,18 @@ public class WindFragment extends Fragment {
         TextView temperatureView = (TextView)fragView.findViewById(R.id.temperature_display);
         temperatureView.setText(Double.toString(source.getCurrentTemperature()));
         TextView lastUpdatedView = (TextView)fragView.findViewById(R.id.last_updated_display);
-//        lastUpdatedView.setText(source.lastUpdated.toString());
+        DateFormat df = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
+        df.setTimeZone(TimeZone.getTimeZone("US/Central"));
+        if (source.getTimeUpdated() != null) {
+            lastUpdatedView.setText(df.format(source.getTimeUpdated()));
+        }
+        else {
+            lastUpdatedView.setText("Loading now ...");
+        }
+
+        TextView percentWind = (TextView)fragView.findViewById(R.id.percent_wind_display);
+        DecimalFormat percent_format = new DecimalFormat("#.#");
+        percentWind.setText(percent_format.format(100*source.getLiveProduction(1)/source.getLiveConsumption()) + "%");
 
     }
 

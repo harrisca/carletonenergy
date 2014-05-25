@@ -5,10 +5,16 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 
 public class EnergyFragment extends Fragment {
@@ -32,12 +38,25 @@ public class EnergyFragment extends Fragment {
 
         fragView.invalidate();
 
+        DecimalFormat data_format = new DecimalFormat("#.##");
         TextView consumptionView = (TextView)fragView.findViewById(R.id.consumption_display);
-        consumptionView.setText(Double.toString(source.getLiveConsumption()));
+        consumptionView.setText(data_format.format(source.getLiveConsumption()));
         TextView productionView= (TextView)fragView.findViewById(R.id.production_display);
-        productionView.setText(Double.toString(source.getLiveProduction(1)));
+        productionView.setText(data_format.format(source.getLiveProduction(1)));
         TextView lastUpdatedView = (TextView)fragView.findViewById(R.id.last_updated_display);
-        //lastUpdatedView.setText(source.lastUpdated.toString());
+        DateFormat df = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
+        df.setTimeZone(TimeZone.getTimeZone("US/Central"));
+        if (source.getTimeUpdated() != null) {
+            lastUpdatedView.setText(df.format(source.getTimeUpdated()));
+        }
+        else {
+            lastUpdatedView.setText("Loading now ...");
+        }
+
+        TextView percentWind = (TextView)fragView.findViewById(R.id.percent_wind_display);
+        DecimalFormat percent_format = new DecimalFormat("#.#");
+        percentWind.setText(percent_format.format(100*source.getLiveProduction(1)/source.getLiveConsumption()) + "%");
+
 
     }
 }
