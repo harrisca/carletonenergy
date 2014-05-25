@@ -9,3 +9,4 @@
         <item android:drawable="@drawable/splash_screen_6" android:duration="100" />
         <item android:drawable="@drawable/splash_screen_7" android:duration="100" />
     </animation-list>
+    <!--Background image is Public Domain. Found at http://pixabay.com/en/windmill-blue-sky-cloud-sunny-days-181284-->
