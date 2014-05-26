@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
@@ -34,14 +35,36 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
         sharedPref = rootView.getContext().getSharedPreferences(PREFS_NAME, 0);
         units = sharedPref.getInt("units", 0);
+
+        ToggleButton unitsToggle = (ToggleButton) rootView.findViewById(R.id.UnitsToggle);
         if(units==1){
-           ToggleButton units = (ToggleButton) rootView.findViewById(R.id.UnitsToggle);
-            units.setChecked(true);
+            unitsToggle.setChecked(true);
         }
+        unitsToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                int temp= 0;
+                boolean on = ((ToggleButton)view).isChecked();
+                if(on){temp =1;}
+                else{temp = 0;}
+                editor.putInt("Units", temp);
+                editor.commit();
+            }
+        });
+        Button notificationButton = (Button) rootView.findViewById(R.id.notificationButton);
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
+
+
 
         //Making a spinner
         Spinner spinner = (Spinner) rootView.findViewById(R.id.font_choice);
