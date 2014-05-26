@@ -22,4 +22,9 @@
     <item name="windmill_post_second" type="id" />
     <item name="checkbox_windmill" type="id" />
     <item name="checkbox_consumption" type="id" />
+    <item name="radio_hour" type="id" />
+    <item name="radio_day" type="id" />
+    <item name="radio_week" type="id" />
+    <item name="radio_month" type="id" />
+    <item name="radioOption_time" type="id" />
 </resources>

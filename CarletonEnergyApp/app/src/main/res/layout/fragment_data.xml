@@ -21,7 +21,7 @@
             <com.androidplot.xy.XYPlot
                 android:id="@+id/mySimpleXYPlot"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="300dp"
                 androidPlot.title="Production vs Consumption"
                 androidPlot.domainLabel="Time"
                 androidPlot.rangeLabel="Power (kW)"
@@ -75,6 +75,44 @@
                 android:id="@id/checkbox_consumption"
                 android:layout_marginLeft="40dp"
                 android:textStyle="bold" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@id/radioOption_time">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hour_setting"
+                    android:id="@id/radio_hour" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/day_setting"
+                    android:id="@id/radio_day" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/week_setting"
+                    android:id="@id/radio_week" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/month_setting"
+                    android:id="@id/radio_month"
+                    android:singleLine="false" />
+                </RadioGroup>
+            </LinearLayout>
 
         </LinearLayout>
 

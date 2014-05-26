@@ -54,6 +54,11 @@ public class GraphActivity extends Activity {
 
     private XYPlot plot;
     private CarletonEnergyDataSource dataSource;
+    private String dependentVariable = "production1";
+    private String increment = "hour";
+    private Calendar startTime;
+    private Calendar endTime;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -80,27 +85,31 @@ public class GraphActivity extends Activity {
         // initialize our XYPlot reference:
         plot = (XYPlot) findViewById(R.id.mySimpleXYPlot2);
 
-        Calendar today = Calendar.getInstance();
-        Calendar yesterday = Calendar.getInstance();
-        yesterday.add(Calendar.DATE, -1);
-
-        String dependentVariable = "production1";
-        String increment = "hour";
-
         //This will hopefully allow us to fix the scale along the x-axis
         //right now, the axis is always in ms :/
         Number scaleAxis;
 
-        if(increment.equals("quarterhour")){
+        if(increment.equals("week")){
             scaleAxis = 1;
+            endTime = Calendar.getInstance();
+            startTime = Calendar.getInstance();
+            startTime.add(Calendar.DATE, -7);
         }
-        else if (increment.equals("hour")){
+        else if (increment.equals("day")){
             scaleAxis = 1;
+            endTime = Calendar.getInstance();
+            startTime = Calendar.getInstance();
+            startTime.add(Calendar.DATE, -1);
         }
-        else scaleAxis = 1;
+        else { //hour by default
+            scaleAxis = 1;
+            endTime = Calendar.getInstance();
+            startTime = Calendar.getInstance();
+            startTime.add(Calendar.YEAR, -1);
+        }
 
-        ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, yesterday.getTime(), today.getTime(), increment);
-        ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", yesterday.getTime(), today.getTime(), "hour");
+        ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, startTime.getTime(), endTime.getTime(), increment);
+        ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", startTime.getTime(), endTime.getTime(), increment);
         Log.i("graph_data", productionGraphData.size() + "");
         Log.i("graph_data", productionGraphData.size() + "");
 
