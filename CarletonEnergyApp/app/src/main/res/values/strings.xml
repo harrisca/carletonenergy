@@ -10,9 +10,9 @@
     <string name="percent_wind_label">Wind Power</string>
     <string name="last_updated_label">Last Updated:</string>
     <string name="consumption_label">Current Energy Consumption</string>
-    <string name="kWH_consumption">kWh</string>
+    <string name="kWH_consumption">kW</string>
     <string name="production_label">Current Energy Production</string>
-    <string name="kWh_production">kWh</string>
+    <string name="kWh_production">kW</string>
     <string name="title_activity_main">Carleton on Wind Power</string>
     <string name="title_wind">Wind</string>
     <string name="title_energy">Energy</string>
