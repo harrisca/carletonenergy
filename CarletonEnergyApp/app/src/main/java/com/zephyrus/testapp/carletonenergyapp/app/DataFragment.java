@@ -204,9 +204,9 @@ public class DataFragment extends Fragment {
 
     public boolean isPortrait() {
         Display getOrient = this.getActivity().getWindowManager().getDefaultDisplay();
-        if (getOrient.getWidth() >= getOrient.getHeight())
-            return false;
-        else
+        if (getOrient.getRotation()%2==0)
             return true;
+        else
+            return false;
     }
 }
