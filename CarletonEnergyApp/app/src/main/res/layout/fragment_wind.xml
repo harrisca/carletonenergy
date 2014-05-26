@@ -1,3 +1,6 @@
+<!--It's extremely likely that the custom text views don't work yet. I might need to switch them back to text views-->
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
