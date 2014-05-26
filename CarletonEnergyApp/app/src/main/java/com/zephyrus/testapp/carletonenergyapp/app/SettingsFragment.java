@@ -1,6 +1,7 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.support.v4.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -73,7 +74,14 @@ public class SettingsFragment extends Fragment {
         return rootView;
     }
 
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser) {
+            Activity a = getActivity();
+            if(a != null) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+    }
 
     public void notificationTest(View view) {
 
