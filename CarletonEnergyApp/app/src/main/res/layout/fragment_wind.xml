@@ -58,7 +58,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
-                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
@@ -70,7 +70,7 @@
                     android:textStyle="bold"
                     android:textSize="35sp" />
 
-                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
@@ -80,7 +80,7 @@
                     android:layout_marginLeft="10dp"
                     android:textSize="35sp" />
 
-                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -102,7 +102,7 @@
             android:weightSum="1"
             android:layout_weight="1">
 
-            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -117,7 +117,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
-                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
@@ -149,7 +149,7 @@
             android:layout_marginTop="50dp"
             android:layout_weight="1.3">
 
-            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -160,7 +160,7 @@
                 android:textSize="50sp"
                 android:textStyle="bold" />
 
-            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -179,7 +179,7 @@
             android:layout_marginTop="40dp"
             android:layout_weight="0.7">
 
-            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -190,7 +190,7 @@
                 android:layout_marginLeft="30dp"
                 android:textSize="20sp" />
 
-            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
