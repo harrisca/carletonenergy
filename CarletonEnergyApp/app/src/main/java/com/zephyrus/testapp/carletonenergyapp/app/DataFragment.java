@@ -15,6 +15,8 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.androidplot.ui.SizeLayoutType;
 import com.androidplot.ui.SizeMetrics;
@@ -73,6 +75,9 @@ public class DataFragment extends Fragment {
 
         String dependentVariable = "production1";
         String increment = "hour";
+
+        RadioGroup rg=(RadioGroup)fragView.findViewById(R.id.radioOption_time);
+//        String radiovalue=  ((RadioButton)fragView.findViewById(rg.getCheckedRadioButtonId()).getText().toString());
 
         //This will hopefully allow us to fix the scale along the x-axis
         //right now, the axis is always in ms :/
