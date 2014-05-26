@@ -36,13 +36,6 @@
                 android:id="@+id/toggleButton2"
                 android:layout_gravity="right|top" />
 
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New ToggleButton"
-                android:id="@+id/toggleButton3"
-                android:layout_gravity="right|bottom" />
-
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,6 +52,18 @@
                 android:layout_gravity="center"
                 android:prompt="@string/action_settings"
                 />
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Units toggle"
+                android:id="@+id/UnitsToggle"
+                android:layout_gravity="center_horizontal|bottom"
+                android:checked="false"
+                android:textOff="Celsius"
+                android:textOn="Fahrenheit"
+                android:onClick="unitChange"/>
+
         </FrameLayout>
 
     </LinearLayout>
