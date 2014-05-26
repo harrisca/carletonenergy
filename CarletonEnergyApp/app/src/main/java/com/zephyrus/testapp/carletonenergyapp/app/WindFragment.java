@@ -1,6 +1,5 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
-//import android.app.Fragment;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;

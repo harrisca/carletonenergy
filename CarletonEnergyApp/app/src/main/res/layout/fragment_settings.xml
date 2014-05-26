@@ -37,11 +37,10 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NotificationTest!"
-                android:id="@+id/notificationbutton"
+                android:text="Enable Notifications"
+                android:id="@+id/notificationButton"
                 android:layout_gravity="center_horizontal|top"
-                android:clickable="true"
-                android:onClick="notificationTest"/>
+                android:clickable="true"/>
 
             <Spinner
                 android:layout_width="208dp"

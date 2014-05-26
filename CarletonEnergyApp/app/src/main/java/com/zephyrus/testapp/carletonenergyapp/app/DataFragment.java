@@ -54,7 +54,7 @@ public class DataFragment extends Fragment {
             getActivity().finish();
         }
 
-        dataSource = new CarletonEnergyDataSource(this.getActivity());
+        dataSource = CarletonEnergyDataSource.getSingleton();
 
         /*
         if(!isPortrait()){
@@ -69,7 +69,7 @@ public class DataFragment extends Fragment {
 
         Calendar today = Calendar.getInstance();
         Calendar yesterday = Calendar.getInstance();
-        yesterday.add(Calendar.DATE, -1);
+        yesterday.add(Calendar.HOUR, -24);
 
         String dependentVariable = "production1";
         String increment = "hour";
@@ -204,9 +204,9 @@ public class DataFragment extends Fragment {
 
     public boolean isPortrait() {
         Display getOrient = this.getActivity().getWindowManager().getDefaultDisplay();
-        if (getOrient.getWidth() >= getOrient.getHeight())
-            return false;
-        else
+        if (getOrient.getRotation()%2==0)
             return true;
+        else
+            return false;
     }
 }
