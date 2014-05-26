@@ -2,7 +2,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zephyrus.testapp.carletonenergyapp.app.WindFragment">
+    tools:context="com.zephyrus.testapp.carletonenergyapp.app.WindFragment"
+    android:background="#FF40567A">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@id/windmill_post"
+        android:src="@drawable/windmill1_post"
+        android:alpha=".5" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@id/windmill_post_second"
+        android:scaleType="fitXY"
+        android:alpha=".5"
+        android:baselineAlignBottom="false"
+        android:src="@drawable/windmill_second_anim" />
 
     <ImageView
         android:layout_width="fill_parent"
@@ -10,9 +27,19 @@
         android:id="@+id/windmillAnim"
 
         android:scaleType="fitXY"
-        android:alpha=".8"
-        android:baselineAlignBottom="false" />
+        android:alpha=".5"
+        android:baselineAlignBottom="false"
+        android:src="@drawable/windmill_anim" />
     <!--android:src="@drawable/windmill_anim"-->
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@id/windmillAnim_second"
+        android:src="@drawable/windmill2_post"
+        android:alpha=".5"
+        android:scaleType="fitXY"
+        android:focusableInTouchMode="true" />
 
     <LinearLayout
         android:orientation="vertical"

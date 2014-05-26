@@ -57,9 +57,6 @@ public class DataFragment extends Fragment {
         */
         fragView = rootView;
 
-
-
-
         // initialize our XYPlot reference:
         plot = (XYPlot) fragView.findViewById(R.id.mySimpleXYPlot);
 
@@ -186,7 +183,6 @@ public class DataFragment extends Fragment {
             }
         });
 
-
         return rootView;
     }
 
@@ -197,6 +193,4 @@ public class DataFragment extends Fragment {
         else
             return true;
     }
-
-
 }

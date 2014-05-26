@@ -1,19 +1,12 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
-import android.app.Activity;
 //import android.app.Fragment;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
+        import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ImageView;
+        import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -26,15 +19,13 @@ public class WindFragment extends Fragment {
 
     private boolean windmillOneOnly;
     View fragView;
-    SharedPreferences sharedPref;
-    public static final String PREFS_NAME = "windPreferences";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_wind, container, false);
-        
+
         fragView = rootView;
         //sets default animation to single windmill
         windmillOneOnly = true;
@@ -66,11 +57,13 @@ public class WindFragment extends Fragment {
 
     }
 
+
+
     //switches windmill animation on tap
     public void switchAnimation(View view){
         if(windmillOneOnly) {
             ImageView anim = (ImageView) fragView.findViewById(R.id.windmillAnim);
-            anim.setImageResource(R.drawable.windmill_twin_anim);
+            anim.setImageResource(R.drawable.windmill_second_anim);
             windmillOneOnly = false;
         }
         else{

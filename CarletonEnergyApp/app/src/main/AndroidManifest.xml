@@ -18,7 +18,7 @@
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.GraphActivity"
-            android:label="Graph" >
+            android:label="CoW Power" >
         </activity>
         <activity
             android:name="com.zephyrus.testapp.carletonenergyapp.app.MainActivity"

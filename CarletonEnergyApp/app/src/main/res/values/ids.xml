@@ -17,4 +17,7 @@
     <item name="kWh_production" type="id" />
     <item name="windspeed_unit" type="id" />
     <item name="divider" type="id" />
+    <item name="windmillAnim_second" type="id" />
+    <item name="windmill_post" type="id" />
+    <item name="windmill_post_second" type="id" />
 </resources>
