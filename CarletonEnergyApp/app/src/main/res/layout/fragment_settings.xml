@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:weightSum="1">
+        android:weightSum="4">
 
         <FrameLayout
             android:layout_width="338dp"
@@ -18,21 +18,6 @@
             android:layout_margin="5dp"
             android:alpha="0.4"
             android:layout_weight="1.03">
-
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nu ToggleButton"
-                android:id="@+id/toggleButton"
-                android:layout_gravity="right|center_vertical"
-                android:checked="false" />
-
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New ToggleButton"
-                android:id="@+id/toggleButton2"
-                android:layout_gravity="right|top" />
 
             <Button
                 android:layout_width="wrap_content"
