@@ -1,6 +1,7 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.LinearGradient;
@@ -46,6 +47,10 @@ public class DataFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_data, container, false);
+
+        if(isPortrait()){
+
+        }
 
         dataSource = new CarletonEnergyDataSource(this.getActivity());
 
@@ -184,6 +189,15 @@ public class DataFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser) {
+            Activity a = getActivity();
+            if(a != null) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        }
     }
 
     public boolean isPortrait() {

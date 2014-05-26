@@ -1,6 +1,8 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
 //import android.app.Fragment;
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
         import android.view.LayoutInflater;
@@ -57,18 +59,32 @@ public class WindFragment extends Fragment {
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser) {
+            Activity a = getActivity();
+            if(a != null) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+    }
+
 
 
     //switches windmill animation on tap
     public void switchAnimation(View view){
-        if(windmillOneOnly) {
+
+        if(windmillOneOnly == true) {
             ImageView anim = (ImageView) fragView.findViewById(R.id.windmillAnim);
             anim.setImageResource(R.drawable.windmill_second_anim);
+            ImageView post = (ImageView) fragView.findViewById(R.id.windmill_post);
+            post.setImageResource(R.drawable.windmill2_post);
             windmillOneOnly = false;
         }
         else{
             ImageView anim = (ImageView) fragView.findViewById(R.id.windmillAnim);
             anim.setImageResource(R.drawable.windmill_anim);
+            ImageView post = (ImageView) fragView.findViewById(R.id.windmill_post);
+            post.setImageResource(R.drawable.windmill1_post);
             windmillOneOnly = true;
         }
     }
