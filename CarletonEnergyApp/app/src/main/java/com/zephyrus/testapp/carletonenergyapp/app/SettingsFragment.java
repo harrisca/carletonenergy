@@ -35,7 +35,7 @@ public class SettingsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        SharedPreferences
+        sharedPref = rootView.getContext().getSharedPreferences(PREFS_NAME, 0);
 
 
         //Making a spinner
