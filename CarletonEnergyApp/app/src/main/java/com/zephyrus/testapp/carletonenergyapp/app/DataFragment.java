@@ -61,28 +61,259 @@ public class DataFragment extends Fragment {
             getActivity().finish();
         }
 
-        dataSource = CarletonEnergyDataSource.getSingleton();
-
-        /*
-        if(!isPortrait()){
-            Intent intent = new Intent(getActivity(), GraphActivity.class);
-            startActivity(intent);
-        }
-        */
         fragView = rootView;
 
-        // initialize our XYPlot reference:
-        plot = (XYPlot) fragView.findViewById(R.id.mySimpleXYPlot);
+        final Calendar today = Calendar.getInstance();
+        final Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.HOUR, -24);
+        final Calendar year_ago = Calendar.getInstance();
+        year_ago.add(Calendar.YEAR, -1);
+        final Calendar month_ago = Calendar.getInstance();
+        month_ago.add(Calendar.MONTH, -1);
+        final Calendar week_ago = Calendar.getInstance();
+        week_ago.add(Calendar.DATE, -7);
 
+        RadioGroup rg = (RadioGroup) fragView.findViewById(R.id.radioOption_time);
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                /*Log.i("radioButtonTest", "starting onCheckedChanged");
+                //onRadioButtonClicked(fragView.findViewById(checkedId));
+                Log.i("radioButtonTest", "done with onCheckedChanged");
+
+                switch (checkedId) {
+                    case R.id.radio_day:
+                            Log.i("radioButtonTest", "clicked day button");
+                            increment = "day";
+                            startTime = yesterday;
+                        break;
+                    case R.id.radio_week:
+                            increment = "week";
+                            startTime = week_ago;
+                        break;
+                    case R.id.radio_month:
+                            increment = "month";
+                            startTime = month_ago;
+                        break;
+                    case R.id.radio_year:
+                            increment = "year";
+                            startTime = year_ago;
+                        break;
+
+                }
+                dataSource = CarletonEnergyDataSource.getSingleton();
+
+                Log.i("radioButtonTest", "starting to graph");
+                // initialize our XYPlot reference:
+                plot = (XYPlot) fragView.findViewById(R.id.mySimpleXYPlot);
+
+                //This will hopefully allow us to fix the scale along the x-axis
+                //right now, the axis is always in ms :/
+                Number scaleAxis;
+
+                if(increment.equals("week")){
+                    scaleAxis = 1;
+                    endTime = Calendar.getInstance();
+                    startTime = Calendar.getInstance();
+                    startTime.add(Calendar.DATE, -7);
+                }
+                else if (increment.equals("day")){
+                    scaleAxis = 1;
+                    endTime = Calendar.getInstance();
+                    startTime = Calendar.getInstance();
+                    startTime.add(Calendar.DATE, -1);
+                }
+                else { //hour by default
+                    scaleAxis = 1;
+                    endTime = Calendar.getInstance();
+                    startTime = Calendar.getInstance();
+                    startTime.add(Calendar.YEAR, -1);
+                }
+
+                ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, startTime.getTime(), endTime.getTime(), increment);
+                ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", startTime.getTime(), endTime.getTime(), increment);
+                Log.i("graph_data", productionGraphData.size() + "");
+                Log.i("graph_data", productionGraphData.size() + "");
+
+                //Converting ArrayList<Double> to Number[]
+                Number[] productionNums = new Number[productionGraphData.size()];
+                for(int i = 0; i<productionNums.length; i++){
+                    productionNums[i] = i;
+                    System.out.println(productionNums[i]);
+                }
+
+                Number[] consumptionNums = new Number[consumptionGraphData.size()];
+                for(int i = 0; i<consumptionNums.length; i++){
+                    consumptionNums[i] = i;
+                    System.out.println(consumptionNums[i]);
+                }
+
+                Number[] timeNums = new Number[productionGraphData.size()];
+                timeNums = (Number[]) productionGraphData.toArray(timeNums);
+
+                // create our series from our array of nums:
+                XYSeries production = new SimpleXYSeries(
+                        Arrays.asList(productionNums),
+                        Arrays.asList(timeNums),
+                        "Production");
+
+                //XYSeries consumption = new SimpleXYSeries(
+                //       Arrays.asList(consumptionNums),
+                //     Arrays.asList(timeNums),
+                //   "Consumption");
+
+                plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
+                plot.getGraphWidget().getDomainGridLinePaint().setColor(Color.BLACK);
+                plot.getGraphWidget().getDomainGridLinePaint().
+                        setPathEffect(new DashPathEffect(new float[]{1, 1}, 1));
+                plot.getGraphWidget().getRangeGridLinePaint().setColor(Color.BLACK);
+                plot.getGraphWidget().getRangeGridLinePaint().
+                        setPathEffect(new DashPathEffect(new float[]{1, 1}, 1));
+                plot.getGraphWidget().getDomainOriginLinePaint().setColor(Color.BLACK);
+                plot.getGraphWidget().getRangeOriginLinePaint().setColor(Color.BLACK);
+                plot.getGraphWidget().setSize(new SizeMetrics(
+                        1, SizeLayoutType.FILL,
+                        10, SizeLayoutType.FILL));
+
+                // Create a formatter to use for drawing a series using LineAndPointRenderer:
+                LineAndPointFormatter series1Format = new LineAndPointFormatter(
+                        Color.rgb(0, 0, 100),                   // line color
+                        Color.rgb(0, 0, 100),                   // point color
+                        Color.rgb(0, 0, 200), null);                // fill color
+
+                // setup our line fill paint to be a slightly transparent gradient:
+                Paint lineFill = new Paint();
+                lineFill.setAlpha(200);
+
+                // ugly usage of LinearGradient. unfortunately there's no way to determine the actual size of
+                // a View from within onCreate.  one alternative is to specify a dimension in resources
+                // and use that accordingly.  at least then the values can be customized for the device type and orientation.
+                lineFill.setShader(new LinearGradient(0, 0, 200, 200, Color.WHITE, Color.BLUE, Shader.TileMode.CLAMP));
+
+                LineAndPointFormatter formatter  =
+                        new LineAndPointFormatter(Color.rgb(0, 0,0), Color.BLUE, Color.RED, null);
+                formatter.setFillPaint(lineFill);
+                plot.getGraphWidget().setPaddingRight(2);
+
+                plot.addSeries(production, formatter);
+
+                //plot.addSeries(consumption, new LineAndPointFormatter(Color.rgb(0, 0,0), Color.RED, Color.RED, null));
+
+                // draw a domain tick for each year:
+                plot.setDomainStep(XYStepMode.SUBDIVIDE, timeNums.length);
+
+                // customize our domain/range labels
+                plot.setDomainLabel("Time");
+
+                plot.setRangeLabel("Power (kW)");
+
+                // get rid of decimal points in our range labels:
+                plot.setRangeValueFormat(new DecimalFormat("0"));
+
+                plot.setDomainValueFormat(new Format() {
+
+                    // create a simple date format that draws on the year portion of our timestamp.
+                    // see http://download.oracle.com/javase/1.4.2/docs/api/java/text/SimpleDateFormat.html
+                    // for a full description of SimpleDateFormat.
+                    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+
+                    @Override
+                    public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+
+                        // because our timestamps are in seconds and SimpleDateFormat expects milliseconds
+                        // we multiply our timestamp by 1000:
+                        long timestamp = ((Number) obj).longValue() * 1000;
+                        Date date = new Date(timestamp);
+                        return dateFormat.format(date, toAppendTo, pos);
+                    }
+
+                    @Override
+                    public Object parseObject(String source, ParsePosition pos) {
+                        return null;
+
+                    }
+                });
+
+                Log.i("radioButtonTest", "done with onCreateView");
+            */}
+        });
+
+
+
+        return rootView;
+    }
+
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser) {
+            Activity a = getActivity();
+            if(a != null) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        }
+    }
+
+    public boolean isPortrait() {
+        Display getOrient = this.getActivity().getWindowManager().getDefaultDisplay();
+        if (getOrient.getRotation()%2==0)
+            return true;
+        else
+            return false;
+    }
+
+
+    /*public void onRadioButtonClicked(View view) {
+        Log.i("radioButtonTest", "made it to onRadioButtonClicked");
         Calendar today = Calendar.getInstance();
         Calendar yesterday = Calendar.getInstance();
         yesterday.add(Calendar.HOUR, -24);
 
-        String dependentVariable = "production1";
-        String increment = "hour";
+        View rg = fragView.findViewById(R.id.radioOption_time);
 
-        RadioGroup rg=(RadioGroup)fragView.findViewById(R.id.radioOption_time);
-//        String radiovalue=  ((RadioButton)fragView.findViewById(rg.getCheckedRadioButtonId()).getText().toString());
+        Boolean checked = ((RadioButton) rg).isChecked();
+
+        Calendar year_ago = Calendar.getInstance();
+        year_ago.add(Calendar.YEAR, -1);
+        Calendar month_ago = Calendar.getInstance();
+        month_ago.add(Calendar.MONTH, -1);
+        Calendar week_ago = Calendar.getInstance();
+        week_ago.add(Calendar.DATE, -7);
+
+        switch (fragView.getId()) {
+            case R.id.radio_day:
+                if (checked) {
+                    Log.i("radioButtonTest", "clicked day button");
+                    increment = "day";
+                    startTime = yesterday;
+                }
+                break;
+            case R.id.radio_week:
+                if (checked) {
+                    increment = "week";
+                    startTime = week_ago;
+                }
+                break;
+            case R.id.radio_month:
+                if (checked) {
+                    increment = "month";
+                    startTime = month_ago;
+                }
+                break;
+            case R.id.radio_year:
+                if (checked) {
+                    increment = "year";
+                    startTime = year_ago;
+                }
+                break;
+        }
+        dataSource = CarletonEnergyDataSource.getSingleton();
+        Log.i("radioButtonTest", "starting next graph");
+
+        // initialize our XYPlot reference:
+        plot = (XYPlot) fragView.findViewById(R.id.mySimpleXYPlot);
+
 
         //This will hopefully allow us to fix the scale along the x-axis
         //right now, the axis is always in ms :/
@@ -137,9 +368,9 @@ public class DataFragment extends Fragment {
                 "Production");
 
         //XYSeries consumption = new SimpleXYSeries(
-         //       Arrays.asList(consumptionNums),
-           //     Arrays.asList(timeNums),
-             //   "Consumption");
+        //       Arrays.asList(consumptionNums),
+        //     Arrays.asList(timeNums),
+        //   "Consumption");
 
         plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
         plot.getGraphWidget().getDomainGridLinePaint().setColor(Color.BLACK);
@@ -198,7 +429,6 @@ public class DataFragment extends Fragment {
 
             @Override
             public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-
                 // because our timestamps are in seconds and SimpleDateFormat expects milliseconds
                 // we multiply our timestamp by 1000:
                 long timestamp = ((Number) obj).longValue() * 1000;
@@ -209,27 +439,8 @@ public class DataFragment extends Fragment {
             @Override
             public Object parseObject(String source, ParsePosition pos) {
                 return null;
-
             }
-        });
 
-        return rootView;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser) {
-            Activity a = getActivity();
-            if(a != null) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
-        }
-    }
-
-    public boolean isPortrait() {
-        Display getOrient = this.getActivity().getWindowManager().getDefaultDisplay();
-        if (getOrient.getRotation()%2==0)
-            return true;
-        else
-            return false;
-    }
+*/
 }
+
