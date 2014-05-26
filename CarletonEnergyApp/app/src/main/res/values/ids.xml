@@ -20,4 +20,6 @@
     <item name="windmillAnim_second" type="id" />
     <item name="windmill_post" type="id" />
     <item name="windmill_post_second" type="id" />
+    <item name="checkbox_windmill" type="id" />
+    <item name="checkbox_consumption" type="id" />
 </resources>

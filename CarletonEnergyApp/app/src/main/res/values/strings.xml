@@ -19,6 +19,9 @@
     <string name="title_data">Data</string>
     <string name="title_settings">Settings</string>
     <string name="FontColor">Select1</string>
+    <string name="graph_rotation_info">Rotate screen to see full-sized graph</string>
+    <string name="windmill_production">Windmill Production</string>
+    <string name="campus_consumption">Campus Consumption</string>
     <string-array name="font_choices">
         <item>Black</item>
         <item>White</item>
