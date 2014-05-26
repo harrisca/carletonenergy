@@ -56,7 +56,7 @@ public class SettingsFragment extends Fragment {
                 editor.commit();
             }
         });
-        Button notificationButton = (Button) rootView.findViewById(R.id.notificationButton);
+        ToggleButton notificationButton = (ToggleButton) rootView.findViewById(R.id.notificationButton);
         notificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,10 +70,10 @@ public class SettingsFragment extends Fragment {
         Spinner spinner = (Spinner) rootView.findViewById(R.id.font_choice);
         spinner1 = (Spinner) rootView.findViewById(R.id.font_choice);
         List<String> list = new ArrayList<String>();
-        list.add("Dark");
-        list.add("Light");
-        list.add("Sky");
-        list.add("Earth");
+        list.add("ColorScheme: Dark");
+        list.add("ColorScheme: Light");
+        list.add("ColorScheme: Sky");
+        list.add("ColorScheme: Earth");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String> (rootView.getContext(), android.R.layout.simple_spinner_item,list);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

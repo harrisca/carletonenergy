@@ -19,13 +19,17 @@
             android:alpha="0.4"
             android:layout_weight="1.03">
 
-            <Button
+            <ToggleButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Enable Notifications"
                 android:id="@+id/notificationButton"
                 android:layout_gravity="center_horizontal|top"
-                android:clickable="true"/>
+                android:checked="false"
+                android:textOff="Notifications: Off"
+                android:textOn= "Notifications: On"
+
+                />
 
             <Spinner
                 android:layout_width="208dp"
@@ -43,8 +47,7 @@
                 android:layout_gravity="center_horizontal|bottom"
                 android:checked="false"
                 android:textOff="Celsius"
-                android:textOn="Fahrenheit"
-                android:onClick="unitChange"/>
+                android:textOn="Fahrenheit"/>
 
         </FrameLayout>
 
