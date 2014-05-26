@@ -35,10 +35,10 @@ public class SettingsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        SharedPreferences
 
 
-
-
+        //Making a spinner
         Spinner spinner = (Spinner) rootView.findViewById(R.id.font_choice);
         spinner1 = (Spinner) rootView.findViewById(R.id.font_choice);
         List<String> list = new ArrayList<String>();
@@ -51,8 +51,7 @@ public class SettingsFragment extends Fragment {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner1.setAdapter(dataAdapter);
-        spinner1.setOnItemSelectedListener((new AdapterView.OnItemSelectedListener()
-        {
+        spinner1.setOnItemSelectedListener((new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
             {
                 Object item = parent.getItemAtPosition(pos);
@@ -112,11 +111,14 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-    public void unitChange(View sview){
-        SharedPreferences.Editor editor = sharedPref.edit();
-        int temp = 0;
-        editor.putInt("Units", temp);
+    public void unitChange(View view){
 
+        SharedPreferences.Editor editor = sharedPref.edit();
+        int temp= 0;
+        boolean on = ((ToggleButton)view).isChecked();
+        if(on){temp =1;}
+        else{temp = 0;}
+        editor.putInt("Units", temp);
         editor.commit();
     }
 
