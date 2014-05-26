@@ -26,6 +26,7 @@ public class SettingsFragment extends Fragment {
 
     public static final String PREFS_NAME = "preferences";
     SharedPreferences sharedPref;
+    int units;
     int notificationToggle;
     Spinner spinner1;
 
@@ -36,7 +37,11 @@ public class SettingsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
         sharedPref = rootView.getContext().getSharedPreferences(PREFS_NAME, 0);
-
+        units = sharedPref.getInt("units", 0);
+        if(units==1){
+           ToggleButton units = (ToggleButton) rootView.findViewById(R.id.UnitsToggle);
+            units.setChecked(true);
+        }
 
         //Making a spinner
         Spinner spinner = (Spinner) rootView.findViewById(R.id.font_choice);
