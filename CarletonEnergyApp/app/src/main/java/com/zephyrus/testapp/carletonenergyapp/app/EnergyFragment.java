@@ -33,6 +33,8 @@ public class EnergyFragment extends Fragment {
         return rootView;
     }
 
+
+
     public void updateTextFields(){
         CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
 

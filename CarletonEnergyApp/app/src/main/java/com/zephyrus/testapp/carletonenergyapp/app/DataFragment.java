@@ -193,5 +193,4 @@ public class DataFragment extends Fragment {
         else
             return true;
     }
-
 }

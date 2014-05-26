@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.EnergyFragment"
-    android:background="#ff40567a">
+    android:background="#FF40567A">
 
     <LinearLayout
         android:orientation="vertical"
