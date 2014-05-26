@@ -32,7 +32,6 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:onClick="switchAnimation"
         android:clickable="true"
         android:weightSum="4">
 
