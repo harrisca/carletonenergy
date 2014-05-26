@@ -1,6 +1,7 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
 //import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
         import android.view.LayoutInflater;
@@ -19,6 +20,9 @@ public class WindFragment extends Fragment {
 
     private boolean windmillOneOnly;
     View fragView;
+    public static final String PREFS_NAME = "windPrefrences";
+    SharedPreferences sharedPref;
+    int units; // 0 for F and 1 for C
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,6 +33,9 @@ public class WindFragment extends Fragment {
         fragView = rootView;
         //sets default animation to single windmill
         windmillOneOnly = true;
+        sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);
+        units = sharedPref.getInt("Units", 0);
+
         updateTextFields();
 
         return rootView;
@@ -40,7 +47,11 @@ public class WindFragment extends Fragment {
         TextView windSpeedView = (TextView)fragView.findViewById(R.id.windspeed_display);
         windSpeedView.setText(Double.toString(source.getCurrentWindSpeed()));
         TextView temperatureView = (TextView)fragView.findViewById(R.id.temperature_display);
-        temperatureView.setText(Double.toString(source.getCurrentTemperature()));
+        Double currentTemperature = source.getCurrentTemperature();
+        if(units == 1){
+            currentTemperature = currentTemperature*9/5 +32;
+        }
+        temperatureView.setText(Double.toString(currentTemperature));
         TextView lastUpdatedView = (TextView)fragView.findViewById(R.id.last_updated_display);
         DateFormat df = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
         df.setTimeZone(TimeZone.getTimeZone("US/Central"));

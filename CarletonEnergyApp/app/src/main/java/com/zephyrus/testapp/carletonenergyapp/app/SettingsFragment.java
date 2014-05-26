@@ -34,6 +34,10 @@ public class SettingsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
+
+
+
+
         Spinner spinner = (Spinner) rootView.findViewById(R.id.font_choice);
         spinner1 = (Spinner) rootView.findViewById(R.id.font_choice);
         List<String> list = new ArrayList<String>();
@@ -100,6 +104,12 @@ public class SettingsFragment extends Fragment {
         }
     }
 
+    public void unitChange(View sview){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        int temp = 0;
+        editor.putInt("Units", temp);
 
+        editor.commit();
+    }
 
 }
