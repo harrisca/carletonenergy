@@ -39,15 +39,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     ViewPager mViewPager;
 
     /**
-        * The data source available to all fragments
-                */
+     * The data source available to all fragments
+     */
 
-        //CarletonEnergyDataSource dataSrc;
+    //CarletonEnergyDataSource dataSrc;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
 
         // Set up the action bar.
@@ -84,12 +84,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
 
-            if(savedInstanceState == null){
-                Bundle extras = getIntent().getExtras();
-                if(extras!=null){
-                    setCurrentView(extras.getInt("jumpToTab"));
-                }
+        if(savedInstanceState == null){
+            Bundle extras = getIntent().getExtras();
+            if(extras!=null){
+                setCurrentView(extras.getInt("jumpToTab"));
             }
+        }
     }
 
     @Override
@@ -166,7 +166,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 3;
+            //return 4;
         }
 
         @Override

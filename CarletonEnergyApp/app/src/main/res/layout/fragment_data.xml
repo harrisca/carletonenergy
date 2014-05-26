@@ -90,12 +90,6 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/hour_setting"
-                    android:id="@id/radio_hour" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/day_setting"
                     android:id="@id/radio_day" />
 
@@ -105,12 +99,21 @@
                     android:text="@string/week_setting"
                     android:id="@id/radio_week" />
 
+
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/month_setting"
                     android:id="@id/radio_month"
                     android:singleLine="false" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/year_setting"
+                    android:id="@id/radio_year" />
+
+
                 </RadioGroup>
             </LinearLayout>
 
