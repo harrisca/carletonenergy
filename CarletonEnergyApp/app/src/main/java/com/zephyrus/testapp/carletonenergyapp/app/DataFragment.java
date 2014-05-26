@@ -41,6 +41,11 @@ public class DataFragment extends Fragment {
     private CarletonEnergyDataSource dataSource;
     private XYPlot plot;
     private View fragView;
+    private String dependentVariable = "production1";
+    private String increment = "hour";
+    private Calendar startTime;
+    private Calendar endTime;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,23 +76,32 @@ public class DataFragment extends Fragment {
         Calendar yesterday = Calendar.getInstance();
         yesterday.add(Calendar.HOUR, -24);
 
-        String dependentVariable = "production1";
-        String increment = "hour";
-
         //This will hopefully allow us to fix the scale along the x-axis
         //right now, the axis is always in ms :/
         Number scaleAxis;
 
-        if(increment.equals("quarterhour")){
-            scaleAxis = 1;
-        }
-        else if (increment.equals("hour")){
-            scaleAxis = 1;
-        }
-        else scaleAxis = 1;
 
-        ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, yesterday.getTime(), today.getTime(), increment);
-        ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", yesterday.getTime(), today.getTime(), "hour");
+        if(increment.equals("week")){
+            scaleAxis = 1;
+            endTime = Calendar.getInstance();
+            startTime = Calendar.getInstance();
+            startTime.add(Calendar.DATE, -7);
+        }
+        else if (increment.equals("day")){
+            scaleAxis = 1;
+            endTime = Calendar.getInstance();
+            startTime = Calendar.getInstance();
+            startTime.add(Calendar.DATE, -1);
+        }
+        else { //hour by default
+            scaleAxis = 1;
+            endTime = Calendar.getInstance();
+            startTime = Calendar.getInstance();
+            startTime.add(Calendar.YEAR, -1);
+        }
+
+        ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, startTime.getTime(), endTime.getTime(), increment);
+        ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", startTime.getTime(), endTime.getTime(), increment);
         Log.i("graph_data", productionGraphData.size() + "");
         Log.i("graph_data", productionGraphData.size() + "");
 
@@ -161,6 +175,7 @@ public class DataFragment extends Fragment {
 
         // customize our domain/range labels
         plot.setDomainLabel("Time");
+
         plot.setRangeLabel("Power (kW)");
 
         // get rid of decimal points in our range labels:
