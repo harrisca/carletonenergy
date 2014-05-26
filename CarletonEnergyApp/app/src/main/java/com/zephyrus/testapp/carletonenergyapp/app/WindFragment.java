@@ -44,6 +44,13 @@ public class WindFragment extends Fragment {
         return rootView;
     }
 
+    public void onDestroy(){
+        super.onDestroy();
+
+        System.gc();
+        Runtime.getRuntime().gc();
+        }
+
     public void updateTextFields(){
         CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
 
