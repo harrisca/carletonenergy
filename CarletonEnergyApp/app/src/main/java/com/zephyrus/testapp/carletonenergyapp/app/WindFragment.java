@@ -3,6 +3,7 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import android.app.Activity;
 //import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,13 +26,15 @@ public class WindFragment extends Fragment {
 
     private boolean windmillOneOnly;
     View fragView;
+    SharedPreferences sharedPref;
+    public static final String PREFS_NAME = "windPreferences";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_wind, container, false);
-
+        
         fragView = rootView;
         //sets default animation to single windmill
         windmillOneOnly = true;

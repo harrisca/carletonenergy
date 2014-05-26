@@ -12,7 +12,13 @@ import android.app.NotificationManager;
 import android.app.Notification;
 import android.content.SharedPreferences;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.ToggleButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SettingsFragment extends Fragment {
@@ -20,6 +26,7 @@ public class SettingsFragment extends Fragment {
     public static final String PREFS_NAME = "prefrences";
     SharedPreferences sharedPref;
     int notificationToggle;
+    Spinner spinner1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,9 +34,42 @@ public class SettingsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.font_choice);
+        spinner1 = (Spinner) rootView.findViewById(R.id.font_choice);
+        List<String> list = new ArrayList<String>();
+        list.add("Dark");
+        list.add("Light");
+        list.add("Sky");
+        list.add("Earth");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String> (rootView.getContext(), android.R.layout.simple_spinner_item,list);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner1.setAdapter(dataAdapter);
+        spinner1.setOnItemSelectedListener((new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+            {
+                Object item = parent.getItemAtPosition(pos);
+
+                System.out.println("it works...   ");
+
+            }
+
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        }));
+
+
+
+
         //notificationToggle = sharedPref.getInt("notifications",0);
         return rootView;
     }
+
+
 
     public void notificationTest(View view) {
 
@@ -39,7 +79,7 @@ public class SettingsFragment extends Fragment {
         PendingIntent pending=PendingIntent.getActivity(this.getActivity(), 0, intent, 0);
         Notification notification = new Notification.Builder(this.getActivity()).setContentTitle("Pwr").setContentText("Omg this worked? that cray")
                 .setSmallIcon(R.drawable.launcher)
-                .setContentIntent(pending).setWhen(when).setAutoCancel(true).build();
+                .setContentIntent(pending).setWhen(when).setAutoCancel(true).getNotification();
 
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notification.defaults |= Notification.DEFAULT_SOUND;
@@ -59,5 +99,7 @@ public class SettingsFragment extends Fragment {
             // Disable
         }
     }
+
+
 
 }
