@@ -10,13 +10,20 @@
     <string name="percent_wind_label">Wind Power</string>
     <string name="last_updated_label">Last Updated:</string>
     <string name="consumption_label">Current Energy Consumption</string>
-    <string name="kWH_consumption">kWh</string>
+    <string name="kWH_consumption">kW</string>
     <string name="production_label">Current Energy Production</string>
-    <string name="kWh_production">kWh</string>
+    <string name="kWh_production">kW</string>
     <string name="title_activity_main">Carleton on Wind Power</string>
     <string name="title_wind">Wind</string>
     <string name="title_energy">Energy</string>
     <string name="title_data">Data</string>
     <string name="title_settings">Settings</string>
+    <string name="FontColor">Select1</string>
+    <string-array name="font_choices">
+        <item>Black</item>
+        <item>White</item>
+        <item>Earth</item>
+        <item>Sky</item>
+    </string-array>
 
 </resources>

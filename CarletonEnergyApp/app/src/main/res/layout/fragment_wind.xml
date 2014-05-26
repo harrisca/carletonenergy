@@ -87,7 +87,8 @@
                     android:textStyle="italic"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
-                    android:textIsSelectable="false" />
+                    android:textIsSelectable="false"
+                    android:visibility="invisible"/>
             </LinearLayout>
         </LinearLayout>
 

@@ -26,7 +26,8 @@
                 android:layout_height="wrap_content"
                 android:text="Nu ToggleButton"
                 android:id="@+id/toggleButton"
-                android:layout_gravity="right|center_vertical"/>
+                android:layout_gravity="right|center_vertical"
+                android:checked="false" />
 
             <ToggleButton
                 android:layout_width="wrap_content"
@@ -50,6 +51,14 @@
                 android:layout_gravity="center_horizontal|top"
                 android:clickable="true"
                 android:onClick="notificationTest"/>
+
+            <Spinner
+                android:layout_width="208dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/font_choice"
+                android:layout_gravity="center"
+                android:prompt="@string/action_settings"
+                />
         </FrameLayout>
 
     </LinearLayout>
