@@ -54,6 +54,9 @@ public class GraphActivity extends Activity {
 
     private XYPlot plot;
     private CarletonEnergyDataSource dataSource;
+    private String dependentVariable = "production1";
+    private String increment = "hour";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -84,8 +87,7 @@ public class GraphActivity extends Activity {
         Calendar yesterday = Calendar.getInstance();
         yesterday.add(Calendar.DATE, -1);
 
-        String dependentVariable = "production1";
-        String increment = "hour";
+
 
         //This will hopefully allow us to fix the scale along the x-axis
         //right now, the axis is always in ms :/
