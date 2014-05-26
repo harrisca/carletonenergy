@@ -35,10 +35,11 @@ public class CustomTextView extends TextView {
         }
     }
 
+    @Override
     public void setTypeface(Typeface tf, int style) {
-        Typeface normalTypeface = Typeface.createFromAsset(getContext().getAssets(), "CustomFont");
-        Typeface boldTypeface = Typeface.createFromAsset(getContext().getAssets(), "CustomBoldFont");
-        Typeface italicTypeFace = Typeface.createFromAsset(getContext().getAssets(), "CustomLightFont");
+        Typeface normalTypeface = Typeface.createFromAsset(getContext().getAssets(), "Aller_Rg.ttf");
+        Typeface boldTypeface = Typeface.createFromAsset(getContext().getAssets(), "Aller_Bd.ttf");
+        Typeface italicTypeFace = Typeface.createFromAsset(getContext().getAssets(), "Aller_Lt.ttf");
 
         if (style == Typeface.BOLD) {
             super.setTypeface(boldTypeface/*, -1*/);
