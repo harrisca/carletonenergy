@@ -26,4 +26,5 @@
     <item name="radio_day" type="id" />
     <item name="radio_week" type="id" />
     <item name="radio_month" type="id" />
+    <item name="radioOption_time" type="id" />
 </resources>
