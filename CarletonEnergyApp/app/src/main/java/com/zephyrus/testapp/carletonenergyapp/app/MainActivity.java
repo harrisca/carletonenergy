@@ -49,9 +49,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
-            //creates datasource
-            //dataSrc = CarletonEnergyDataSource.getSingleton();
-            //dataSrc.sync();
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -86,6 +83,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
+            if(savedInstanceState == null){
+                Bundle extras = getIntent().getExtras();
+                if(extras!=null){
+                    setCurrentView(extras.getInt("jumpToTab"));
+                }
+            }
     }
 
     @Override
@@ -123,7 +127,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void setCurrentView(int viewNum){
-        mViewPager.setCurrentItem(viewNum,true);
+        mViewPager.setCurrentItem(viewNum);
     }
 
     //public CarletonEnergyDataSource getDataSrc(){ return dataSrc; }

@@ -48,8 +48,10 @@ public class DataFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_data, container, false);
 
-        if(isPortrait()){
-
+        if(!isPortrait()){
+            Intent i = new Intent(this.getActivity(), GraphActivity.class);
+            startActivity(i);
+            getActivity().finish();
         }
 
         dataSource = new CarletonEnergyDataSource(this.getActivity());

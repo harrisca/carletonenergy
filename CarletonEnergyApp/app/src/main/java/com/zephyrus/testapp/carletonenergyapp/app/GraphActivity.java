@@ -41,6 +41,14 @@ public class GraphActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
 
+        if(!isLandscape()){
+            Intent intent = new Intent(this, MainActivity.class);
+            int jumpToData = 2;
+            intent.putExtra("jumpToTab",jumpToData);
+            startActivity(intent);
+            finish();
+        }
+
         // fun little snippet that prevents users from taking screenshots
         // on ICS+ devices :-)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
@@ -87,4 +95,11 @@ public class GraphActivity extends Activity {
 
     }
 
+    public boolean isLandscape() {
+        Display getOrient = getWindowManager().getDefaultDisplay();
+        if (getOrient.getWidth() >= getOrient.getHeight())
+            return true;
+        else
+            return false;
+    }
 }
