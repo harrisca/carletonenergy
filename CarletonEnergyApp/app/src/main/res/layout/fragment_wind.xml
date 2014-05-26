@@ -43,7 +43,7 @@
             android:weightSum="1"
             android:layout_weight="1">
 
-            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -128,7 +128,7 @@
                     android:textStyle="bold"
                     android:textSize="35sp" />
 
-                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
