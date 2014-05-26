@@ -23,7 +23,7 @@ import java.util.List;
 
 public class SettingsFragment extends Fragment {
 
-    public static final String PREFS_NAME = "prefrences";
+    public static final String PREFS_NAME = "preferences";
     SharedPreferences sharedPref;
     int notificationToggle;
     Spinner spinner1;
