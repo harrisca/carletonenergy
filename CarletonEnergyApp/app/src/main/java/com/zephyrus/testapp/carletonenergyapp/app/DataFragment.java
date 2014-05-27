@@ -47,6 +47,8 @@ public class DataFragment extends Fragment {
     private String increment = "hour";
     private Calendar startTime;
     private Calendar endTime;
+    private String timeUnit = "Day"; // you should be able to use increment instead of
+    private RadioGroup rg;
 
 
     @Override
@@ -59,6 +61,8 @@ public class DataFragment extends Fragment {
             Intent i = new Intent(this.getActivity(), GraphActivity.class);
             startActivity(i);
             getActivity().finish();
+            RadioButton rb = (RadioButton)rootView.findViewById(R.id.radio_week);
+            rb.setChecked(true);
         }
 
         fragView = rootView;
@@ -73,30 +77,37 @@ public class DataFragment extends Fragment {
         final Calendar week_ago = Calendar.getInstance();
         week_ago.add(Calendar.DATE, -7);
 
-        RadioGroup rg = (RadioGroup) fragView.findViewById(R.id.radioOption_time);
+        rg = (RadioGroup) fragView.findViewById(R.id.radioOption_time);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup rg, int checkedId) {
 
-                /*Log.i("radioButtonTest", "starting onCheckedChanged");
+                Log.i("radioButtonTest", "starting onCheckedChanged");
                 //onRadioButtonClicked(fragView.findViewById(checkedId));
                 Log.i("radioButtonTest", "done with onCheckedChanged");
 
                 switch (checkedId) {
                     case R.id.radio_day:
                             Log.i("radioButtonTest", "clicked day button");
+                            timeUnit = "Day";
                             increment = "day";
                             startTime = yesterday;
                         break;
                     case R.id.radio_week:
+                            Log.i("radioButtonTest", "clicked week button");
+                            timeUnit = "Week";
                             increment = "week";
                             startTime = week_ago;
                         break;
                     case R.id.radio_month:
+                        Log.i("radioButtonTest", "clicked month button");
+                            timeUnit = "Month";
                             increment = "month";
                             startTime = month_ago;
                         break;
                     case R.id.radio_year:
+                        Log.i("radioButtonTest", "clicked year button");
+                            timeUnit = "Year";
                             increment = "year";
                             startTime = year_ago;
                         break;
@@ -140,13 +151,13 @@ public class DataFragment extends Fragment {
                 Number[] productionNums = new Number[productionGraphData.size()];
                 for(int i = 0; i<productionNums.length; i++){
                     productionNums[i] = i;
-                    System.out.println(productionNums[i]);
+//                    System.out.println(productionNums[i]);
                 }
 
                 Number[] consumptionNums = new Number[consumptionGraphData.size()];
                 for(int i = 0; i<consumptionNums.length; i++){
                     consumptionNums[i] = i;
-                    System.out.println(consumptionNums[i]);
+//                    System.out.println(consumptionNums[i]);
                 }
 
                 Number[] timeNums = new Number[productionGraphData.size()];
@@ -236,7 +247,7 @@ public class DataFragment extends Fragment {
                 });
 
                 Log.i("radioButtonTest", "done with onCreateView");
-            */}
+            }
         });
 
 
