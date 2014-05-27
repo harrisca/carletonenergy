@@ -200,6 +200,49 @@ public class CarletonEnergyDataSource {
 
         // get data and store in separate files for each time-range and data point
 
+
+        // quarter-hourly consumption for past week
+        String quarter_hourly_consumption = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_campus_en_use");
+        // update liveConsumption based on data from most recent complete 1/4 hour
+        String[] consumption_list = quarter_hourly_consumption.split("[\n|\r]");
+        String recent_consumption_line = consumption_list[consumption_list.length - 2];
+        Log.i("syncEnergyData", recent_consumption_line);
+        // lucid data is returned in average kW over time period - this is ok for live
+        liveConsumption = (Double.parseDouble(recent_consumption_line.substring(recent_consumption_line.indexOf(';') + 1, recent_consumption_line.length())));
+
+        // quarter-hourly windmill1 production for past week
+        String quarter_hourly_production1 = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
+        // update liveProduction based on data from most recent complete 1/4 hour
+        String[] production1_list = quarter_hourly_production1.split("[\n|\r]");
+        String recent_production1_line = production1_list[production1_list.length - 2];
+        Log.i("syncEnergyData", recent_production1_line);
+        liveProduction1 = (Double.parseDouble(recent_production1_line.substring(recent_production1_line.indexOf(';') + 1, recent_production1_line.length())));
+        Log.i("energyData", "" + liveProduction1);
+
+
+        // update graph data file
+        try {
+            DataOutputStream out =
+                    new DataOutputStream(context.openFileOutput("quarterhour_consumption_data", Context.MODE_PRIVATE));
+            out.writeUTF(quarter_hourly_consumption);
+            out.close();
+        } catch (IOException e) {
+            Log.i("syncEnergyData", "I/O Error");
+        }
+        try {
+            DataOutputStream out =
+                    new DataOutputStream(context.openFileOutput("quarterhour_production1_data", Context.MODE_PRIVATE));
+            out.writeUTF(quarter_hourly_production1);
+            out.close();
+        } catch (IOException e) {
+            Log.i("syncEnergyData", "I/O Error");
+        }
+
+
+
+
+
+
         // daily consumption for past year
         String daily_consumption = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_campus_en_use");
         try {
@@ -244,42 +287,10 @@ public class CarletonEnergyDataSource {
             Log.i("syncEnergyData", "I/O Error");
         }
 
-        // quarter-hourly consumption for past week
-        String quarter_hourly_consumption = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_campus_en_use");
-        // update liveConsumption based on data from most recent complete 1/4 hour
-        String[] consumption_list = quarter_hourly_consumption.split("[\n|\r]");
-        String recent_consumption_line = consumption_list[consumption_list.length - 2];
-        Log.i("syncEnergyData", recent_consumption_line);
-        // lucid data is returned in average kW over time period - this is ok for live
-        liveConsumption = (Double.parseDouble(recent_consumption_line.substring(recent_consumption_line.indexOf(';') + 1, recent_consumption_line.length())));
-        // update graph data file
-        try {
-            DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("quarterhour_consumption_data", Context.MODE_PRIVATE));
-            out.writeUTF(quarter_hourly_consumption);
-            out.close();
-        } catch (IOException e) {
-            Log.i("syncEnergyData", "I/O Error");
-        }
-
-        // quarter-hourly windmill1 production for past week
-        String quarter_hourly_production1 = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
-        // update liveProduction based on data from most recent complete 1/4 hour
-        String[] production1_list = quarter_hourly_production1.split("[\n|\r]");
-        String recent_production1_line = production1_list[production1_list.length - 2];
-        Log.i("syncEnergyData", recent_production1_line);
-        liveProduction1 = (Double.parseDouble(recent_production1_line.substring(recent_production1_line.indexOf(';') + 1, recent_production1_line.length())));
-        Log.i("energyData", "" + liveProduction1);
-        try {
-            DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("quarterhour_production1_data", Context.MODE_PRIVATE));
-            out.writeUTF(quarter_hourly_production1);
-            out.close();
-        } catch (IOException e) {
-            Log.i("syncEnergyData", "I/O Error");
-        }
 
         return 0;
+
+
 
     }
 

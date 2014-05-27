@@ -47,7 +47,7 @@ public class EnergyFragment extends Fragment {
     public void updateTextFields(){
         CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
 
-        fragView.invalidate();
+        //fragView.invalidate();
 
         DecimalFormat data_format = new DecimalFormat("#.##");
         TextView consumptionView = (TextView)fragView.findViewById(R.id.consumption_display);
