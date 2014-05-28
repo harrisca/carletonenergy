@@ -35,12 +35,14 @@
         android:layout_height="fill_parent"
         android:weightSum="4">
 
-        <Button
+        <ToggleButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/notification_toggle"
             android:id="@+id/notificationButton"
-            android:clickable="true"
+            android:checked="false"
+            android:textOff="Notifications: Off"
+            android:textOn= "Notifications: On"
             android:layout_weight="1" />
 
         <Spinner
@@ -59,7 +61,6 @@
             android:checked="false"
             android:textOff="Celsius"
             android:textOn="Fahrenheit"
-            android:onClick="unitChange"
             android:layout_weight="1"
             android:textSize="30sp" />
 
