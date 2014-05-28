@@ -69,7 +69,7 @@ public class GraphActivity extends Activity {
 
         if(!isLandscape()){
             Intent intent = new Intent(this, MainActivity.class);
-            int jumpToData = 2;
+            int jumpToData = 1;
             intent.putExtra("jumpToTab",jumpToData);
             startActivity(intent);
             finish();
