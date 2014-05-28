@@ -3,14 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.InfoFragment"
-    android:background="#FF40567A">
+    android:background="@drawable/background_day">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/background_dawn"
-        android:id="@+id/linearLayout"
         android:weightSum="1">
 
         <LinearLayout
@@ -32,8 +31,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:weightSum="4"
-        android:id="@+id/linearLayout2">
+        android:weightSum="4">
 
         <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
             android:layout_width="wrap_content"

@@ -1,34 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">CoW Power</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_load">LoadActivity</string>
-    <string name="windspeed_label">Windspeed</string>
-    <string name="unit_mph">mph</string>
-    <string name="temperature_label">Temperature</string>
-    <string name="percent_wind_label">Wind Power</string>
-    <string name="last_updated_label">LAST UPDATED </string>
-    <string name="consumption_label">Consumption</string>
-    <string name="kWH_consumption">kW</string>
-    <string name="production_label">Production</string>
-    <string name="kWh_production">kW</string>
-    <string name="title_activity_main">Carleton on Wind Power</string>
+    <string name="app_name">Carleton on Wind Power</string>
     <string name="title_wind">Wind</string>
     <string name="title_data">Data</string>
     <string name="title_info">Info</string>
     <string name="title_settings">Settings</string>
-    <string name="FontColor">Select1</string>
-    <string name="graph_rotation_info">Rotate screen to see full-sized graph</string>
-    <string name="windmill_production">Windmill Production</string>
-    <string name="campus_consumption">Campus Consumption</string>
+    <string name="title_sync">Sync</string>
+    <string name="windspeed_label">Windspeed</string>
+    <string name="temperature_label">Temperature</string>
+    <string name="percent_wind_label">Wind Power</string>
+    <string name="consumption_label">Campus Consumption</string>
+    <string name="production_label">Windmill Production</string>
+    <string name="last_updated_label">LAST UPDATED </string>
+    <string name="rotation_label">rotate screen to see full-size graph</string>
+    <string name="unit_mph">mph</string>
+    <string name="kWH_consumption">kW</string>
+    <string name="kWh_production">kW</string>
+    <string name="FontColor">Select Color</string>
     <string name="year_setting">Year</string>
     <string name="day_setting">Day</string>
     <string name="week_setting">Week</string>
     <string name="month_setting">Month</string>
     <string name="current_energy">Current Energy</string>
     <string name="info_about_us">About Us</string>
-    <string name="title_sync">Sync</string>
     <string name="notification_toggle">ENABLE NOTIFICATIONS</string>
     <string-array name="font_choices">
         <item>Black</item>

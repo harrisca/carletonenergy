@@ -34,13 +34,15 @@ public class WindFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_wind, container, false);
 
+        //stores inflated view
         fragView = rootView;
 
+        //retrieves unit preferences
         sharedPref = rootView.getContext().getSharedPreferences(PREFS_NAME, 0);
         units = sharedPref.getInt("units", 0);
 
 
-        //sets default animation to single windmill
+        //initializes fields
         windmillOneOnly = true;
         updateTextFields();
         animateWindmill();
@@ -59,25 +61,33 @@ public class WindFragment extends Fragment {
         CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
 
         fragView.invalidate();
+
         TextView windSpeedView = (TextView)fragView.findViewById(R.id.windspeed_display);
         windSpeedView.setText(Double.toString(source.getCurrentWindSpeed()));
+
         TextView temperatureView = (TextView)fragView.findViewById(R.id.temperature_display);
+
         Double temperature = source.getCurrentTemperature();
-        if(units ==1){ temperature = temperature  *9/5+32;}
+        if(units ==1){ temperature = temperature*9/5+32;}
         temperatureView.setText(Double.toString(temperature));
+
         DecimalFormat data_format = new DecimalFormat("#.##");
+
         TextView consumptionView = (TextView)fragView.findViewById(R.id.consumption_display);
         consumptionView.setText(data_format.format(source.getLiveConsumption()));
+
         TextView productionView= (TextView)fragView.findViewById(R.id.production_display);
         productionView.setText(data_format.format(source.getLiveProduction(1)));
+
         TextView lastUpdatedView = (TextView)fragView.findViewById(R.id.last_updated_display);
         DateFormat df = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
         df.setTimeZone(TimeZone.getTimeZone("US/Central"));
+
         if (source.getTimeUpdated() != null) {
             lastUpdatedView.setText(df.format(source.getTimeUpdated()));
         }
         else {
-            lastUpdatedView.setText("Loading now ...");
+            lastUpdatedView.setText("Syncing...");
         }
 
         TextView percentWind = (TextView)fragView.findViewById(R.id.percent_wind_display);

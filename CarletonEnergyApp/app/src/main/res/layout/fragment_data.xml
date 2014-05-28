@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.DataFragment"
-    android:background="#ff40567a">
+    android:background="@drawable/background_dawn">
 
 
     <LinearLayout
@@ -51,11 +51,11 @@
             android:layout_height="wrap_content"
             android:layout_weight=".8">
 
-            <TextView
+            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/graph_rotation_info"
+                android:text="@string/rotation_label"
                 android:id="@+id/textView"
                 android:textStyle="italic"
                 android:layout_gravity="center_horizontal" />
@@ -63,7 +63,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/windmill_production"
+                android:text="@string/production_label"
                 android:id="@id/checkbox_windmill"
                 android:layout_marginLeft="40dp"
                 android:textStyle="bold" />
@@ -71,7 +71,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/campus_consumption"
+                android:text="@string/consumption_label"
                 android:id="@id/checkbox_consumption"
                 android:layout_marginLeft="40dp"
                 android:textStyle="bold" />
@@ -112,8 +112,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/year_setting"
                     android:id="@id/radio_year" />
-
-
                 </RadioGroup>
             </LinearLayout>
 
