@@ -3,8 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.SettingsFragment"
-    android:background="#ff40567a">
+    android:background="@drawable/background_dawn">
 
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1"
+        android:background="@drawable/background_dawn"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight=".8" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/settings_gear"
+            android:alpha="0.3" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,41 +35,33 @@
         android:layout_height="fill_parent"
         android:weightSum="4">
 
-        <FrameLayout
-            android:layout_width="338dp"
-            android:layout_height="373dp"
-            android:layout_margin="5dp"
-            android:alpha="0.4"
-            android:layout_weight="1.03">
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notification_toggle"
+            android:id="@+id/notificationButton"
+            android:clickable="true"
+            android:layout_weight="1" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enable Notifications"
-                android:id="@+id/notificationButton"
-                android:layout_gravity="center_horizontal|top"
-                android:clickable="true"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/font_choice"
+            android:prompt="@string/action_settings"
+            android:layout_weight="1" />
 
-            <Spinner
-                android:layout_width="208dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/font_choice"
-                android:layout_gravity="center"
-                android:prompt="@string/action_settings"
-                />
-
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Units toggle"
-                android:id="@+id/UnitsToggle"
-                android:layout_gravity="center_horizontal|bottom"
-                android:checked="false"
-                android:textOff="Celsius"
-                android:textOn="Fahrenheit"
-                android:onClick="unitChange"/>
-
-        </FrameLayout>
+        <ToggleButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Units toggle"
+            android:id="@+id/UnitsToggle"
+            android:layout_gravity="bottom"
+            android:checked="false"
+            android:textOff="Celsius"
+            android:textOn="Fahrenheit"
+            android:onClick="unitChange"
+            android:layout_weight="1"
+            android:textSize="30sp" />
 
     </LinearLayout>
 

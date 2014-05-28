@@ -8,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +43,7 @@ public class WindFragment extends Fragment {
         //sets default animation to single windmill
         windmillOneOnly = true;
         updateTextFields();
+        animateWindmill();
 
         return rootView;
     }
@@ -54,13 +58,18 @@ public class WindFragment extends Fragment {
     public void updateTextFields(){
         CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
 
+        fragView.invalidate();
         TextView windSpeedView = (TextView)fragView.findViewById(R.id.windspeed_display);
         windSpeedView.setText(Double.toString(source.getCurrentWindSpeed()));
         TextView temperatureView = (TextView)fragView.findViewById(R.id.temperature_display);
         Double temperature = source.getCurrentTemperature();
         if(units ==1){ temperature = temperature  *9/5+32;}
-
         temperatureView.setText(Double.toString(temperature));
+        DecimalFormat data_format = new DecimalFormat("#.##");
+        TextView consumptionView = (TextView)fragView.findViewById(R.id.consumption_display);
+        consumptionView.setText(data_format.format(source.getLiveConsumption()));
+        TextView productionView= (TextView)fragView.findViewById(R.id.production_display);
+        productionView.setText(data_format.format(source.getLiveProduction(1)));
         TextView lastUpdatedView = (TextView)fragView.findViewById(R.id.last_updated_display);
         DateFormat df = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
         df.setTimeZone(TimeZone.getTimeZone("US/Central"));
@@ -86,8 +95,18 @@ public class WindFragment extends Fragment {
         }
     }
 
+    public void animateWindmill(){
+        /*
+        ImageView windmill = (ImageView)fragView.findViewById(R.id.windmill_anim);
+        Animation anim = new RotateAnimation(30,360, windmill.getPivotX(), windmill.getPivotY());
+        anim.setDuration(2000);               // duration in ms
+        anim.setRepeatCount(-1);                // -1 = infinite repeated
+        anim.setRepeatMode(Animation.INFINITE);
+        windmill.startAnimation(anim);
+        */
+    }
 
-
+    /*
     //switches windmill animation on tap
     public void switchAnimation(View view){
 
@@ -95,16 +114,16 @@ public class WindFragment extends Fragment {
             ImageView anim = (ImageView) fragView.findViewById(R.id.windmillAnim);
             anim.setImageResource(R.drawable.windmill_second_anim);
             ImageView post = (ImageView) fragView.findViewById(R.id.windmill_post);
-            post.setImageResource(R.drawable.windmill2_post);
+            post.setImageResource(R.drawable.windmill_stand_inverted);
             windmillOneOnly = false;
         }
         else{
             ImageView anim = (ImageView) fragView.findViewById(R.id.windmillAnim);
             anim.setImageResource(R.drawable.windmill_anim);
             ImageView post = (ImageView) fragView.findViewById(R.id.windmill_post);
-            post.setImageResource(R.drawable.windmill1_post);
+            post.setImageResource(R.drawable.windmill_stand);
             windmillOneOnly = true;
         }
     }
-
+*/
 }

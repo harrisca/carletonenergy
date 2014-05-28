@@ -2,7 +2,6 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import java.util.Locale;
 
 
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -11,14 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import com.zephyrus.testapp.carletonenergyapp.app.WindFragment;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -105,7 +98,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_sync) {
+            manualSync();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -130,6 +124,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager.setCurrentItem(viewNum);
     }
 
+    public void manualSync(){ CarletonEnergyDataSource.getSingleton().sync();    }
     //public CarletonEnergyDataSource getDataSrc(){ return dataSrc; }
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -151,10 +146,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return new WindFragment();
                 case 1:
                     // Games fragment activity
-                    return new EnergyFragment();
+                    return new DataFragment();
                 case 2:
                     // Movies fragment activity
-                    return new DataFragment();
+                    return new InfoFragment();
                 case 3:
                     // Movies fragment activity
                     return new SettingsFragment();
@@ -166,7 +161,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
             //return 4;
         }
 
@@ -177,9 +172,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case 0:
                     return getString(R.string.title_wind).toUpperCase();
                 case 1:
-                    return getString(R.string.title_energy).toUpperCase();
-                case 2:
                     return getString(R.string.title_data).toUpperCase();
+                case 2:
+                    return getString(R.string.title_info).toUpperCase();
                 case 3:
                     return getString(R.string.title_settings).toUpperCase();
             }
