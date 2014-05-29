@@ -27,16 +27,16 @@ import java.util.SimpleTimeZone;
 //This is a class for dealing with energy
 public class CarletonEnergyDataSource {
     public static CarletonEnergyDataSource singleton;
-    String speedUnits = "US";
-    String degreeUnits;
-    double currentTemperature = 0.0;
-    double currentWindspeed = 0.0;
-    double liveProduction1 = 0.0;
-    double liveProduction2 = 0.0;
-    double liveConsumption = 0.0;
-    Date lastUpdated = null;
-    ArrayList oldData = null;
-    Context context;
+    private String speedUnits = "US";
+    private String degreeUnits;
+    private double currentTemperature = 0.0;
+    private double currentWindspeed = 0.0;
+    private double liveProduction1 = 0.0;
+    private double liveProduction2 = 0.0;
+    private double liveConsumption = 0.0;
+    private Date lastUpdated = null;
+    private double[] oldData = new double[4];
+    private Context context;
     public static final String PREFS_NAME = "preferences";
     SharedPreferences sharedPref;
     int notificationToggle;
@@ -195,26 +195,28 @@ public class CarletonEnergyDataSource {
         year_ago.add(Calendar.YEAR, -1);
         Calendar month_ago = Calendar.getInstance();
         month_ago.add(Calendar.MONTH, -1);
-        Calendar week_ago = Calendar.getInstance();
-        week_ago.add(Calendar.DATE, -7);
+        Calendar day_ago = Calendar.getInstance();
+        day_ago.add(Calendar.DATE, -1);
 
         // get data and store in separate files for each time-range and data point
 
 
-        // quarter-hourly consumption for past week
-        String quarter_hourly_consumption = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_campus_en_use");
+        // quarter-hourly consumption for past 24 hours
+        String quarter_hourly_consumption = readEnergyJSON(day_ago.getTime(), today.getTime(), "quarterhour", "carleton_campus_en_use");
+        Log.i("quarter_hourly_consumption", quarter_hourly_consumption);
         // update liveConsumption based on data from most recent complete 1/4 hour
         String[] consumption_list = quarter_hourly_consumption.split("[\n|\r]");
-        String recent_consumption_line = consumption_list[consumption_list.length - 2];
+        String recent_consumption_line = consumption_list[consumption_list.length - 1];
         Log.i("syncEnergyData", recent_consumption_line);
         // lucid data is returned in average kW over time period - this is ok for live
         liveConsumption = (Double.parseDouble(recent_consumption_line.substring(recent_consumption_line.indexOf(';') + 1, recent_consumption_line.length())));
 
-        // quarter-hourly windmill1 production for past week
-        String quarter_hourly_production1 = readEnergyJSON(week_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
+        // quarter-hourly windmill1 production for past 24 hours
+        String quarter_hourly_production1 = readEnergyJSON(day_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
+        Log.i("quarter_hourly_production1", quarter_hourly_production1);
         // update liveProduction based on data from most recent complete 1/4 hour
         String[] production1_list = quarter_hourly_production1.split("[\n|\r]");
-        String recent_production1_line = production1_list[production1_list.length - 2];
+        String recent_production1_line = production1_list[production1_list.length - 1];
         Log.i("syncEnergyData", recent_production1_line);
         liveProduction1 = (Double.parseDouble(recent_production1_line.substring(recent_production1_line.indexOf(';') + 1, recent_production1_line.length())));
         Log.i("energyData", "" + liveProduction1);
@@ -237,10 +239,6 @@ public class CarletonEnergyDataSource {
         } catch (IOException e) {
             Log.i("syncEnergyData", "I/O Error");
         }
-
-
-
-
 
 
         // daily consumption for past year
@@ -307,6 +305,7 @@ public class CarletonEnergyDataSource {
         df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
         String url_string = "https://rest.buildingos.com/reports/timeseries/?start=" + df.format(start) + "&resolution=" + resolution + "&end=" + df.format(end) + "&name=" + point;
         URL consumption_url = new URL(url_string);
+        Log.i("url", consumption_url.toString());
         InputStream in = consumption_url.openStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String result, line = reader.readLine();
@@ -324,14 +323,16 @@ public class CarletonEnergyDataSource {
             for (int i = 0; i < results.length(); i++) {
                 try {
                     Double value;
-                    if ((((JSONObject)results.get(i)).get(point)) != null) {
+                    if (!(((JSONObject)results.get(i)).has(point))) {
                         value = ((JSONObject) ((JSONObject) results.get(i)).get(point)).getDouble("value");
                     }
                     else {
                         value = -1.0;
+                        Log.i("null", "adding -1.0?");
                     }
 
                     String timestamp_string = ((JSONObject) results.get(i)).getString("startTimestamp");
+                    Log.i("null", "timestamp: " + timestamp_string);
                     return_string += timestamp_string + ";" + value + "\n";
                 }
                 catch (Exception e) {

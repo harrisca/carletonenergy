@@ -23,7 +23,7 @@ public class LoadManager {
 
         CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
 
-        if(source.lastUpdated != null && source.lastUpdated != lastUpdatedDate)
+        if(source.getTimeUpdated() != null && source.getTimeUpdated() != lastUpdatedDate)
             wasUpdated = true;
 
         if(mListener != null)
@@ -31,7 +31,7 @@ public class LoadManager {
 
         if(wasUpdated){
             wasUpdated = false;
-            lastUpdatedDate = source.lastUpdated;
+            lastUpdatedDate = source.getTimeUpdated();
         }
 
     }
