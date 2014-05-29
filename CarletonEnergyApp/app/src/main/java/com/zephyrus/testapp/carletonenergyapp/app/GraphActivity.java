@@ -3,16 +3,9 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
-import android.graphics.Shader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.View;
-import android.app.Activity;
-import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.androidplot.ui.SizeLayoutType;
@@ -55,9 +48,10 @@ public class GraphActivity extends Activity {
     private XYPlot plot;
     private CarletonEnergyDataSource dataSource;
     private String dependentVariable = "production1";
-    private String increment = "hour";
+    private String increment = "year";
     private Calendar startTime;
     private Calendar endTime;
+    private String graphTitle;
 
 
     @Override
@@ -83,7 +77,7 @@ public class GraphActivity extends Activity {
         setContentView(R.layout.activity_graph);
 
         // initialize our XYPlot reference:
-        plot = (XYPlot) findViewById(R.id.mySimpleXYPlot2);
+        plot = (XYPlot) findViewById(R.id.graphActivityPlot);
 
         //This will hopefully allow us to fix the scale along the x-axis
         //right now, the axis is always in ms :/
@@ -91,24 +85,34 @@ public class GraphActivity extends Activity {
 
         if(increment.equals("week")){
             scaleAxis = 1;
+            graphTitle = "This Week's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
             startTime.add(Calendar.DATE, -7);
         }
-        else if (increment.equals("day")){
+        else if (increment.equals("month")){
             scaleAxis = 1;
+            graphTitle = "This Month's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
-            startTime.add(Calendar.DATE, -1);
+            startTime.add(Calendar.HOUR, -1);
         }
-        else { //hour by default
+        else if (increment.equals("year")){
             scaleAxis = 1;
+            graphTitle = "This Year's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
             startTime.add(Calendar.YEAR, -1);
         }
+        else { //day by default
+            scaleAxis = 1;
+            graphTitle = "Today's Energy";
+            endTime = Calendar.getInstance();
+            startTime = Calendar.getInstance();
+            startTime.add(Calendar.DATE, -1);
+        }
 
-        ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, startTime.getTime(), endTime.getTime(), increment);
+        ArrayList<Double> productionGraphData = dataSource.getGraphData("production1", startTime.getTime(), endTime.getTime(), increment);
         ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", startTime.getTime(), endTime.getTime(), increment);
         Log.i("graph_data", productionGraphData.size() + "");
         Log.i("graph_data", productionGraphData.size() + "");
@@ -116,78 +120,77 @@ public class GraphActivity extends Activity {
         //Converting ArrayList<Double> to Number[]
         Number[] productionNums = new Number[productionGraphData.size()];
         for(int i = 0; i<productionNums.length; i++){
-            productionNums[i] = i;
+            productionNums[i] = productionGraphData.get(i);
             System.out.println(productionNums[i]);
         }
 
         Number[] consumptionNums = new Number[consumptionGraphData.size()];
         for(int i = 0; i<consumptionNums.length; i++){
-            consumptionNums[i] = i;
-            System.out.println(consumptionNums[i]);
+            consumptionNums[i] = consumptionGraphData.get(i);
         }
 
         Number[] timeNums = new Number[productionGraphData.size()];
-        timeNums = (Number[]) productionGraphData.toArray(timeNums);
-
-        Log.i("size check","ProductionData Length = " + productionGraphData.size());
-        Log.i("size check","ConsumptionData Length = " + consumptionGraphData.size());
-        Log.i("size check","TimeNums Length = " + timeNums.length);
-
+        //timeNums = (Number[]) productionGraphData.toArray(timeNums);
+        for(int i = 0; i<timeNums.length; i++){
+            timeNums[i] = i;
+        }
 
         // create our series from our array of nums:
         XYSeries production = new SimpleXYSeries(
-                Arrays.asList(productionNums),
                 Arrays.asList(timeNums),
+                Arrays.asList(productionNums),
                 "Production");
-/*
+
         XYSeries consumption = new SimpleXYSeries(
-               Arrays.asList(consumptionNums),
                Arrays.asList(timeNums),
+               Arrays.asList(consumptionNums),
                "Consumption");
-*/
-        plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
-        plot.getGraphWidget().getDomainGridLinePaint().setColor(Color.BLACK);
-        plot.getGraphWidget().getDomainGridLinePaint().
-                setPathEffect(new DashPathEffect(new float[]{1, 1}, 1));
-        plot.getGraphWidget().getRangeGridLinePaint().setColor(Color.BLACK);
-        plot.getGraphWidget().getRangeGridLinePaint().
-                setPathEffect(new DashPathEffect(new float[]{1, 1}, 1));
+
+        ///plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
+        ///plot.getGraphWidget().getDomainGridLinePaint().setColor(Color.BLACK);
+        //plot.getGraphWidget().getDomainGridLinePaint().
+          //      setPathEffect(new DashPathEffect(new float[]{1, 1}, 1));
+        ///plot.getGraphWidget().getRangeGridLinePaint().setColor(Color.BLACK);
+        //plot.getGraphWidget().getRangeGridLinePaint().
+          //      setPathEffect(new DashPathEffect(new float[]{1, 1}, 1));
         plot.getGraphWidget().getDomainOriginLinePaint().setColor(Color.BLACK);
         plot.getGraphWidget().getRangeOriginLinePaint().setColor(Color.BLACK);
-        plot.getGraphWidget().setSize(new SizeMetrics(
-                1, SizeLayoutType.FILL,
-                10, SizeLayoutType.FILL));
+        plot.getGraphWidget().setSize(new SizeMetrics(1, SizeLayoutType.FILL, 10, SizeLayoutType.FILL));
 
         // Create a formatter to use for drawing a series using LineAndPointRenderer:
-        LineAndPointFormatter series1Format = new LineAndPointFormatter(
+        /*LineAndPointFormatter series1Format = new LineAndPointFormatter(
                 Color.rgb(0, 0, 100),                   // line color
-                Color.rgb(0, 0, 100),                   // point color
-                Color.rgb(0, 0, 200), null);                // fill color
-
+                Color.rgb(0, 0, 0),                   // point color
+                Color.rgb(0, 0, 0), null);                // fill color
+        */
         // setup our line fill paint to be a slightly transparent gradient:
-        Paint lineFill = new Paint();
-        lineFill.setAlpha(200);
+        //Paint lineFill = new Paint();
+        //lineFill.setAlpha(200);
 
         // ugly usage of LinearGradient. unfortunately there's no way to determine the actual size of
         // a View from within onCreate.  one alternative is to specify a dimension in resources
         // and use that accordingly.  at least then the values can be customized for the device type and orientation.
-        lineFill.setShader(new LinearGradient(0, 0, 200, 200, Color.WHITE, Color.BLUE, Shader.TileMode.CLAMP));
+        //lineFill.setShader(new LinearGradient(0, 0, 200, 200, Color.WHITE, Color.BLUE, Shader.TileMode.CLAMP));
 
-        LineAndPointFormatter formatter  =
-                new LineAndPointFormatter(Color.rgb(0, 0,0), Color.BLUE, Color.RED, null);
-        formatter.setFillPaint(lineFill);
+        LineAndPointFormatter proFormatter = new LineAndPointFormatter(Color.rgb(0,51,102), Color.rgb(0,51,102), null, null);
+        //formatter.setFillPaint(lineFill);
+        //proFormatter.setFillPaint(null);
         plot.getGraphWidget().setPaddingRight(2);
+        //plot.addSeries(production, proFormatter);
 
-        plot.addSeries(production, formatter);
 
-        //plot.addSeries(consumption, new LineAndPointFormatter(Color.rgb(0, 0,0), Color.RED, Color.RED, null));
-
+        LineAndPointFormatter conFormatter = new LineAndPointFormatter(Color.rgb(153,0,0), Color.rgb(153,0,0), null, null);
+        //conFormatter.setFillPaint(null);
+        plot.addSeries(consumption, conFormatter);
+        plot.addSeries(production, proFormatter);
         // draw a domain tick for each year:
         plot.setDomainStep(XYStepMode.SUBDIVIDE, timeNums.length);
 
         // customize our domain/range labels
         plot.setDomainLabel("Time");
         plot.setRangeLabel("Power (kW)");
+
+        plot.setTitle(graphTitle);
 
         // get rid of decimal points in our range labels:
         plot.setRangeValueFormat(new DecimalFormat("0"));
