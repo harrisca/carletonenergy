@@ -129,18 +129,22 @@ public class GraphActivity extends Activity {
         Number[] timeNums = new Number[productionGraphData.size()];
         timeNums = (Number[]) productionGraphData.toArray(timeNums);
 
+        Log.i("size check","ProductionData Length = " + productionGraphData.size());
+        Log.i("size check","ConsumptionData Length = " + consumptionGraphData.size());
+        Log.i("size check","TimeNums Length = " + timeNums.length);
+
 
         // create our series from our array of nums:
         XYSeries production = new SimpleXYSeries(
                 Arrays.asList(productionNums),
                 Arrays.asList(timeNums),
                 "Production");
-
-        //XYSeries consumption = new SimpleXYSeries(
-        //       Arrays.asList(consumptionNums),
-        //     Arrays.asList(timeNums),
-        //   "Consumption");
-
+/*
+        XYSeries consumption = new SimpleXYSeries(
+               Arrays.asList(consumptionNums),
+               Arrays.asList(timeNums),
+               "Consumption");
+*/
         plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
         plot.getGraphWidget().getDomainGridLinePaint().setColor(Color.BLACK);
         plot.getGraphWidget().getDomainGridLinePaint().
