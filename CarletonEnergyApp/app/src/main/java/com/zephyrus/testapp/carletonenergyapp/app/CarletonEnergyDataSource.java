@@ -35,7 +35,7 @@ public class CarletonEnergyDataSource {
     private double liveProduction2 = 0.0;
     private double liveConsumption = 0.0;
     private Date lastUpdated = null;
-    private double[] oldData = new double[4];
+    private double[] oldData = new double[5];
     private Context context;
     public static final String PREFS_NAME = "preferences";
     SharedPreferences sharedPref;
@@ -43,6 +43,13 @@ public class CarletonEnergyDataSource {
 
     public CarletonEnergyDataSource(Context context) {
         this.context = context;
+        sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        this.liveConsumption = (double)sharedPref.getFloat("liveConsumption", (float)-1.0);
+        this.liveProduction1 = (double)sharedPref.getFloat("liveProduction1", (float)-1.0);
+        this.liveProduction2 = (double)sharedPref.getFloat("liveProduction2", (float)-1.0);
+        this.currentTemperature = (double)sharedPref.getFloat("currentTemperature", (float)-1.0);
+        this.currentWindspeed = (double)sharedPref.getFloat("currentWindspeed", (float)-1.0);
+
         //degreeUnits = sharedPref.getString("degreeUnits", "C");
         //notificationToggle = sharedPref.getInt("notifications", 0);
     }
@@ -178,6 +185,7 @@ public class CarletonEnergyDataSource {
                 Log.i("sync", "windmill1 " + getLiveProduction(1));
                 Log.i("sync", "temp " + getCurrentTemperature());
                 Log.i("sync", "wind " + getCurrentWindSpeed());
+
                 //Log.i("sync", "" + getGraphData("consumption", ));
             }
         }).start();
@@ -191,6 +199,7 @@ public class CarletonEnergyDataSource {
 
         // initialize some useful dates
         Calendar today = Calendar.getInstance();
+        //today.add(Calendar.MINUTE, -15);
         Calendar year_ago = Calendar.getInstance();
         year_ago.add(Calendar.YEAR, -1);
         Calendar month_ago = Calendar.getInstance();
@@ -206,20 +215,25 @@ public class CarletonEnergyDataSource {
         Log.i("quarter_hourly_consumption", quarter_hourly_consumption);
         // update liveConsumption based on data from most recent complete 1/4 hour
         String[] consumption_list = quarter_hourly_consumption.split("[\n|\r]");
-        String recent_consumption_line = consumption_list[consumption_list.length - 1];
+        String recent_consumption_line = consumption_list[consumption_list.length - 2];
         Log.i("syncEnergyData", recent_consumption_line);
         // lucid data is returned in average kW over time period - this is ok for live
         liveConsumption = (Double.parseDouble(recent_consumption_line.substring(recent_consumption_line.indexOf(';') + 1, recent_consumption_line.length())));
+        Log.i("syncEnergyData", "liveConsumption: " + liveConsumption);
 
         // quarter-hourly windmill1 production for past 24 hours
         String quarter_hourly_production1 = readEnergyJSON(day_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
         Log.i("quarter_hourly_production1", quarter_hourly_production1);
         // update liveProduction based on data from most recent complete 1/4 hour
         String[] production1_list = quarter_hourly_production1.split("[\n|\r]");
-        String recent_production1_line = production1_list[production1_list.length - 1];
+        String recent_production1_line = production1_list[production1_list.length - 2];
         Log.i("syncEnergyData", recent_production1_line);
         liveProduction1 = (Double.parseDouble(recent_production1_line.substring(recent_production1_line.indexOf(';') + 1, recent_production1_line.length())));
         Log.i("energyData", "" + liveProduction1);
+
+        SharedPreferences.Editor ed = sharedPref.edit();
+        ed.putFloat("liveConsumption", (float)liveConsumption);
+        ed.putFloat("liveProduction1", (float)liveProduction1);
 
 
         // update graph data file
@@ -321,23 +335,28 @@ public class CarletonEnergyDataSource {
             all_electricity_page = (JSONObject) new JSONTokener(json_string).nextValue();
             JSONArray results = (JSONArray)all_electricity_page.get("results");
             for (int i = 0; i < results.length(); i++) {
+                Double value = -2.0;
                 try {
-                    Double value;
-                    if (!(((JSONObject)results.get(i)).has(point))) {
+                    if (results.get(i) != JSONObject.NULL
+                            && ((JSONObject)results.get(i)).get(point) != JSONObject.NULL) {
                         value = ((JSONObject) ((JSONObject) results.get(i)).get(point)).getDouble("value");
+                        //Log.i("not null", "getting here? value = " + value);
+
                     }
                     else {
-                        value = -1.0;
-                        Log.i("null", "adding -1.0?");
+                        value = 0.0;
+                        String timestamp_string = ((JSONObject) results.get(i)).getString("startTimestamp");
+                        Log.i("null", "adding -1.0? point=" + point + " time=" + timestamp_string);
                     }
 
                     String timestamp_string = ((JSONObject) results.get(i)).getString("startTimestamp");
-                    Log.i("null", "timestamp: " + timestamp_string);
                     return_string += timestamp_string + ";" + value + "\n";
                 }
                 catch (Exception e) {
                     //System.out.println(results.get(i));
-                    //e.printStackTrace();
+                    e.printStackTrace();
+                    //Log.i("null error?", "error: value = " + value);
+                    //Log.i("null error?", e.toString());
                 }
             }
 
@@ -396,6 +415,9 @@ public class CarletonEnergyDataSource {
 
         currentTemperature = temp;
         currentWindspeed = speed;
+        SharedPreferences.Editor e = sharedPref.edit();
+        e.putFloat("currentTemperature", (float)currentTemperature);
+        e.putFloat("currentWindspeed", (float)currentWindspeed);
         return 0;
 
     }
