@@ -30,17 +30,18 @@ public class SettingsFragment extends Fragment {
     int units;
     int notificationToggle;
     Spinner spinner1;
+    View fragView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        fragView = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        sharedPref = rootView.getContext().getSharedPreferences(PREFS_NAME, 0);
+        sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);
         units = sharedPref.getInt("units", 0);
 
-        ToggleButton unitsToggle = (ToggleButton) rootView.findViewById(R.id.UnitsToggle);
+        ToggleButton unitsToggle = (ToggleButton) fragView.findViewById(R.id.UnitsToggle);
         if(units==1){
             unitsToggle.setChecked(true);
         }
@@ -56,7 +57,7 @@ public class SettingsFragment extends Fragment {
                 editor.commit();
             }
         });
-        ToggleButton notificationButton = (ToggleButton) rootView.findViewById(R.id.notificationButton);
+        ToggleButton notificationButton = (ToggleButton) fragView.findViewById(R.id.notificationButton);
         notificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,14 +68,14 @@ public class SettingsFragment extends Fragment {
 
 
         //Making a spinner
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.font_choice);
-        spinner1 = (Spinner) rootView.findViewById(R.id.font_choice);
+        Spinner spinner = (Spinner) fragView.findViewById(R.id.font_choice);
+        spinner1 = (Spinner) fragView.findViewById(R.id.font_choice);
         List<String> list = new ArrayList<String>();
         list.add("ColorScheme: Dark");
         list.add("ColorScheme: Light");
         list.add("ColorScheme: Sky");
         list.add("ColorScheme: Earth");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String> (rootView.getContext(), android.R.layout.simple_spinner_item,list);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String> (fragView.getContext(), android.R.layout.simple_spinner_item,list);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -98,7 +99,7 @@ public class SettingsFragment extends Fragment {
 
 
         //notificationToggle = sharedPref.getInt("notifications",0);
-        return rootView;
+        return fragView;
     }
 
     @Override
@@ -110,6 +111,10 @@ public class SettingsFragment extends Fragment {
         }
     }
 
+    public void onDestroyView(){
+        super.onDestroyView();
+        fragView = null;
+    }
     public void notificationTest(View view) {
 
         long when = System.currentTimeMillis();

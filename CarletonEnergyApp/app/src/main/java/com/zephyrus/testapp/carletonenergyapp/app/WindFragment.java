@@ -32,13 +32,11 @@ public class WindFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_wind, container, false);
-
         //stores inflated view
-        fragView = rootView;
+        fragView = inflater.inflate(R.layout.fragment_wind, container, false);
 
         //retrieves unit preferences
-        sharedPref = rootView.getContext().getSharedPreferences(PREFS_NAME, 0);
+        sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);
         units = sharedPref.getInt("units", 0);
 
 
@@ -47,14 +45,14 @@ public class WindFragment extends Fragment {
         updateTextFields();
         animateWindmill();
 
-        return rootView;
+        return fragView;
     }
 
-    public void onDestroy(){
-        super.onDestroy();
+    //clean up
+    public void onDestroyView(){
+        super.onDestroyView();
 
-        System.gc();
-        Runtime.getRuntime().gc();
+        fragView = null;
         }
 
     public void updateTextFields(){

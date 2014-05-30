@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -159,11 +161,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 4;
-            //return 4;
-        }
+        public int getCount() { return 4;}
 
         @Override
         public CharSequence getPageTitle(int position) {
@@ -179,6 +177,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return getString(R.string.title_settings).toUpperCase();
             }
             return null;
+        }
+
+        public void destroyItem(ViewGroup collection, int position, Object o){
+            o = null;
         }
     }
 }
