@@ -20,7 +20,8 @@ import java.util.Date;
 
 public class LoadActivity extends Activity {
 
-    private static int SPLASH_TIME_OUT = 1500;
+    //private static int SPLASH_TIME_OUT = 1500;
+    private static int SPLASH_TIME_OUT = 4000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

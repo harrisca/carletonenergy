@@ -80,7 +80,9 @@ public class WindFragment extends Fragment {
         productionView.setText(data_format.format(source.getLiveProduction(1)));
 
         TextView lastUpdatedView = (TextView)fragView.findViewById(R.id.last_updated_display);
-        DateFormat df = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
+        //DateFormat df = new SimpleDateFormat("K:mm'pm' MM/dd/yy");
+        DateFormat df = new SimpleDateFormat("K:mm 'pm on' MMM d");
+
         df.setTimeZone(TimeZone.getTimeZone("US/Central"));
 
         if (source.getTimeUpdated() != null) {
