@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.app.NotificationManager;
@@ -49,12 +50,14 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor editor = sharedPref.edit();
-                int temp= 0;
+                int temp;
                 boolean on = ((ToggleButton)view).isChecked();
                 if(on){temp =1;}
                 else{temp = 0;}
-                editor.putInt("Units", temp);
+                editor.putInt("units", temp);
                 editor.commit();
+                units = sharedPref.getInt("units", 0);
+                Log.i("units", "units in settings: " + units);
             }
         });
         ToggleButton notificationButton = (ToggleButton) fragView.findViewById(R.id.notificationButton);
@@ -151,7 +154,7 @@ public class SettingsFragment extends Fragment {
         boolean on = ((ToggleButton)view).isChecked();
         if(on){temp =1;}
         else{temp = 0;}
-        editor.putInt("Units", temp);
+        editor.putInt("units", temp);
         editor.commit();
     }
 

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,8 @@ public class WindFragment extends Fragment {
 
         //retrieves unit preferences
         sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);
-        units = sharedPref.getInt("units", 0);
+        units = sharedPref.getInt("Units", 0);
+        Log.i("units", "units in WindFrag: " + units);
 
 
         //initializes fields
@@ -64,10 +66,18 @@ public class WindFragment extends Fragment {
         windSpeedView.setText(Double.toString(source.getCurrentWindSpeed()));
 
         TextView temperatureView = (TextView)fragView.findViewById(R.id.temperature_display);
+        TextView temperatureUnit = (TextView)fragView.findViewById(R.id.temperature_type);
 
         Double temperature = source.getCurrentTemperature();
-        if(units ==1){ temperature = temperature*9/5+32;}
-        temperatureView.setText(Double.toString(temperature));
+        if(units == 0){
+            temperature = (temperature - 32.0)*5.0/9.0;
+            temperatureUnit.setText("C");
+        }
+        else {
+            temperatureUnit.setText("F");
+        }
+        DecimalFormat temp_format = new DecimalFormat("#.#");
+        temperatureView.setText(temp_format.format(temperature));
 
         DecimalFormat data_format = new DecimalFormat("#.##");
 

@@ -49,8 +49,10 @@ public class CarletonEnergyDataSource {
         this.liveProduction2 = (double)sharedPref.getFloat("liveProduction2", (float)-1.0);
         this.currentTemperature = (double)sharedPref.getFloat("currentTemperature", (float)-1.0);
         this.currentWindspeed = (double)sharedPref.getFloat("currentWindspeed", (float)-1.0);
-        this.lastUpdated = new Date(sharedPref.getLong("lastUpdated", 0l));
-
+        long time_l = sharedPref.getLong("lastUpdated", 0l);
+        if (time_l > 0l) {
+            this.lastUpdated = new Date(time_l);
+        }
 
         //degreeUnits = sharedPref.getString("degreeUnits", "C");
         //notificationToggle = sharedPref.getInt("notifications", 0);
