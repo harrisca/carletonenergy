@@ -19,7 +19,7 @@
             android:layout_weight="2.5">
 
             <com.androidplot.xy.XYPlot
-                android:id="@+id/mySimpleXYPlot"
+                android:id="@+id/dataFragGraph"
                 android:layout_width="fill_parent"
                 android:layout_height="300dp"
                 androidPlot.title="Production vs Consumption"

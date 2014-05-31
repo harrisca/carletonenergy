@@ -39,16 +39,18 @@ import java.util.Date;
 
 
 public class DataFragment extends Fragment {
-
-    private CarletonEnergyDataSource dataSource;
     private XYPlot plot;
-    private View fragView;
+    private CarletonEnergyDataSource dataSource;
     private String dependentVariable = "production1";
-    private String increment = "hour";
+    private String buttonClicked = "day";
+    private String increment = "quarter-hour"; //must be quarter-hour for day; hour for week; day for month/year
     private Calendar startTime;
     private Calendar endTime;
-    private String timeUnit = "Day"; // you should be able to use increment instead of
+    private Number scaleAxis;
+    private String graphTitle;
+    private View fragView;
     private RadioGroup rg;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +65,7 @@ public class DataFragment extends Fragment {
             RadioButton rb = (RadioButton)fragView.findViewById(R.id.radio_week);
             rb.setChecked(true);
         }
-
+/*
         final Calendar today = Calendar.getInstance();
         final Calendar yesterday = Calendar.getInstance();
         yesterday.add(Calendar.HOUR, -24);
@@ -73,7 +75,7 @@ public class DataFragment extends Fragment {
         month_ago.add(Calendar.MONTH, -1);
         final Calendar week_ago = Calendar.getInstance();
         week_ago.add(Calendar.DATE, -7);
-
+*/
         rg = (RadioGroup) fragView.findViewById(R.id.radioOption_time);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -85,28 +87,44 @@ public class DataFragment extends Fragment {
 
                 switch (checkedId) {
                     case R.id.radio_day:
-                            Log.i("radioButtonTest", "clicked day button");
-                            timeUnit = "Day";
-                            increment = "day";
-                            startTime = yesterday;
+                        Log.i("radioButtonTest", "clicked day button");
+                        buttonClicked = "day";
+                        scaleAxis = 1;
+                        graphTitle = "Today's Energy";
+                        endTime = Calendar.getInstance();
+                        startTime = Calendar.getInstance();
+                        startTime.add(Calendar.DATE, -1);
+                        increment = "quarter-hour";
                         break;
                     case R.id.radio_week:
-                            Log.i("radioButtonTest", "clicked week button");
-                            timeUnit = "Week";
-                            increment = "week";
-                            startTime = week_ago;
+                        Log.i("radioButtonTest", "clicked week button");
+                        buttonClicked = "week";
+                        scaleAxis = 1;
+                        graphTitle = "This Week's Energy";
+                        endTime = Calendar.getInstance();
+                        startTime = Calendar.getInstance();
+                        startTime.add(Calendar.DATE, -7);
+                        increment = "hour";
                         break;
                     case R.id.radio_month:
                         Log.i("radioButtonTest", "clicked month button");
-                            timeUnit = "Month";
-                            increment = "month";
-                            startTime = month_ago;
+                        buttonClicked = "month";
+                        scaleAxis = 1;
+                        graphTitle = "This Month's Energy";
+                        endTime = Calendar.getInstance();
+                        startTime = Calendar.getInstance();
+                        startTime.add(Calendar.MONTH, -1);
+                        increment = "day";
                         break;
                     case R.id.radio_year:
                         Log.i("radioButtonTest", "clicked year button");
-                            timeUnit = "Year";
-                            increment = "year";
-                            startTime = year_ago;
+                        buttonClicked = "year";
+                        scaleAxis = 1;
+                        graphTitle = "This Year's Energy";
+                        endTime = Calendar.getInstance();
+                        startTime = Calendar.getInstance();
+                        startTime.add(Calendar.YEAR, -1);
+                        increment = "day";
                         break;
 
                 }
@@ -114,30 +132,7 @@ public class DataFragment extends Fragment {
 
                 Log.i("radioButtonTest", "starting to graph");
                 // initialize our XYPlot reference:
-                plot = (XYPlot) fragView.findViewById(R.id.mySimpleXYPlot);
-
-                //This will hopefully allow us to fix the scale along the x-axis
-                //right now, the axis is always in ms :/
-                Number scaleAxis;
-
-                if(increment.equals("week")){
-                    scaleAxis = 1;
-                    endTime = Calendar.getInstance();
-                    startTime = Calendar.getInstance();
-                    startTime.add(Calendar.DATE, -7);
-                }
-                else if (increment.equals("day")){
-                    scaleAxis = 1;
-                    endTime = Calendar.getInstance();
-                    startTime = Calendar.getInstance();
-                    startTime.add(Calendar.DATE, -1);
-                }
-                else { //hour by default
-                    scaleAxis = 1;
-                    endTime = Calendar.getInstance();
-                    startTime = Calendar.getInstance();
-                    startTime.add(Calendar.YEAR, -1);
-                }
+                plot = (XYPlot) fragView.findViewById(R.id.dataFragGraph);
 
                 ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, startTime.getTime(), endTime.getTime(), increment);
                 ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", startTime.getTime(), endTime.getTime(), increment);
@@ -147,74 +142,77 @@ public class DataFragment extends Fragment {
                 //Converting ArrayList<Double> to Number[]
                 Number[] productionNums = new Number[productionGraphData.size()];
                 for(int i = 0; i<productionNums.length; i++){
-                    productionNums[i] = i;
-//                    System.out.println(productionNums[i]);
+                    productionNums[i] = productionGraphData.get(i);
+                    System.out.println(productionNums[i]);
                 }
 
                 Number[] consumptionNums = new Number[consumptionGraphData.size()];
                 for(int i = 0; i<consumptionNums.length; i++){
-                    consumptionNums[i] = i;
-//                    System.out.println(consumptionNums[i]);
+                    consumptionNums[i] = consumptionGraphData.get(i);
                 }
 
                 Number[] timeNums = new Number[productionGraphData.size()];
-                timeNums = (Number[]) productionGraphData.toArray(timeNums);
+                //timeNums = (Number[]) productionGraphData.toArray(timeNums);
+                for(int i = 0; i<timeNums.length; i++){
+                    timeNums[i] = i;
+                }
 
                 // create our series from our array of nums:
                 XYSeries production = new SimpleXYSeries(
-                        Arrays.asList(productionNums),
                         Arrays.asList(timeNums),
+                        Arrays.asList(productionNums),
                         "Production");
 
-                //XYSeries consumption = new SimpleXYSeries(
-                //       Arrays.asList(consumptionNums),
-                //     Arrays.asList(timeNums),
-                //   "Consumption");
+                XYSeries consumption = new SimpleXYSeries(
+                        Arrays.asList(timeNums),
+                        Arrays.asList(consumptionNums),
+                        "Consumption");
 
-                plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
-                plot.getGraphWidget().getDomainGridLinePaint().setColor(Color.BLACK);
-                plot.getGraphWidget().getDomainGridLinePaint().
-                        setPathEffect(new DashPathEffect(new float[]{1, 1}, 1));
-                plot.getGraphWidget().getRangeGridLinePaint().setColor(Color.BLACK);
-                plot.getGraphWidget().getRangeGridLinePaint().
-                        setPathEffect(new DashPathEffect(new float[]{1, 1}, 1));
+                ///plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
+                ///plot.getGraphWidget().getDomainGridLinePaint().setColor(Color.BLACK);
+                //plot.getGraphWidget().getDomainGridLinePaint().
+                //      setPathEffect(new DashPathEffect(new float[]{1, 1}, 1));
+                ///plot.getGraphWidget().getRangeGridLinePaint().setColor(Color.BLACK);
+                //plot.getGraphWidget().getRangeGridLinePaint().
+                //      setPathEffect(new DashPathEffect(new float[]{1, 1}, 1));
                 plot.getGraphWidget().getDomainOriginLinePaint().setColor(Color.BLACK);
                 plot.getGraphWidget().getRangeOriginLinePaint().setColor(Color.BLACK);
-                plot.getGraphWidget().setSize(new SizeMetrics(
-                        1, SizeLayoutType.FILL,
-                        10, SizeLayoutType.FILL));
+                plot.getGraphWidget().setSize(new SizeMetrics(1, SizeLayoutType.FILL, 10, SizeLayoutType.FILL));
 
                 // Create a formatter to use for drawing a series using LineAndPointRenderer:
-                LineAndPointFormatter series1Format = new LineAndPointFormatter(
-                        Color.rgb(0, 0, 100),                   // line color
-                        Color.rgb(0, 0, 100),                   // point color
-                        Color.rgb(0, 0, 200), null);                // fill color
-
+        /*LineAndPointFormatter series1Format = new LineAndPointFormatter(
+                Color.rgb(0, 0, 100),                   // line color
+                Color.rgb(0, 0, 0),                   // point color
+                Color.rgb(0, 0, 0), null);                // fill color
+        */
                 // setup our line fill paint to be a slightly transparent gradient:
-                Paint lineFill = new Paint();
-                lineFill.setAlpha(200);
+                //Paint lineFill = new Paint();
+                //lineFill.setAlpha(200);
 
                 // ugly usage of LinearGradient. unfortunately there's no way to determine the actual size of
                 // a View from within onCreate.  one alternative is to specify a dimension in resources
                 // and use that accordingly.  at least then the values can be customized for the device type and orientation.
-                lineFill.setShader(new LinearGradient(0, 0, 200, 200, Color.WHITE, Color.BLUE, Shader.TileMode.CLAMP));
+                //lineFill.setShader(new LinearGradient(0, 0, 200, 200, Color.WHITE, Color.BLUE, Shader.TileMode.CLAMP));
 
-                LineAndPointFormatter formatter  =
-                        new LineAndPointFormatter(Color.rgb(0, 0,0), Color.BLUE, Color.RED, null);
-                formatter.setFillPaint(lineFill);
+                LineAndPointFormatter proFormatter = new LineAndPointFormatter(Color.rgb(0,51,102), Color.rgb(0,51,102), null, null);
+                //formatter.setFillPaint(lineFill);
+                //proFormatter.setFillPaint(null);
                 plot.getGraphWidget().setPaddingRight(2);
+                plot.addSeries(production, proFormatter);
 
-                plot.addSeries(production, formatter);
 
-                //plot.addSeries(consumption, new LineAndPointFormatter(Color.rgb(0, 0,0), Color.RED, Color.RED, null));
+                LineAndPointFormatter conFormatter = new LineAndPointFormatter(Color.rgb(153,0,0), Color.rgb(153,0,0), null, null);
+                //conFormatter.setFillPaint(null);
+                plot.addSeries(consumption, conFormatter);
 
                 // draw a domain tick for each year:
                 plot.setDomainStep(XYStepMode.SUBDIVIDE, timeNums.length);
 
                 // customize our domain/range labels
                 plot.setDomainLabel("Time");
-
                 plot.setRangeLabel("Power (kW)");
+
+                //plot.setTitle(graphTitle);
 
                 // get rid of decimal points in our range labels:
                 plot.setRangeValueFormat(new DecimalFormat("0"));
@@ -242,6 +240,7 @@ public class DataFragment extends Fragment {
 
                     }
                 });
+
 
                 Log.i("radioButtonTest", "done with onCreateView");
             }
