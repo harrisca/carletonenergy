@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zephyrus.testapp.carletonenergyapp.app" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/launcher"
@@ -24,8 +30,34 @@
             android:name="com.zephyrus.testapp.carletonenergyapp.app.MainActivity"
             android:label="@string/app_name" >
         </activity>
+        <service
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.SyncService"
+            android:exported="true"
+            android:process=":sync">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
+        <service
+            android:name="com.zephyrus.testapp.carletonenergyapp.app.AuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+        <provider
+            android:name=".provider.StubProvider"
+            android:authorities="com.zephyrus.testapp.carletonenergyapp.app.provider"
+            android:exported="false"
+            android:syncable="true"/>
+
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+
+
 
 </manifest>

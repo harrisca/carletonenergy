@@ -1,6 +1,8 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
+import android.accounts.Account;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.Fragment;
 import android.app.PendingIntent;
@@ -31,6 +33,13 @@ public class SettingsFragment extends Fragment {
     int notificationToggle;
     Spinner spinner1;
 
+
+
+
+    public static final String AUTHORITY = "com.zephyrus.testapp.carletonenergyapp.app.provider";
+    public static final String ACCOUNT_TYPE = "syncAccount";
+    public static final String ACCOUNT = "dummyAccount";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,8 +63,20 @@ public class SettingsFragment extends Fragment {
                 else{temp = 0;}
                 editor.putInt("Units", temp);
                 editor.commit();
+
+
+                Account newAccount = new Account( ACCOUNT, ACCOUNT_TYPE);
+                Bundle settingsBundle = new Bundle();
+                settingsBundle.putBoolean( ContentResolver.SYNC_EXTRAS_MANUAL, true);
+                settingsBundle.putBoolean( ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+                ContentResolver.requestSync(newAccount, AUTHORITY, settingsBundle);
             }
         });
+
+
+
+
+
         ToggleButton notificationButton = (ToggleButton) rootView.findViewById(R.id.notificationButton);
         notificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
