@@ -47,7 +47,7 @@ public class DataFragment extends Fragment {
     private Calendar startTime;
     private Calendar endTime;
     private Number scaleAxis;
-    private String graphTitle;
+    private String graphTitle = "Energy Data";
     private View fragView;
     private RadioGroup rg;
 
@@ -95,6 +95,7 @@ public class DataFragment extends Fragment {
                         startTime = Calendar.getInstance();
                         startTime.add(Calendar.DATE, -1);
                         increment = "quarter-hour";
+                        graphTitle = "Today's Energy";
                         break;
                     case R.id.radio_week:
                         Log.i("radioButtonTest", "clicked week button");
@@ -105,6 +106,7 @@ public class DataFragment extends Fragment {
                         startTime = Calendar.getInstance();
                         startTime.add(Calendar.DATE, -7);
                         increment = "hour";
+                        graphTitle = "This Week's Energy";
                         break;
                     case R.id.radio_month:
                         Log.i("radioButtonTest", "clicked month button");
@@ -115,6 +117,7 @@ public class DataFragment extends Fragment {
                         startTime = Calendar.getInstance();
                         startTime.add(Calendar.MONTH, -1);
                         increment = "day";
+                        graphTitle = "This Month's Energy";
                         break;
                     case R.id.radio_year:
                         Log.i("radioButtonTest", "clicked year button");
@@ -125,6 +128,7 @@ public class DataFragment extends Fragment {
                         startTime = Calendar.getInstance();
                         startTime.add(Calendar.YEAR, -1);
                         increment = "day";
+                        graphTitle = "This Year's Energy";
                         break;
 
                 }
@@ -212,7 +216,7 @@ public class DataFragment extends Fragment {
                 plot.setDomainLabel("Time");
                 plot.setRangeLabel("Power (kW)");
 
-                //plot.setTitle(graphTitle);
+                plot.setTitle(graphTitle);
 
                 // get rid of decimal points in our range labels:
                 plot.setRangeValueFormat(new DecimalFormat("0"));
