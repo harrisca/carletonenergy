@@ -60,10 +60,10 @@ public class DataFragment extends Fragment {
 
         if(!isPortrait()){
             Intent i = new Intent(this.getActivity(), GraphActivity.class);
-            startActivity(i);
-            getActivity().finish();
             RadioButton rb = (RadioButton)fragView.findViewById(R.id.radio_week);
             rb.setChecked(true);
+            startActivity(i);
+            getActivity().finish();
         }
 /*
         final Calendar today = Calendar.getInstance();

@@ -25,12 +25,4 @@
     <string name="current_energy">Current Energy</string>
     <string name="info_about_us">About Us</string>
     <string name="notification_toggle">ENABLE NOTIFICATIONS</string>
-    <string name="Licensing">\tCopyright 2014 Carleton on Wind Power Michael Wheatman, Richard Lin, Nathan Fudenberg, Katja Collier, and Carolyn Harris via Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported (the "CC License"); you may not use this file except in compliance with the CC License. You may obtain a copy of the License at http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode Unless required by applicable law or agreed to in writing, software distributed under the CC License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the CC License for the specific language governing permissions and limitations under the License. \n \n\tCopyright 2013 AndroidPlot.com Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. \n \n\tImage Rights: Windmill Line Art: http://sweetclipart.com/wind-turbine-line-art-1190 under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported. \n \n\tLoading Screen Windmill: http://pixabay.com/en/windmill-blue-sky-cloud-sunny-days-181284/ under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication." </string>
-    <string-array name="font_choices">
-        <item>Black</item>
-        <item>White</item>
-        <item>Earth</item>
-        <item>Sky</item>
-    </string-array>
-
 </resources>
