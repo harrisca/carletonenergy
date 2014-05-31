@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.InfoFragment"
-    android:background="@drawable/background_day">
+    android:background="@drawable/background_dawn"
+    android:id="@id/fragment_background">
 
     <ImageView
         android:layout_width="wrap_content"
