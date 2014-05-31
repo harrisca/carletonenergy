@@ -3,6 +3,7 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;

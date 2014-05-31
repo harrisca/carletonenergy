@@ -142,7 +142,7 @@ public class DataFragment extends Fragment {
                 ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, startTime.getTime(), endTime.getTime(), increment);
                 ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", startTime.getTime(), endTime.getTime(), increment);
                 Log.i("graph_data", productionGraphData.size() + "");
-                Log.i("graph_data", productionGraphData.size() + "");
+                Log.i("graph_data", consumptionGraphData.size() + "");
 
                 //Converting ArrayList<Double> to Number[]
                 Number[] productionNums = new Number[productionGraphData.size()];

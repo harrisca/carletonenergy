@@ -38,8 +38,8 @@ public class WindFragment extends Fragment {
 
         //retrieves unit preferences
         sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);
-        units = sharedPref.getInt("Units", 0);
-        Log.i("units", "units in WindFrag: " + units);
+        units = sharedPref.getInt("units", 0);
+        //Log.i("units", "units in WindFrag: " + units);
 
 
         //initializes fields
@@ -58,6 +58,7 @@ public class WindFragment extends Fragment {
         }
 
     public void updateTextFields(){
+        //Log.i("units", "updatingTextFields");
         CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
 
         fragView.invalidate();
