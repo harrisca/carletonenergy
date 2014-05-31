@@ -27,6 +27,7 @@ import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.Format;
@@ -36,13 +37,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 
 public class DataFragment extends Fragment {
     private XYPlot plot;
     private CarletonEnergyDataSource dataSource;
     private String dependentVariable = "production1";
-    private String buttonClicked = "day";
+    private static String buttonClicked = "day";
     private String increment = "quarterhour"; //must be quarter-hour for day; hour for week; day for month/year
     private Calendar startTime;
     private Calendar endTime;
@@ -58,9 +60,9 @@ public class DataFragment extends Fragment {
 
         fragView = inflater.inflate(R.layout.fragment_data, container, false);
 
-        if(!isPortrait()){
-            Intent i = new Intent(this.getActivity(), GraphActivity.class);
-            RadioButton rb = (RadioButton)fragView.findViewById(R.id.radio_week);
+        if (!isPortrait()) {
+            Intent i = new Intent(this.getActivity(), GraphActivity.class).putExtra("buttonClicked", buttonClicked);
+            RadioButton rb = (RadioButton) fragView.findViewById(R.id.radio_week);
             rb.setChecked(true);
             startActivity(i);
             getActivity().finish();
@@ -141,24 +143,35 @@ public class DataFragment extends Fragment {
                 ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, startTime.getTime(), endTime.getTime(), increment);
                 ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", startTime.getTime(), endTime.getTime(), increment);
                 Log.i("graph_data", productionGraphData.size() + "");
-                Log.i("graph_data", consumptionGraphData.size() + "");
+                Log.i("graph_data", productionGraphData.size() + "");
 
                 //Converting ArrayList<Double> to Number[]
                 Number[] productionNums = new Number[productionGraphData.size()];
-                for(int i = 0; i<productionNums.length; i++){
+                for (int i = 0; i < productionNums.length; i++) {
                     productionNums[i] = productionGraphData.get(i);
-                    System.out.println(productionNums[i]);
+                    //System.out.println(productionNums[i]);
                 }
 
                 Number[] consumptionNums = new Number[consumptionGraphData.size()];
-                for(int i = 0; i<consumptionNums.length; i++){
+                for (int i = 0; i < consumptionNums.length; i++) {
                     consumptionNums[i] = consumptionGraphData.get(i);
                 }
 
                 Number[] timeNums = new Number[productionGraphData.size()];
                 //timeNums = (Number[]) productionGraphData.toArray(timeNums);
-                for(int i = 0; i<timeNums.length; i++){
+                for (int i = 0; i < timeNums.length; i++) {
                     timeNums[i] = i;
+                    long increment_ms = 0l;
+                    if (increment.equals("quarterhour")) {
+                        increment_ms = 15 * 60 * 1000;
+                    } else if (increment.equals("hour")) {
+                        increment_ms = 60 * 60 * 1000;
+                    } else if (increment.equals("day")) {
+                        increment_ms = 24 * 60 * 60 * 1000;
+                    }
+
+
+                    timeNums[i] = i * increment_ms + startTime.getTime().getTime();
                 }
 
                 // create our series from our array of nums:
@@ -198,19 +211,19 @@ public class DataFragment extends Fragment {
                 // and use that accordingly.  at least then the values can be customized for the device type and orientation.
                 //lineFill.setShader(new LinearGradient(0, 0, 200, 200, Color.WHITE, Color.BLUE, Shader.TileMode.CLAMP));
 
-                LineAndPointFormatter proFormatter = new LineAndPointFormatter(Color.rgb(0,51,102), Color.rgb(0,51,102), null, null);
+                LineAndPointFormatter proFormatter = new LineAndPointFormatter(Color.rgb(0, 51, 102), Color.rgb(0, 51, 102), null, null);
                 //formatter.setFillPaint(lineFill);
                 //proFormatter.setFillPaint(null);
                 plot.getGraphWidget().setPaddingRight(2);
                 plot.addSeries(production, proFormatter);
 
 
-                LineAndPointFormatter conFormatter = new LineAndPointFormatter(Color.rgb(153,0,0), Color.rgb(153,0,0), null, null);
+                LineAndPointFormatter conFormatter = new LineAndPointFormatter(Color.rgb(153, 0, 0), Color.rgb(153, 0, 0), null, null);
                 //conFormatter.setFillPaint(null);
                 plot.addSeries(consumption, conFormatter);
 
                 // draw a domain tick for each year:
-                plot.setDomainStep(XYStepMode.SUBDIVIDE, timeNums.length);
+                //plot.setDomainStep(XYStepMode.SUBDIVIDE, 10);
 
                 // customize our domain/range labels
                 plot.setDomainLabel("Time");
@@ -221,37 +234,86 @@ public class DataFragment extends Fragment {
                 // get rid of decimal points in our range labels:
                 plot.setRangeValueFormat(new DecimalFormat("0"));
 
-                plot.setDomainValueFormat(new Format() {
+                if (increment.equals("quarterhour")) {
+                    plot.setDomainValueFormat(new Format() {
 
-                    // create a simple date format that draws on the year portion of our timestamp.
-                    // see http://download.oracle.com/javase/1.4.2/docs/api/java/text/SimpleDateFormat.html
-                    // for a full description of SimpleDateFormat.
-                    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+                        // create a simple date format that draws on the year portion of our timestamp.
+                        // see http://download.oracle.com/javase/1.4.2/docs/api/java/text/SimpleDateFormat.html
+                        // for a full description of SimpleDateFormat.
+                        private SimpleDateFormat dateFormat = new SimpleDateFormat("K:mm");
 
-                    @Override
-                    public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+                        @Override
+                        public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
 
-                        // because our timestamps are in seconds and SimpleDateFormat expects milliseconds
-                        // we multiply our timestamp by 1000:
-                        long timestamp = ((Number) obj).longValue() * 1000;
-                        Date date = new Date(timestamp);
-                        return dateFormat.format(date, toAppendTo, pos);
-                    }
+                            // because our timestamps are in seconds and SimpleDateFormat expects milliseconds
+                            // we multiply our timestamp by 1000:
+                            long timestamp = ((Number) obj).longValue();
+                            Date date = new Date(timestamp);
+                            dateFormat.setTimeZone(TimeZone.getTimeZone("US/Central"));
+                            return dateFormat.format(date, toAppendTo, pos);
+                        }
 
-                    @Override
-                    public Object parseObject(String source, ParsePosition pos) {
-                        return null;
+                        @Override
+                        public Object parseObject(String source, ParsePosition pos) {
+                            return null;
 
-                    }
-                });
+                        }
+                    });
+                } else if (increment.equals("hour")) {
+                    plot.setDomainValueFormat(new Format() {
+
+                        // create a simple date format that draws on the year portion of our timestamp.
+                        // see http://download.oracle.com/javase/1.4.2/docs/api/java/text/SimpleDateFormat.html
+                        // for a full description of SimpleDateFormat.
+                        private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
 
 
-                Log.i("radioButtonTest", "done with onCreateView");
+                        @Override
+                        public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+
+                            // because our timestamps are in seconds and SimpleDateFormat expects milliseconds
+                            // we multiply our timestamp by 1000:
+                            long timestamp = ((Number) obj).longValue();
+                            Date date = new Date(timestamp);
+                            dateFormat.setTimeZone(TimeZone.getTimeZone("US/Central"));
+                            return dateFormat.format(date, toAppendTo, pos);
+                        }
+
+                        @Override
+                        public Object parseObject(String source, ParsePosition pos) {
+                            return null;
+
+                        }
+                    });
+                } else if (increment.equals("day")) {
+                    plot.setDomainValueFormat(new Format() {
+
+                        // create a simple date format that draws on the year portion of our timestamp.
+                        // see http://download.oracle.com/javase/1.4.2/docs/api/java/text/SimpleDateFormat.html
+                        // for a full description of SimpleDateFormat.
+                        private SimpleDateFormat dateFormat = new SimpleDateFormat("MMM");
+
+
+                        @Override
+                        public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+
+                            // because our timestamps are in seconds and SimpleDateFormat expects milliseconds
+                            // we multiply our timestamp by 1000:
+                            long timestamp = ((Number) obj).longValue();
+                            Date date = new Date(timestamp);
+                            dateFormat.setTimeZone(TimeZone.getTimeZone("US/Central"));
+                            return dateFormat.format(date, toAppendTo, pos);
+                        }
+
+                        @Override
+                        public Object parseObject(String source, ParsePosition pos) {
+                            return null;
+
+                        }
+                    });
+                }
             }
         });
-
-
-
         return fragView;
     }
 
@@ -453,7 +515,7 @@ public class DataFragment extends Fragment {
             public Object parseObject(String source, ParsePosition pos) {
                 return null;
             }
-
 */
+
 }
 
