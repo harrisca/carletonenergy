@@ -3,6 +3,7 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +50,10 @@ public class CarletonEnergyDataSource {
         this.liveProduction2 = (double)sharedPref.getFloat("liveProduction2", (float)-1.0);
         this.currentTemperature = (double)sharedPref.getFloat("currentTemperature", (float)-1.0);
         this.currentWindspeed = (double)sharedPref.getFloat("currentWindspeed", (float)-1.0);
+        long time_l = sharedPref.getLong("lastUpdated", 0l);
+        if (time_l > 0l) {
+            this.lastUpdated = new Date(time_l);
+        }
 
         //degreeUnits = sharedPref.getString("degreeUnits", "C");
         //notificationToggle = sharedPref.getInt("notifications", 0);
@@ -176,6 +181,9 @@ public class CarletonEnergyDataSource {
                 }
 
                 lastUpdated = new Date();
+                SharedPreferences.Editor e = sharedPref.edit();
+                e.putLong("lastUpdated", lastUpdated.getTime());
+                e.commit();
                 DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
 
@@ -237,11 +245,19 @@ public class CarletonEnergyDataSource {
         Calendar day_ago = Calendar.getInstance();
         day_ago.add(Calendar.DATE, -1);
 
+
+
+        String consumption_point = "carleton_campus_en_use";
+        //TODO: not sure production point we should be using - maybe both?
+        //String production_point = "carleton_turbine1_produced_power";
+        String production_point = "carleton_wind_production";
+
+
+
         // get data and store in separate files for each time-range and data point
 
-
         // quarter-hourly consumption for past 24 hours
-        String quarter_hourly_consumption = readEnergyJSON(day_ago.getTime(), today.getTime(), "quarterhour", "carleton_campus_en_use");
+        String quarter_hourly_consumption = readEnergyJSON(day_ago.getTime(), today.getTime(), "quarterhour", consumption_point);
         Log.i("quarter_hourly_consumption", quarter_hourly_consumption);
         // update liveConsumption based on data from most recent complete 1/4 hour
         String[] consumption_list = quarter_hourly_consumption.split("[\n|\r]");
@@ -252,7 +268,7 @@ public class CarletonEnergyDataSource {
         Log.i("syncEnergyData", "liveConsumption: " + liveConsumption);
 
         // quarter-hourly windmill1 production for past 24 hours
-        String quarter_hourly_production1 = readEnergyJSON(day_ago.getTime(), today.getTime(), "quarterhour", "carleton_turbine1_produced_power");
+        String quarter_hourly_production1 = readEnergyJSON(day_ago.getTime(), today.getTime(), "quarterhour", production_point);
         Log.i("quarter_hourly_production1", quarter_hourly_production1);
         // update liveProduction based on data from most recent complete 1/4 hour
         String[] production1_list = quarter_hourly_production1.split("[\n|\r]");
@@ -264,6 +280,7 @@ public class CarletonEnergyDataSource {
         SharedPreferences.Editor ed = sharedPref.edit();
         ed.putFloat("liveConsumption", (float)liveConsumption);
         ed.putFloat("liveProduction1", (float)liveProduction1);
+        ed.commit();
 
 
         // update graph data file
@@ -286,7 +303,7 @@ public class CarletonEnergyDataSource {
 
 
         // daily consumption for past year
-        String daily_consumption = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_campus_en_use");
+        String daily_consumption = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", consumption_point);
         try {
             DataOutputStream out =
                     new DataOutputStream(context.openFileOutput("day_consumption_data", Context.MODE_PRIVATE));
@@ -297,7 +314,7 @@ public class CarletonEnergyDataSource {
         }
 
         // daily windmill 1 production for past year
-        String daily_production1 = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", "carleton_turbine1_produced_power");
+        String daily_production1 = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", production_point);
         try {
             DataOutputStream out =
                     new DataOutputStream(context.openFileOutput("day_production1_data", Context.MODE_PRIVATE));
@@ -308,7 +325,7 @@ public class CarletonEnergyDataSource {
         }
 
         // hourly consumption for past month
-        String hourly_consumption = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_campus_en_use");
+        String hourly_consumption = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", consumption_point);
         try {
             DataOutputStream out =
                     new DataOutputStream(context.openFileOutput("hour_consumption_data", Context.MODE_PRIVATE));
@@ -319,7 +336,7 @@ public class CarletonEnergyDataSource {
         }
 
         // hourly windmill1 production for past month
-        String hourly_production1 = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", "carleton_turbine1_produced_power");
+        String hourly_production1 = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", production_point);
         try {
             DataOutputStream out =
                     new DataOutputStream(context.openFileOutput("hour_production1_data", Context.MODE_PRIVATE));
@@ -448,6 +465,7 @@ public class CarletonEnergyDataSource {
         SharedPreferences.Editor e = sharedPref.edit();
         e.putFloat("currentTemperature", (float)currentTemperature);
         e.putFloat("currentWindspeed", (float)currentWindspeed);
+        e.commit();
         return 0;
 
     }

@@ -43,6 +43,12 @@
             android:layout_gravity="center_horizontal"
             android:textSize="50sp"
             android:layout_weight="0.3" />
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="715dp"
+    android:text="@string/Licensing"
+        android:id="@+id/textView2" />
     </LinearLayout>
 
 </RelativeLayout>

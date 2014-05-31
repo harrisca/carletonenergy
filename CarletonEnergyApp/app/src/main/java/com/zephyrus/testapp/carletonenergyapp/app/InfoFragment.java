@@ -17,10 +17,9 @@ public class InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_info, container, false);
+        fragView = inflater.inflate(R.layout.fragment_info, container, false);
 
-        fragView = rootView;
-        return rootView;
+        return fragView;
     }
 
     @Override
@@ -30,6 +29,11 @@ public class InfoFragment extends Fragment {
             Activity a = getActivity();
             if(a != null) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+    }
+
+    public void onDestroyView(){
+        super.onDestroyView();
+        fragView = null;
     }
 
 

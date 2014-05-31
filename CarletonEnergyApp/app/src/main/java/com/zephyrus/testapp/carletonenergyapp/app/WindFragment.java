@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,14 +33,13 @@ public class WindFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_wind, container, false);
-
         //stores inflated view
-        fragView = rootView;
+        fragView = inflater.inflate(R.layout.fragment_wind, container, false);
 
         //retrieves unit preferences
-        sharedPref = rootView.getContext().getSharedPreferences(PREFS_NAME, 0);
+        sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);
         units = sharedPref.getInt("units", 0);
+        //Log.i("units", "units in WindFrag: " + units);
 
 
         //initializes fields
@@ -47,17 +47,18 @@ public class WindFragment extends Fragment {
         updateTextFields();
         animateWindmill();
 
-        return rootView;
+        return fragView;
     }
 
-    public void onDestroy(){
-        super.onDestroy();
+    //clean up
+    public void onDestroyView(){
+        super.onDestroyView();
 
-        System.gc();
-        Runtime.getRuntime().gc();
+        fragView = null;
         }
 
     public void updateTextFields(){
+        //Log.i("units", "updatingTextFields");
         CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
 
         fragView.invalidate();
@@ -66,10 +67,18 @@ public class WindFragment extends Fragment {
         windSpeedView.setText(Double.toString(source.getCurrentWindSpeed()));
 
         TextView temperatureView = (TextView)fragView.findViewById(R.id.temperature_display);
+        TextView temperatureUnit = (TextView)fragView.findViewById(R.id.temperature_type);
 
         Double temperature = source.getCurrentTemperature();
-        if(units ==1){ temperature = temperature*9/5+32;}
-        temperatureView.setText(Double.toString(temperature));
+        if(units == 0){
+            temperature = (temperature - 32.0)*5.0/9.0;
+            temperatureUnit.setText("C");
+        }
+        else {
+            temperatureUnit.setText("F");
+        }
+        DecimalFormat temp_format = new DecimalFormat("#.#");
+        temperatureView.setText(temp_format.format(temperature));
 
         DecimalFormat data_format = new DecimalFormat("#.##");
 
@@ -80,7 +89,9 @@ public class WindFragment extends Fragment {
         productionView.setText(data_format.format(source.getLiveProduction(1)));
 
         TextView lastUpdatedView = (TextView)fragView.findViewById(R.id.last_updated_display);
-        DateFormat df = new SimpleDateFormat("HH:mm:ss MM/dd/yyyy");
+        //DateFormat df = new SimpleDateFormat("K:mm'pm' MM/dd/yy");
+        DateFormat df = new SimpleDateFormat("K:mm 'pm on' MMM d");
+
         df.setTimeZone(TimeZone.getTimeZone("US/Central"));
 
         if (source.getTimeUpdated() != null) {

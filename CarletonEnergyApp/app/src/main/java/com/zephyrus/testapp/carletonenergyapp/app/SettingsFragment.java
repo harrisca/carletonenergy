@@ -1,14 +1,13 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
-import android.accounts.Account;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.app.NotificationManager;
@@ -32,24 +31,18 @@ public class SettingsFragment extends Fragment {
     int units;
     int notificationToggle;
     Spinner spinner1;
-
-
-
-
-    public static final String AUTHORITY = "com.zephyrus.testapp.carletonenergyapp.app.provider";
-    public static final String ACCOUNT_TYPE = "syncAccount";
-    public static final String ACCOUNT = "dummyAccount";
+    View fragView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        fragView = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        sharedPref = rootView.getContext().getSharedPreferences(PREFS_NAME, 0);
+        sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);
         units = sharedPref.getInt("units", 0);
 
-        ToggleButton unitsToggle = (ToggleButton) rootView.findViewById(R.id.UnitsToggle);
+        ToggleButton unitsToggle = (ToggleButton) fragView.findViewById(R.id.UnitsToggle);
         if(units==1){
             unitsToggle.setChecked(true);
         }
@@ -57,27 +50,17 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor editor = sharedPref.edit();
-                int temp= 0;
+                int temp;
                 boolean on = ((ToggleButton)view).isChecked();
                 if(on){temp =1;}
                 else{temp = 0;}
-                editor.putInt("Units", temp);
+                editor.putInt("units", temp);
                 editor.commit();
-
-
-                Account newAccount = new Account( ACCOUNT, ACCOUNT_TYPE);
-                Bundle settingsBundle = new Bundle();
-                settingsBundle.putBoolean( ContentResolver.SYNC_EXTRAS_MANUAL, true);
-                settingsBundle.putBoolean( ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-                ContentResolver.requestSync(newAccount, AUTHORITY, settingsBundle);
+                units = sharedPref.getInt("units", 0);
+                Log.i("units", "units in settings: " + units);
             }
         });
-
-
-
-
-
-        ToggleButton notificationButton = (ToggleButton) rootView.findViewById(R.id.notificationButton);
+        ToggleButton notificationButton = (ToggleButton) fragView.findViewById(R.id.notificationButton);
         notificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,14 +71,14 @@ public class SettingsFragment extends Fragment {
 
 
         //Making a spinner
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.font_choice);
-        spinner1 = (Spinner) rootView.findViewById(R.id.font_choice);
+        Spinner spinner = (Spinner) fragView.findViewById(R.id.font_choice);
+        spinner1 = (Spinner) fragView.findViewById(R.id.font_choice);
         List<String> list = new ArrayList<String>();
         list.add("ColorScheme: Dark");
         list.add("ColorScheme: Light");
         list.add("ColorScheme: Sky");
         list.add("ColorScheme: Earth");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String> (rootView.getContext(), android.R.layout.simple_spinner_item,list);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String> (fragView.getContext(), android.R.layout.simple_spinner_item,list);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -119,7 +102,7 @@ public class SettingsFragment extends Fragment {
 
 
         //notificationToggle = sharedPref.getInt("notifications",0);
-        return rootView;
+        return fragView;
     }
 
     @Override
@@ -131,6 +114,10 @@ public class SettingsFragment extends Fragment {
         }
     }
 
+    public void onDestroyView(){
+        super.onDestroyView();
+        fragView = null;
+    }
     public void notificationTest(View view) {
 
         long when = System.currentTimeMillis();
@@ -167,7 +154,7 @@ public class SettingsFragment extends Fragment {
         boolean on = ((ToggleButton)view).isChecked();
         if(on){temp =1;}
         else{temp = 0;}
-        editor.putInt("Units", temp);
+        editor.putInt("units", temp);
         editor.commit();
     }
 

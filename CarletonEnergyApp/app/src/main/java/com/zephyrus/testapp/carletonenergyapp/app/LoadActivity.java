@@ -24,7 +24,7 @@ import java.util.Date;
 
 public class LoadActivity extends Activity {
 
-    private static int SPLASH_TIME_OUT = 1500;
+    private static int SPLASH_TIME_OUT = 5000;
 
     //not sure if these are needed but supposedly they are required...
     public static final long MILLISECONDS_PER_SECOND = 1000L;

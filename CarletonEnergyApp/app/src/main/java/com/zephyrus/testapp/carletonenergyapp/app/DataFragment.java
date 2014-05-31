@@ -50,22 +50,19 @@ public class DataFragment extends Fragment {
     private String timeUnit = "Day"; // you should be able to use increment instead of
     private RadioGroup rg;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_data, container, false);
+        fragView = inflater.inflate(R.layout.fragment_data, container, false);
 
         if(!isPortrait()){
             Intent i = new Intent(this.getActivity(), GraphActivity.class);
             startActivity(i);
             getActivity().finish();
-            RadioButton rb = (RadioButton)rootView.findViewById(R.id.radio_week);
+            RadioButton rb = (RadioButton)fragView.findViewById(R.id.radio_week);
             rb.setChecked(true);
         }
-
-        fragView = rootView;
 
         final Calendar today = Calendar.getInstance();
         final Calendar yesterday = Calendar.getInstance();
@@ -145,7 +142,7 @@ public class DataFragment extends Fragment {
                 ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, startTime.getTime(), endTime.getTime(), increment);
                 ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", startTime.getTime(), endTime.getTime(), increment);
                 Log.i("graph_data", productionGraphData.size() + "");
-                Log.i("graph_data", productionGraphData.size() + "");
+                Log.i("graph_data", consumptionGraphData.size() + "");
 
                 //Converting ArrayList<Double> to Number[]
                 Number[] productionNums = new Number[productionGraphData.size()];
@@ -252,10 +249,8 @@ public class DataFragment extends Fragment {
 
 
 
-        return rootView;
+        return fragView;
     }
-
-
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -266,6 +261,10 @@ public class DataFragment extends Fragment {
         }
     }
 
+    public void onDestroyView(){
+        super.onDestroyView();
+        fragView = null;
+    }
     public boolean isPortrait() {
         Display getOrient = this.getActivity().getWindowManager().getDefaultDisplay();
         if (getOrient.getRotation()%2==0)
