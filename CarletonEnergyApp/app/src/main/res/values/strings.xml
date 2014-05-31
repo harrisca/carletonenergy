@@ -25,11 +25,4 @@
     <string name="current_energy">Current Energy</string>
     <string name="info_about_us">About Us</string>
     <string name="notification_toggle">ENABLE NOTIFICATIONS</string>
-    <string-array name="font_choices">
-        <item>Black</item>
-        <item>White</item>
-        <item>Earth</item>
-        <item>Sky</item>
-    </string-array>
-
 </resources>

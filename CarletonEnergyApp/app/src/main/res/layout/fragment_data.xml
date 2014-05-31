@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.DataFragment"
-    android:background="@drawable/background_dawn">
+    android:background="@drawable/background_dawn"
+    android:id="@id/fragment_background">
 
 
     <LinearLayout

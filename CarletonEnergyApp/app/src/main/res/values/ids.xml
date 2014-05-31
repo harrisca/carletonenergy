@@ -28,4 +28,5 @@
     <item name="radio_month" type="id" />
     <item name="radioOption_time" type="id" />
     <item name="windmill_anim" type="id" />
+    <item name="fragment_background" type="id" />
 </resources>
