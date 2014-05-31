@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.SettingsFragment"
-    android:background="@drawable/background_dawn">
+    android:background="@drawable/background_dawn"
+    android:id="@id/fragment_background">
 
 
     <LinearLayout
@@ -11,21 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:weightSum="1"
-        android:background="@drawable/background_dawn"
-        android:id="@+id/linearLayout">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight=".8" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/settings_gear"
-            android:alpha="0.3" />
+        android:background="@drawable/settings_gear">
 
     </LinearLayout>
 

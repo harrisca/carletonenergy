@@ -74,10 +74,11 @@ public class SettingsFragment extends Fragment {
         Spinner spinner = (Spinner) fragView.findViewById(R.id.font_choice);
         spinner1 = (Spinner) fragView.findViewById(R.id.font_choice);
         List<String> list = new ArrayList<String>();
-        list.add("ColorScheme: Dark");
-        list.add("ColorScheme: Light");
-        list.add("ColorScheme: Sky");
-        list.add("ColorScheme: Earth");
+        list.add("Color Scheme: Dawn");
+        list.add("Color Scheme: Day");
+        list.add("Color Scheme: Sunset");
+        list.add("Color Scheme: Evening");
+        list.add("Color Scheme: Dusk");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String> (fragView.getContext(), android.R.layout.simple_spinner_item,list);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -86,10 +87,9 @@ public class SettingsFragment extends Fragment {
         spinner1.setOnItemSelectedListener((new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
             {
+
                 Object item = parent.getItemAtPosition(pos);
-
                 System.out.println("it works...   ");
-
             }
 
             public void onNothingSelected(AdapterView<?> parent)
