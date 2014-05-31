@@ -52,7 +52,7 @@ public class GraphActivity extends Activity {
     private String increment = "quarter-hour";     //must be quarter-hour for day; hour for week; day for month/year
     private Calendar startTime;
     private Calendar endTime;
-    private String graphTitle;
+    private String graphTitle = "Energy Data";
 
 
     @Override
@@ -195,7 +195,7 @@ public class GraphActivity extends Activity {
         plot.setDomainLabel("Time");
         plot.setRangeLabel("Power (kW)");
 
-        //plot.setTitle(graphTitle);
+        plot.setTitle(graphTitle);
 
         // get rid of decimal points in our range labels:
         plot.setRangeValueFormat(new DecimalFormat("0"));
