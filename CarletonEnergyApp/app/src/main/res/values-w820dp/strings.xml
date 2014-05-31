@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="Licensing">Copyright 2014 Carleton on Wind Power Michael Wheatman, Richard Lin, Nathan Fudenberg, Katja Collier, and Carolyn Harris via Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported (the </string>
+    <string name="RefreshButton">Refreshing</string>
 </resources>

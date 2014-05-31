@@ -4,7 +4,7 @@
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.MainActivity" >
     <item android:id="@+id/action_sync"
         android:title="@string/title_sync"
-        android:icon="@drawable/ic_sync"
+        android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="0"
         app:showAsAction="always|withText"
         />
