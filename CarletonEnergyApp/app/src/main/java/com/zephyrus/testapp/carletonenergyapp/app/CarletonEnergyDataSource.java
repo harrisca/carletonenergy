@@ -3,6 +3,7 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -196,6 +197,36 @@ public class CarletonEnergyDataSource {
                 //Log.i("sync", "" + getGraphData("consumption", ));
             }
         }).start();
+
+    }
+
+    public void syncUnThreaded()  {
+
+                try {
+                    syncWeatherData();
+                } catch (IOException e) {
+                    Log.i("sync", "error syncing weather data");
+                    e.printStackTrace();
+                }
+                try {
+                    syncEnergyData();
+                } catch (IOException e) {
+                    Log.i("sync", "error syncing energy data");
+                    e.printStackTrace();
+                }
+
+                lastUpdated = new Date();
+                DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
+
+                Log.i("sync", "synced at: " + lastUpdated);
+                Log.i("sync/time", "local time: " + df.format(lastUpdated));
+                Log.i("sync", "consumption " + getLiveConsumption());
+                Log.i("sync", "windmill1 " + getLiveProduction(1));
+                Log.i("sync", "temp " + getCurrentTemperature());
+                Log.i("sync", "wind " + getCurrentWindSpeed());
+
+                //Log.i("sync", "" + getGraphData("consumption", ));
 
     }
 

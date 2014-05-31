@@ -5,153 +5,133 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zephyrus.testapp.carletonenergyapp.app.WindFragment"
-    android:background="#FF40567A">
+    tools:context="com.zephyrus.testapp.carletonenergyapp.app.WindFragment">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:weightSum="1"
-        android:background="@drawable/background_dawn">
+        android:alpha="0.3"
+        android:layout_marginLeft="110dp">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight=".8"></LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/windmill_anim"
+            android:src="@drawable/windmill_blade_inverted" />
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:alpha="0.3">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@id/windmill_anim"
-                android:src="@drawable/windmill_blade_inverted" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@id/windmill_anim"
-                android:src="@drawable/windmill_stand_inverted" />
-        </RelativeLayout>
-    </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/windmill_anim"
+            android:src="@drawable/windmill_stand_inverted" />
+    </RelativeLayout>
 
     <!--android:src="@drawable/windmill_anim"-->
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:clickable="true"
-        android:weightSum="4">
+        android:layout_height="wrap_content"
+        android:layout_weight="2.2"
+        android:gravity="fill_vertical|top"
+        android:layout_above="@+id/linearLayout3"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:baselineAligned="false">
+            android:weightSum="2">
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="2">
-    
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="fill_parent"
+                android:layout_weight="1">
+
+                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-    
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/windspeed_label"
+                    android:id="@id/windspeed_label"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
                     <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/windspeed_label"
-                        android:id="@id/windspeed_label"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginTop="15dp"
-                        android:textSize="20sp" />
-    
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
-    
-                        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="50"
-                            android:id="@id/windspeed_display"
-                            android:layout_below="@id/windspeed_label"
-                            android:layout_marginLeft="35dp"
-                            android:layout_marginTop="5dp"
-                            android:textStyle="bold"
-                            android:textSize="35sp" />
-    
-                        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="@string/unit_mph"
-                            android:id="@id/windspeed_unit"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="10dp"
-                            android:textSize="35sp" />
-    
-                    </LinearLayout>
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="50"
+                        android:id="@id/windspeed_display"
+                        android:layout_below="@id/windspeed_label"
+                        android:layout_marginLeft="35dp"
+                        android:layout_marginTop="5dp"
+                        android:textStyle="bold"
+                        android:textSize="35sp" />
+
+                    <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/unit_mph"
+                        android:id="@id/windspeed_unit"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="35sp" />
+
                 </LinearLayout>
-    
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="fill_parent"
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-    
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/temperature_label"
+                    android:id="@id/temperature_label"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="70"
+                        android:id="@id/temperature_display"
+                        android:layout_marginLeft="35dp"
+                        android:layout_marginTop="5dp"
+                        android:textStyle="bold"
+                        android:textSize="35sp" />
+
                     <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/temperature_label"
-                        android:id="@id/temperature_label"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginLeft="25dp"
-                        android:textSize="20sp" />
-    
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
-    
-                        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="70"
-                            android:id="@id/temperature_display"
-                            android:layout_marginLeft="35dp"
-                            android:layout_marginTop="5dp"
-                            android:textStyle="bold"
-                            android:textSize="35sp" />
-    
-                        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="F"
-                            android:id="@id/temperature_type"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:textStyle="italic"
-                            android:textSize="25sp" />
-    
-                    </LinearLayout>
+                        android:text="F"
+                        android:id="@id/temperature_type"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:textStyle="italic"
+                        android:textSize="25sp" />
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -160,97 +140,91 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2.2">
+            android:layout_weight="1.1"
+            android:id="@+id/linearLayout"
+            android:layout_marginTop="30dp">
+
+            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/consumption_label"
+                android:id="@id/consumption_label"
+                android:layout_marginLeft="30dp"
+                android:textSize="20sp"
+                android:layout_marginTop="5dp" />
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.1"
-                android:id="@+id/linearLayout">
+                android:layout_height="wrap_content" >
 
                 <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/consumption_label"
-                    android:id="@id/consumption_label"
-                    android:layout_marginLeft="30dp"
-                    android:textSize="20sp"
-                    android:layout_marginTop="5dp" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
-
-                    <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="1220"
-                        android:id="@id/consumption_display"
-                        android:layout_below="@id/consumption_label"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginTop="5dp"
-                        android:textStyle="bold"
-                        android:textSize="35sp" />
-
-                    <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/kWH_consumption"
-                        android:id="@id/kWH_consumption"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:textSize="35sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.1"
-                android:id="@+id/linearLayout2">
-
-                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/production_label"
-                    android:id="@id/production_label"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="1220"
+                    android:id="@id/consumption_display"
+                    android:layout_below="@id/consumption_label"
+                    android:layout_marginLeft="50dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="30dp"
-                    android:textSize="20sp" />
+                    android:textStyle="bold"
+                    android:textSize="35sp" />
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
+                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/kWH_consumption"
+                    android:id="@id/kWH_consumption"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="35sp" />
+            </LinearLayout>
+        </LinearLayout>
 
-                    <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="987"
-                        android:id="@id/production_display"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginTop="5dp"
-                        android:textStyle="bold"
-                        android:textSize="35sp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:id="@+id/linearLayout2">
 
-                    <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/kWh_production"
-                        android:id="@id/kWh_production"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="5dp"
-                        android:textSize="35sp" />
-                </LinearLayout>
+            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/production_label"
+                android:id="@id/production_label"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="987"
+                    android:id="@id/production_display"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:textSize="35sp" />
+
+                <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/kWh_production"
+                    android:id="@id/kWh_production"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="35sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -283,46 +257,47 @@
                 android:textSize="25sp" />
 
         </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bottom_bar"
+        android:gravity="fill_horizontal|bottom"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearLayout3">
+
+        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/bottom_bar">
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/last_updated_label"
+            android:id="@id/last_updated_label"
+            android:textStyle="bold"
+            android:gravity="right"
+            android:layout_marginLeft="30dp"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical" />
 
-            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/last_updated_label"
-                android:id="@id/last_updated_label"
-                android:textStyle="bold"
-                android:gravity="right"
-                android:layout_marginLeft="30dp"
-                android:textSize="20sp"
-                android:layout_gravity="center_vertical" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/divider"
+            android:layout_gravity="center_vertical" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView"
-                android:src="@drawable/divider"
-                android:layout_gravity="center_vertical" />
-
-            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="12:14pm 4/26/2014"
-                android:id="@id/last_updated_display"
-                android:textSize="20sp"
-                android:textStyle="italic"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
-
+        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="12:14pm 4/26/2014"
+            android:id="@id/last_updated_display"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
 </RelativeLayout>
