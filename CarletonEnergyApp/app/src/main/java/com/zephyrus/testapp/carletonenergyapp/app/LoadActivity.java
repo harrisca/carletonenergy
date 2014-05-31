@@ -57,7 +57,7 @@ public class LoadActivity extends Activity {
 
         source.sync();
 
-
+        /*
         //for syncing...
         Log.i("Load: ", "Starting Sync");
         mAccount = CreateSyncAccount(this);
@@ -68,7 +68,7 @@ public class LoadActivity extends Activity {
         ContentResolver.addPeriodicSync(mAccount, AUTHORITY, null, SYNC_INTERVAL);
 
         Log.i("Load: ", "Sync Successfully started");
-
+        */
 
         // show splash screen for 3 seconds
         new Handler().postDelayed(new Runnable() {
