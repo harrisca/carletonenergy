@@ -3,6 +3,7 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,23 +28,19 @@ import java.util.SimpleTimeZone;
 //This is a class for dealing with energy
 public class CarletonEnergyDataSource {
     public static CarletonEnergyDataSource singleton;
-    private String speedUnits = "US";
-    private String degreeUnits;
-    private double currentTemperature = 0.0;
-    private double currentWindspeed = 0.0;
-    private double liveProduction1 = 0.0;
-    private double liveProduction2 = 0.0;
-    private double liveConsumption = 0.0;
-    private Date lastUpdated = null;
-    private double[] oldData = new double[5];
+    private double currentTemperature;
+    private double currentWindspeed;
+    private double liveProduction1;
+    private double liveProduction2;
+    private double liveConsumption;
+    private long lastUpdated;
     private Context context;
     public static final String PREFS_NAME = "preferences";
-    SharedPreferences sharedPref;
     int notificationToggle;
 
     public CarletonEnergyDataSource(Context context) {
         this.context = context;
-        sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         this.liveConsumption = (double)sharedPref.getFloat("liveConsumption", (float)-1.0);
         this.liveProduction1 = (double)sharedPref.getFloat("liveProduction1", (float)-1.0);
         this.liveProduction2 = (double)sharedPref.getFloat("liveProduction2", (float)-1.0);
@@ -51,7 +48,7 @@ public class CarletonEnergyDataSource {
         this.currentWindspeed = (double)sharedPref.getFloat("currentWindspeed", (float)-1.0);
         long time_l = sharedPref.getLong("lastUpdated", 0l);
         if (time_l > 0l) {
-            this.lastUpdated = new Date(time_l);
+            this.lastUpdated = time_l;
         }
 
         //degreeUnits = sharedPref.getString("degreeUnits", "C");
@@ -65,7 +62,7 @@ public class CarletonEnergyDataSource {
         singleton = newSource;
     }
     public Date getTimeUpdated() {
-        return lastUpdated;
+        return new Date(lastUpdated);
     }
 
     /*
@@ -179,10 +176,43 @@ public class CarletonEnergyDataSource {
                     e.printStackTrace();
                 }
 
-                lastUpdated = new Date();
+                Date now = new Date();
+                lastUpdated = now.getTime();
+                SharedPreferences sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
                 SharedPreferences.Editor e = sharedPref.edit();
-                e.putLong("lastUpdated", lastUpdated.getTime());
+                e.putLong("lastUpdated", lastUpdated);
                 e.commit();
+                DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
+
+                Log.i("sync", "consumption " + getLiveConsumption());
+                Log.i("sync", "windmill1 " + getLiveProduction(1));
+                Log.i("sync", "temp " + getCurrentTemperature());
+                Log.i("sync", "wind " + getCurrentWindSpeed());
+
+                //Log.i("sync", "" + getGraphData("consumption", ));
+            }
+        }).start();
+
+    }
+
+    public void syncUnThreaded()  {
+
+                try {
+                    syncWeatherData();
+                } catch (IOException e) {
+                    Log.i("sync", "error syncing weather data");
+                    e.printStackTrace();
+                }
+                try {
+                    syncEnergyData();
+                } catch (IOException e) {
+                    Log.i("sync", "error syncing energy data");
+                    e.printStackTrace();
+                }
+
+                lastUpdated = System.currentTimeMillis();
+
                 DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
 
@@ -194,8 +224,6 @@ public class CarletonEnergyDataSource {
                 Log.i("sync", "wind " + getCurrentWindSpeed());
 
                 //Log.i("sync", "" + getGraphData("consumption", ));
-            }
-        }).start();
 
     }
 
@@ -246,6 +274,7 @@ public class CarletonEnergyDataSource {
         liveProduction1 = (Double.parseDouble(recent_production1_line.substring(recent_production1_line.indexOf(';') + 1, recent_production1_line.length())));
         Log.i("energyData", "" + liveProduction1);
 
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor ed = sharedPref.edit();
         ed.putFloat("liveConsumption", (float)liveConsumption);
         ed.putFloat("liveProduction1", (float)liveProduction1);
@@ -431,6 +460,7 @@ public class CarletonEnergyDataSource {
 
         currentTemperature = temp;
         currentWindspeed = speed;
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor e = sharedPref.edit();
         e.putFloat("currentTemperature", (float)currentTemperature);
         e.putFloat("currentWindspeed", (float)currentWindspeed);

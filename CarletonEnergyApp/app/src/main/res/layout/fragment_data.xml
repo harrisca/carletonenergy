@@ -13,110 +13,96 @@
         android:layout_height="match_parent"
         android:weightSum="4">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2.5">
-
-            <com.androidplot.xy.XYPlot
-                android:id="@+id/mySimpleXYPlot"
-                android:layout_width="fill_parent"
-                android:layout_height="300dp"
-                androidPlot.title="Production vs Consumption"
-                androidPlot.domainLabel="Time"
-                androidPlot.rangeLabel="Power (kW)"
-                androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"
-                androidPlot.domainLabelWidget.labelPaint.textSize="@dimen/domain_label_font_size"
-                androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_label_font_size"
-                androidPlot.graphWidget.marginTop="20dp"
-                androidPlot.graphWidget.marginLeft="15dp"
-                androidPlot.graphWidget.marginBottom="25dp"
-                androidPlot.graphWidget.marginRight="10dp"
-                androidPlot.graphWidget.rangeLabelPaint.textSize="@dimen/range_tick_label_font_size"
-                androidPlot.graphWidget.rangeOriginLabelPaint.textSize="@dimen/range_tick_label_font_size"
-                androidPlot.graphWidget.domainLabelPaint.textSize="@dimen/domain_tick_label_font_size"
-                androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_label_font_size"
-                androidPlot.legendWidget.textPaint.textSize="@dimen/legend_text_font_size"
-                androidPlot.legendWidget.iconSizeMetrics.heightMetric.value="15dp"
-                androidPlot.legendWidget.iconSizeMetrics.widthMetric.value="15dp"
-                androidPlot.legendWidget.heightMetric.value="25dp"
-                androidPlot.legendWidget.positionMetrics.anchor="right_bottom"
-                androidPlot.graphWidget.gridLinePaint.color="#000000"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
+        <com.androidplot.xy.XYPlot
+            android:id="@+id/dataFragGraph"
             android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            androidPlot.title="Production vs Consumption"
+            androidPlot.domainLabel="Time"
+            androidPlot.rangeLabel="Power (kW)"
+            androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"
+            androidPlot.domainLabelWidget.labelPaint.textSize="@dimen/domain_label_font_size"
+            androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_label_font_size"
+            androidPlot.graphWidget.marginTop="20dp"
+            androidPlot.graphWidget.marginLeft="15dp"
+            androidPlot.graphWidget.marginBottom="25dp"
+            androidPlot.graphWidget.marginRight="10dp"
+            androidPlot.graphWidget.rangeLabelPaint.textSize="@dimen/range_tick_label_font_size"
+            androidPlot.graphWidget.rangeOriginLabelPaint.textSize="@dimen/range_tick_label_font_size"
+            androidPlot.graphWidget.domainLabelPaint.textSize="@dimen/domain_tick_label_font_size"
+            androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_label_font_size"
+            androidPlot.legendWidget.textPaint.textSize="@dimen/legend_text_font_size"
+            androidPlot.legendWidget.iconSizeMetrics.heightMetric.value="15dp"
+            androidPlot.legendWidget.iconSizeMetrics.widthMetric.value="15dp"
+            androidPlot.legendWidget.heightMetric.value="25dp"
+            androidPlot.legendWidget.positionMetrics.anchor="right_bottom"
+            androidPlot.graphWidget.gridLinePaint.color="#000000"/>
+
+        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight=".8">
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/rotation_label"
+            android:id="@+id/textView"
+            android:textStyle="italic"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp" />
 
-            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/rotation_label"
-                android:id="@+id/textView"
-                android:textStyle="italic"
-                android:layout_gravity="center_horizontal" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/production_label"
+            android:id="@id/checkbox_windmill"
+            android:layout_marginLeft="40dp"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/production_label"
-                android:id="@id/checkbox_windmill"
-                android:layout_marginLeft="40dp"
-                android:textStyle="bold" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consumption_label"
+            android:id="@id/checkbox_consumption"
+            android:layout_marginLeft="40dp"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/consumption_label"
-                android:id="@id/checkbox_consumption"
-                android:layout_marginLeft="40dp"
-                android:textStyle="bold" />
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@id/radioOption_time"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/day_setting"
+            android:id="@id/radio_day" />
 
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:id="@id/radioOption_time">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/day_setting"
-                    android:id="@id/radio_day" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/week_setting"
-                    android:id="@id/radio_week" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/week_setting"
+            android:id="@id/radio_week" />
 
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/month_setting"
-                    android:id="@id/radio_month"
-                    android:singleLine="false" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/month_setting"
+            android:id="@id/radio_month"
+            android:singleLine="false" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/year_setting"
-                    android:id="@id/radio_year" />
-                </RadioGroup>
-            </LinearLayout>
-
-        </LinearLayout>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/year_setting"
+            android:id="@id/radio_year" />
+        </RadioGroup>
 
     </LinearLayout>
 

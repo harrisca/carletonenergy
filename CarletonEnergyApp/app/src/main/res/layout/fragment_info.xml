@@ -3,34 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.InfoFragment"
-    android:background="@drawable/background_dawn"
-    android:id="@id/fragment_background">
+    android:background="@drawable/background_day">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/info_about"
+        android:alpha="0.3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@drawable/info_about"
-        android:weightSum="1">
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/info_about_us"
+        android:id="@+id/textView"
+        android:layout_alignParentStart="false"
+        android:layout_gravity="center_horizontal"
+        android:textSize="50sp"
+        android:layout_weight="0.3"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:weightSum="4">
-
-        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/info_about_us"
-            android:id="@+id/textView"
-            android:layout_alignParentStart="false"
-            android:layout_gravity="center_horizontal"
-            android:textSize="50sp"
-            android:layout_weight="0.3" />
-    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Licensing"
+            android:id="@+id/textView2"
+        android:textIsSelectable="true"
+        android:textSize="18dp"
+        android:layout_marginTop="55dp" />
 
 </RelativeLayout>
