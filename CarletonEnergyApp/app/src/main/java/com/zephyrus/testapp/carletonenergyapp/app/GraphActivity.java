@@ -48,7 +48,8 @@ public class GraphActivity extends Activity {
     private XYPlot plot;
     private CarletonEnergyDataSource dataSource;
     private String dependentVariable = "production1";
-    private String increment = "year";
+    private String buttonClicked = "day";
+    private String increment = "quarter-hour";     //must be quarter-hour for day; hour for week; day for month/year
     private Calendar startTime;
     private Calendar endTime;
     private String graphTitle;
@@ -83,26 +84,29 @@ public class GraphActivity extends Activity {
         //right now, the axis is always in ms :/
         Number scaleAxis;
 
-        if(increment.equals("week")){
+        if(buttonClicked.equals("week")){
             scaleAxis = 1;
             graphTitle = "This Week's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
             startTime.add(Calendar.DATE, -7);
+            increment = "hour";
         }
-        else if (increment.equals("month")){
+        else if (buttonClicked.equals("month")){
             scaleAxis = 1;
             graphTitle = "This Month's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
             startTime.add(Calendar.HOUR, -1);
+            increment = "day";
         }
-        else if (increment.equals("year")){
+        else if (buttonClicked.equals("year")){
             scaleAxis = 1;
             graphTitle = "This Year's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
             startTime.add(Calendar.YEAR, -1);
+            increment = "day";
         }
         else { //day by default
             scaleAxis = 1;
@@ -110,6 +114,7 @@ public class GraphActivity extends Activity {
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
             startTime.add(Calendar.DATE, -1);
+            increment = "quarter-hour";
         }
 
         ArrayList<Double> productionGraphData = dataSource.getGraphData("production1", startTime.getTime(), endTime.getTime(), increment);
@@ -176,13 +181,13 @@ public class GraphActivity extends Activity {
         //formatter.setFillPaint(lineFill);
         //proFormatter.setFillPaint(null);
         plot.getGraphWidget().setPaddingRight(2);
-        //plot.addSeries(production, proFormatter);
+        plot.addSeries(production, proFormatter);
 
 
         LineAndPointFormatter conFormatter = new LineAndPointFormatter(Color.rgb(153,0,0), Color.rgb(153,0,0), null, null);
         //conFormatter.setFillPaint(null);
         plot.addSeries(consumption, conFormatter);
-        plot.addSeries(production, proFormatter);
+
         // draw a domain tick for each year:
         plot.setDomainStep(XYStepMode.SUBDIVIDE, timeNums.length);
 
@@ -190,7 +195,7 @@ public class GraphActivity extends Activity {
         plot.setDomainLabel("Time");
         plot.setRangeLabel("Power (kW)");
 
-        plot.setTitle(graphTitle);
+        //plot.setTitle(graphTitle);
 
         // get rid of decimal points in our range labels:
         plot.setRangeValueFormat(new DecimalFormat("0"));
