@@ -17,7 +17,7 @@
             android:id="@+id/dataFragGraph"
             android:layout_width="fill_parent"
             android:layout_height="300dp"
-            androidPlot.title="Production vs Consumption"
+            androidPlot.title="Energy Data"
             androidPlot.domainLabel="Time"
             androidPlot.rangeLabel="Power (kW)"
             androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"

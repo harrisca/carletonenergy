@@ -49,7 +49,7 @@ public class GraphActivity extends Activity {
     private CarletonEnergyDataSource dataSource;
     private String dependentVariable = "production1";
     private String buttonClicked = "day";
-    private String increment = "quarter-hour";     //must be quarter-hour for day; hour for week; day for month/year
+    private String increment = "quarterhour";     //must be quarter-hour for day; hour for week; day for month/year
     private Calendar startTime;
     private Calendar endTime;
     private String graphTitle = "Energy Data";
@@ -114,7 +114,7 @@ public class GraphActivity extends Activity {
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
             startTime.add(Calendar.DATE, -1);
-            increment = "quarter-hour";
+            increment = "quarterhour";
         }
 
         ArrayList<Double> productionGraphData = dataSource.getGraphData("production1", startTime.getTime(), endTime.getTime(), increment);

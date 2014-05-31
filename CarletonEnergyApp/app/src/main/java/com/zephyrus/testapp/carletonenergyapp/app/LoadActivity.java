@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -96,6 +98,13 @@ public class LoadActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_sync) {
+
+            Context context = getApplicationContext();
+            CharSequence text = getString(R.string.RefreshButton);
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
             return true;
         }
         return super.onOptionsItemSelected(item);
