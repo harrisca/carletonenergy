@@ -25,6 +25,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+//Displays a graph according to the buttons selected in DataFragment.
+//This screen is accessed by rotating the device from Portrait to Landscape while
+//on the DataFragment sceen.
+
 public class GraphActivity extends Activity {
 
     private XYPlot plot;
@@ -41,12 +45,13 @@ public class GraphActivity extends Activity {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        buttonClickedStr = getIntent().getStringExtra("buttonClicked");
+        buttonClickedStr = getIntent().getStringExtra("buttonClickedStr");
         productionChecked = getIntent().getBooleanExtra("productionChecked", true);
         consumptionChecked = getIntent().getBooleanExtra("consumptionChecked", true);
 
         dataSource = CarletonEnergyDataSource.getSingleton();
 
+        //Switches to DataFragment when phone is rotated to Portrait
         if(!isLandscape()){
             Intent intent = new Intent(this, MainActivity.class);
             int jumpToData = 1;

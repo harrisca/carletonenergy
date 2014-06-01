@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:weightSum="4">
 
+<!-- This is our small graph
         <com.androidplot.xy.XYPlot
             android:id="@+id/dataFragGraph"
             android:layout_width="fill_parent"
@@ -37,6 +38,7 @@
             androidPlot.legendWidget.heightMetric.value="25dp"
             androidPlot.legendWidget.positionMetrics.anchor="right_bottom"
             androidPlot.graphWidget.gridLinePaint.color="#000000"/>
+-->
 
         <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
             android:layout_width="wrap_content"
