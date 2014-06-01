@@ -78,7 +78,7 @@ public class WindFragment extends Fragment {
             temperatureUnit.setText("F");
         }
         DecimalFormat temp_format = new DecimalFormat("#.#");
-        temperatureView.setText(temp_format.format(temperature));
+        temperatureView.setText(temp_format.format(temperature) + "°");
 
         DecimalFormat data_format = new DecimalFormat("#.##");
 
@@ -90,7 +90,7 @@ public class WindFragment extends Fragment {
 
         TextView lastUpdatedView = (TextView)fragView.findViewById(R.id.last_updated_display);
         //DateFormat df = new SimpleDateFormat("K:mm'pm' MM/dd/yy");
-        DateFormat df = new SimpleDateFormat("K:mm 'pm on' MMM d");
+        DateFormat df = new SimpleDateFormat("K:mm a 'on' MMM d");
 
         df.setTimeZone(TimeZone.getTimeZone("US/Central"));
 
