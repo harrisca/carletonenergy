@@ -98,7 +98,7 @@ public class GraphActivity extends Activity {
             graphTitle = "This Month's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
-            startTime.add(Calendar.HOUR, -1);
+            startTime.add(Calendar.MONTH, -1);
             increment = "day";
         }
         else if (buttonClicked.equals("year")){
@@ -135,21 +135,20 @@ public class GraphActivity extends Activity {
 
         Number[] timeNums = new Number[productionGraphData.size()];
         //timeNums = (Number[]) productionGraphData.toArray(timeNums);
-        for(int i = 0; i<timeNums.length; i++){
-            timeNums[i] = i;
+        for (int i = 0; i < timeNums.length; i++) {
+
+            // calculates the number of milliseconds that passed between consecutive data points
             long increment_ms = 0l;
             if (increment.equals("quarterhour")) {
-                increment_ms = 15*60*1000;
-            }
-            else if (increment.equals("hour")) {
-                increment_ms = 60*60*1000;
-            }
-            else if (increment.equals("day")) {
-                increment_ms = 24*60*60*1000;
+                increment_ms = 15 * 60 * 1000;
+            } else if (increment.equals("hour")) {
+                increment_ms = 60 * 60 * 1000;
+            } else if (increment.equals("day")) {
+                increment_ms = 24 * 60 * 60 * 1000;
             }
 
-
-            timeNums[i] = i*increment_ms + startTime.getTime().getTime();
+            // sets the time for each data point based on that increment
+            timeNums[i] = i * increment_ms + startTime.getTime().getTime();
         }
 
         // create our series from our array of nums:
@@ -204,9 +203,6 @@ public class GraphActivity extends Activity {
             plot.addSeries(consumption, conFormatter);
         }
 
-        // draw a domain tick for each year:
-        //plot.setDomainStep(XYStepMode.SUBDIVIDE, 10);
-
         // customize our domain/range labels
         plot.setDomainLabel("Time");
         plot.setRangeLabel("Power (kW)");
@@ -216,7 +212,7 @@ public class GraphActivity extends Activity {
         // get rid of decimal points in our range labels:
         plot.setRangeValueFormat(new DecimalFormat("0"));
 
-        if (increment.equals("quarterhour")) {
+        if (buttonClicked.equals("day")) {
             plot.setDomainValueFormat(new Format() {
 
                 // create a simple date format that draws on the year portion of our timestamp.
@@ -242,7 +238,13 @@ public class GraphActivity extends Activity {
                 }
             });
         }
-        else if (increment.equals("hour")) {
+        else if (buttonClicked.equals("month") || buttonClicked.equals("week")) {
+
+            if (buttonClicked.equals("week")) {
+                // draw a domain tick for each day:
+                plot.setDomainStep(XYStepMode.SUBDIVIDE, 7);
+            }
+
             plot.setDomainValueFormat(new Format() {
 
                 // create a simple date format that draws on the year portion of our timestamp.
@@ -270,7 +272,9 @@ public class GraphActivity extends Activity {
                 }
             });
         }
-        else if (increment.equals("day")) {
+        else if (buttonClicked.equals("year")) {
+            // show tick for each month
+            plot.setDomainStep(XYStepMode.SUBDIVIDE, 12);
             plot.setDomainValueFormat(new Format() {
 
                 // create a simple date format that draws on the year portion of our timestamp.
