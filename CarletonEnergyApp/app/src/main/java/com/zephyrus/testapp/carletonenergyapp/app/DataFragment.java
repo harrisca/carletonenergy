@@ -47,7 +47,8 @@ public class DataFragment extends Fragment {
     private CarletonEnergyDataSource dataSource;
     private static boolean productionChecked = true;
     private static boolean consumptionChecked = true;
-    private static String buttonClicked = "day";
+    private static String buttonClickedStr = "day";
+    private static int buttonClicked = R.id.radio_day;
     private String increment = "quarterhour"; //must be quarter-hour for day; hour for week; day for month/year
     private Calendar startTime;
     private Calendar endTime;
@@ -63,11 +64,11 @@ public class DataFragment extends Fragment {
         fragView = inflater.inflate(R.layout.fragment_data, container, false);
 
         if (!isPortrait()) {
-            Intent i = new Intent(this.getActivity(), GraphActivity.class).putExtra("buttonClicked", buttonClicked);
+            Intent i = new Intent(this.getActivity(), GraphActivity.class).putExtra("buttonClicked", buttonClickedStr);
             i.putExtra("productionChecked", productionChecked);
             i.putExtra("consumptionChecked", consumptionChecked);
-            RadioButton rb = (RadioButton) fragView.findViewById(R.id.radio_week);
-            rb.setChecked(true);
+            //RadioButton rb = (RadioButton) fragView.findViewById(R.id.radio_day);
+            //rb.setChecked(true);
             startActivity(i);
             getActivity().finish();
         }
@@ -77,6 +78,9 @@ public class DataFragment extends Fragment {
 
         proCheckbox.setChecked(productionChecked);
         conCheckbox.setChecked(consumptionChecked);
+
+        RadioButton bc = (RadioButton) fragView.findViewById(buttonClicked);
+        bc.setChecked(true);
 
         proCheckbox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
             @Override
@@ -111,10 +115,12 @@ public class DataFragment extends Fragment {
                 //onRadioButtonClicked(fragView.findViewById(checkedId));
                 Log.i("radioButtonTest", "done with onCheckedChanged");
 
+                buttonClicked = checkedId;
+
                 switch (checkedId) {
                     case R.id.radio_day:
                         Log.i("radioButtonTest", "clicked day button");
-                        buttonClicked = "day";
+                        buttonClickedStr = "day";
                         graphTitle = "Today's Energy";
                         endTime = Calendar.getInstance();
                         startTime = Calendar.getInstance();
@@ -124,7 +130,7 @@ public class DataFragment extends Fragment {
                         break;
                     case R.id.radio_week:
                         Log.i("radioButtonTest", "clicked week button");
-                        buttonClicked = "week";
+                        buttonClickedStr = "week";
                         graphTitle = "This Week's Energy";
                         endTime = Calendar.getInstance();
                         startTime = Calendar.getInstance();
@@ -134,7 +140,7 @@ public class DataFragment extends Fragment {
                         break;
                     case R.id.radio_month:
                         Log.i("radioButtonTest", "clicked month button");
-                        buttonClicked = "month";
+                        buttonClickedStr = "month";
                         graphTitle = "This Month's Energy";
                         endTime = Calendar.getInstance();
                         startTime = Calendar.getInstance();
@@ -144,7 +150,7 @@ public class DataFragment extends Fragment {
                         break;
                     case R.id.radio_year:
                         Log.i("radioButtonTest", "clicked year button");
-                        buttonClicked = "year";
+                        buttonClickedStr = "year";
                         graphTitle = "This Year's Energy";
                         endTime = Calendar.getInstance();
                         startTime = Calendar.getInstance();
