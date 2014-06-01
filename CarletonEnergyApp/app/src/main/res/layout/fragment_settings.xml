@@ -46,8 +46,8 @@
             android:id="@+id/UnitsToggle"
             android:layout_gravity="bottom"
             android:checked="false"
-            android:textOff="Celsius"
-            android:textOn="Fahrenheit"
+            android:textOff="Temperature Units: Celsius"
+            android:textOn="Temperature Units: Fahrenheit"
             android:layout_weight="1"
             android:textSize="30sp" />
 

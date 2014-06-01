@@ -47,7 +47,7 @@ public class WindFragment extends Fragment {
                 fragView.setBackgroundResource(R.drawable.background_dawn);
                 break;
             case 1:
-                fragView.setBackgroundResource(R.drawable.background_dusk);
+                fragView.setBackgroundResource(R.drawable.background_day);
                 break;
             case 2:
                 fragView.setBackgroundResource(R.drawable.background_sunset);
