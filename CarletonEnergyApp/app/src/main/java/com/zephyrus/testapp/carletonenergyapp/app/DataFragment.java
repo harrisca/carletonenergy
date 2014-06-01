@@ -179,7 +179,8 @@ public class DataFragment extends Fragment {
                 Number[] timeNums = new Number[productionGraphData.size()];
                 //timeNums = (Number[]) productionGraphData.toArray(timeNums);
                 for (int i = 0; i < timeNums.length; i++) {
-                    timeNums[i] = i;
+
+                    // calculates the number of milliseconds that passed between consecutive data points
                     long increment_ms = 0l;
                     if (increment.equals("quarterhour")) {
                         increment_ms = 15 * 60 * 1000;
@@ -189,7 +190,7 @@ public class DataFragment extends Fragment {
                         increment_ms = 24 * 60 * 60 * 1000;
                     }
 
-
+                    // sets the time for each data point based on that increment
                     timeNums[i] = i * increment_ms + startTime.getTime().getTime();
                 }
 
