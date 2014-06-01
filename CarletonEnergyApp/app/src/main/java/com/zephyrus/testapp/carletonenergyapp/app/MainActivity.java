@@ -157,7 +157,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return new LiveFragment();
                 case 1:
                     // Games fragment activity
-                    return new DataFragment();
+                    return new HistoricFragment();
                 case 2:
                     // Movies fragment activity
                     return new InfoFragment();

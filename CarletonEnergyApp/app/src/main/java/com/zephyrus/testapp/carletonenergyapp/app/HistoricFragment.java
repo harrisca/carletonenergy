@@ -2,11 +2,6 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
-import android.graphics.Shader;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,32 +15,10 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.androidplot.ui.SizeLayoutType;
-import com.androidplot.ui.SizeMetrics;
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.PointLabelFormatter;
-import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYGraphWidget;
-import com.androidplot.xy.XYPlot;
-import com.androidplot.xy.XYSeries;
-import com.androidplot.xy.XYStepMode;
-
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-
 //Screen provides buttons for the user to select the data they would like to view on a graph.
 //Graph is viewed by rotating the screen to Landscape from Portrait which switches to GraphActivity.
 
-public class DataFragment extends Fragment {
+public class HistoricFragment extends Fragment {
     //private XYPlot plot;
     //private CarletonEnergyDataSource dataSource;
     private static boolean productionChecked = true;
@@ -63,7 +36,7 @@ public class DataFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        fragView = inflater.inflate(R.layout.fragment_data, container, false);
+        fragView = inflater.inflate(R.layout.fragment_historic, container, false);
 
         if (!isPortrait()) {
             Intent i = new Intent(this.getActivity(), GraphActivity.class).putExtra("buttonClickedStr", buttonClickedStr);

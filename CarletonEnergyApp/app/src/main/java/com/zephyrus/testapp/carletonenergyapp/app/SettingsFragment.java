@@ -16,7 +16,6 @@ import android.content.SharedPreferences;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
@@ -40,7 +39,7 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         fragView = inflater.inflate(R.layout.fragment_settings, container, false);
-        fragWind = inflater.inflate(R.layout.fragment_wind, container, false);
+        fragWind = inflater.inflate(R.layout.fragment_live, container, false);
         fragInfo = inflater.inflate(R.layout.fragment_info, container, false);
 
 
@@ -172,7 +171,7 @@ public class SettingsFragment extends Fragment {
 
         long when = System.currentTimeMillis();
         NotificationManager nm=(NotificationManager)this.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent intent=new Intent(this.getActivity(), WindFragment.class);
+        Intent intent=new Intent(this.getActivity(), LiveFragment.class);
         PendingIntent pending=PendingIntent.getActivity(this.getActivity(), 0, intent, 0);
         Notification notification = new Notification.Builder(this.getActivity()).setContentTitle("Pwr").setContentText("Omg this worked? that cray")
                 .setSmallIcon(R.drawable.launcher)

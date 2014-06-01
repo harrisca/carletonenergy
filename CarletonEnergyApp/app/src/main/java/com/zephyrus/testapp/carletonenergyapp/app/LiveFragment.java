@@ -9,10 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -34,7 +30,7 @@ public class LiveFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         //stores inflated view
-        fragView = inflater.inflate(R.layout.fragment_wind, container, false);
+        fragView = inflater.inflate(R.layout.fragment_live, container, false);
 
         //retrieves unit preferences
         sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);

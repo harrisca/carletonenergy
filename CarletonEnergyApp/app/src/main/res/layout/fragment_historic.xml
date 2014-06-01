@@ -1,0 +1,139 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zephyrus.testapp.carletonenergyapp.app.HistoricFragment"
+    android:background="@drawable/background_dawn"
+    android:id="@id/fragment_background">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/historic_graph">
+
+        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/label_graphable"
+            android:id="@id/graph_label"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20sp"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/production_label"
+            android:id="@id/checkbox_windmill"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consumption_label"
+            android:id="@id/checkbox_consumption"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/label_time_scale"
+            android:id="@id/radio_label"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20sp"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@id/radioOption_time"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/day_setting"
+                android:id="@id/radio_day" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/week_setting"
+                android:id="@id/radio_week" />
+
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/month_setting"
+                android:id="@id/radio_month"
+                android:singleLine="false" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/year_setting"
+                android:id="@id/radio_year" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_bar">
+
+            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/rotation_description"
+                android:id="@id/rotation_superlabel"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:layout_gravity="center_vertical" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:src="@drawable/divider"
+                android:layout_gravity="center_vertical" />
+
+            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/rotation_label"
+                android:id="@id/rotation_label"
+                android:textStyle="italic"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:textIsSelectable="false" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
