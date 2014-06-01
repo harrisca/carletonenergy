@@ -144,7 +144,7 @@ public class GraphActivity extends Activity {
 
         gw.getDomainOriginLinePaint().setColor(Color.BLACK);
         gw.getRangeOriginLinePaint().setColor(Color.BLACK);
-        gw.setSize(new SizeMetrics(1, SizeLayoutType.FILL, 10, SizeLayoutType.FILL));
+        gw.setSize(new SizeMetrics(50, SizeLayoutType.FILL, 50, SizeLayoutType.FILL));
         gw.setPaddingRight(2);
 
         LineAndPointFormatter proFormatter = new LineAndPointFormatter(Color.rgb(0,51,102), Color.rgb(0,51,102), null, null);

@@ -39,15 +39,25 @@
             androidPlot.legendWidget.positionMetrics.anchor="right_bottom"
             androidPlot.graphWidget.gridLinePaint.color="#000000"/>
 -->
+        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/dataFrag_instructions"
+            android:id="@+id/dataFragInstructions"
+            android:textStyle="italic"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp" />
+
 
         <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/rotation_label"
-            android:id="@+id/textView"
+            android:text="@string/checkBoxLabel"
+            android:id="@+id/checkBoxLabel"
             android:textStyle="italic"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center_horizontal|left"
             android:layout_margin="5dp" />
 
         <CheckBox
@@ -69,6 +79,16 @@
             android:textStyle="bold"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp" />
+
+        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/radioButtonLabel"
+            android:id="@+id/radioButtonLabel"
+            android:textStyle="italic"
+            android:layout_gravity="center_horizontal|left"
+            android:layout_margin="5dp" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
@@ -105,6 +125,16 @@
             android:text="@string/year_setting"
             android:id="@id/radio_year" />
         </RadioGroup>
+
+        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/rotation_label"
+            android:id="@+id/textView"
+            android:textStyle="bold|italic"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp" />
 
     </LinearLayout>
 
