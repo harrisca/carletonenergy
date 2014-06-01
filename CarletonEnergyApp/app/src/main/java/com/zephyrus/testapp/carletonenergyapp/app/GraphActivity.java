@@ -48,7 +48,8 @@ public class GraphActivity extends Activity {
 
     private XYPlot plot;
     private CarletonEnergyDataSource dataSource;
-    private String dependentVariable = "production1";
+    private static boolean productionChecked;
+    private static boolean consumptionChecked;
     private String buttonClicked;
     private String increment = "quarterhour";     //must be quarter-hour for day; hour for week; day for month/year
     private Calendar startTime;
@@ -61,6 +62,9 @@ public class GraphActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
         buttonClicked = getIntent().getStringExtra("buttonClicked");
+        productionChecked = getIntent().getBooleanExtra("productionChecked", true);
+        consumptionChecked = getIntent().getBooleanExtra("consumptionChecked", true);
+
 
         dataSource = CarletonEnergyDataSource.getSingleton();
 
@@ -82,12 +86,8 @@ public class GraphActivity extends Activity {
         // initialize our XYPlot reference:
         plot = (XYPlot) findViewById(R.id.graphActivityPlot);
 
-        //This will hopefully allow us to fix the scale along the x-axis
-        //right now, the axis is always in ms :/
-        Number scaleAxis;
 
         if(buttonClicked.equals("week")){
-            scaleAxis = 1;
             graphTitle = "This Week's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
@@ -95,7 +95,6 @@ public class GraphActivity extends Activity {
             increment = "hour";
         }
         else if (buttonClicked.equals("month")){
-            scaleAxis = 1;
             graphTitle = "This Month's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
@@ -103,7 +102,6 @@ public class GraphActivity extends Activity {
             increment = "day";
         }
         else if (buttonClicked.equals("year")){
-            scaleAxis = 1;
             graphTitle = "This Year's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
@@ -111,7 +109,6 @@ public class GraphActivity extends Activity {
             increment = "day";
         }
         else { //day by default
-            scaleAxis = 1;
             graphTitle = "Today's Energy";
             endTime = Calendar.getInstance();
             startTime = Calendar.getInstance();
@@ -196,12 +193,16 @@ public class GraphActivity extends Activity {
         //formatter.setFillPaint(lineFill);
         //proFormatter.setFillPaint(null);
         plot.getGraphWidget().setPaddingRight(2);
-        plot.addSeries(production, proFormatter);
+        if(productionChecked == true) {
+            plot.addSeries(production, proFormatter);
+        }
 
 
         LineAndPointFormatter conFormatter = new LineAndPointFormatter(Color.rgb(153,0,0), Color.rgb(153,0,0), null, null);
         //conFormatter.setFillPaint(null);
-        plot.addSeries(consumption, conFormatter);
+        if(consumptionChecked == true) {
+            plot.addSeries(consumption, conFormatter);
+        }
 
         // draw a domain tick for each year:
         //plot.setDomainStep(XYStepMode.SUBDIVIDE, 10);

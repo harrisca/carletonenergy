@@ -15,6 +15,8 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -43,12 +45,12 @@ import java.util.TimeZone;
 public class DataFragment extends Fragment {
     private XYPlot plot;
     private CarletonEnergyDataSource dataSource;
-    private String dependentVariable = "production1";
+    private static boolean productionChecked = true;
+    private static boolean consumptionChecked = true;
     private static String buttonClicked = "day";
     private String increment = "quarterhour"; //must be quarter-hour for day; hour for week; day for month/year
     private Calendar startTime;
     private Calendar endTime;
-    private Number scaleAxis;
     private String graphTitle = "Energy Data";
     private View fragView;
     private RadioGroup rg;
@@ -62,22 +64,44 @@ public class DataFragment extends Fragment {
 
         if (!isPortrait()) {
             Intent i = new Intent(this.getActivity(), GraphActivity.class).putExtra("buttonClicked", buttonClicked);
+            i.putExtra("productionChecked", productionChecked);
+            i.putExtra("consumptionChecked", consumptionChecked);
             RadioButton rb = (RadioButton) fragView.findViewById(R.id.radio_week);
             rb.setChecked(true);
             startActivity(i);
             getActivity().finish();
         }
-/*
-        final Calendar today = Calendar.getInstance();
-        final Calendar yesterday = Calendar.getInstance();
-        yesterday.add(Calendar.HOUR, -24);
-        final Calendar year_ago = Calendar.getInstance();
-        year_ago.add(Calendar.YEAR, -1);
-        final Calendar month_ago = Calendar.getInstance();
-        month_ago.add(Calendar.MONTH, -1);
-        final Calendar week_ago = Calendar.getInstance();
-        week_ago.add(Calendar.DATE, -7);
-*/
+
+        CheckBox proCheckbox = (CheckBox) fragView.findViewById(R.id.checkbox_windmill);
+        CheckBox conCheckbox = (CheckBox) fragView.findViewById(R.id.checkbox_consumption);
+
+        proCheckbox.setChecked(productionChecked);
+        conCheckbox.setChecked(consumptionChecked);
+
+        proCheckbox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton proCheckBox, boolean checked){
+                if(proCheckBox.isChecked()){
+                    productionChecked = true;
+                }
+                else {
+                    productionChecked = false;
+                }
+            }
+        });
+
+        conCheckbox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton conCheckBox, boolean checked){
+                if(conCheckBox.isChecked()){
+                    consumptionChecked = true;
+                }
+                else {
+                    consumptionChecked = false;
+                }
+            }
+        });
+
         rg = (RadioGroup) fragView.findViewById(R.id.radioOption_time);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -91,7 +115,6 @@ public class DataFragment extends Fragment {
                     case R.id.radio_day:
                         Log.i("radioButtonTest", "clicked day button");
                         buttonClicked = "day";
-                        scaleAxis = 1;
                         graphTitle = "Today's Energy";
                         endTime = Calendar.getInstance();
                         startTime = Calendar.getInstance();
@@ -102,7 +125,6 @@ public class DataFragment extends Fragment {
                     case R.id.radio_week:
                         Log.i("radioButtonTest", "clicked week button");
                         buttonClicked = "week";
-                        scaleAxis = 1;
                         graphTitle = "This Week's Energy";
                         endTime = Calendar.getInstance();
                         startTime = Calendar.getInstance();
@@ -113,7 +135,6 @@ public class DataFragment extends Fragment {
                     case R.id.radio_month:
                         Log.i("radioButtonTest", "clicked month button");
                         buttonClicked = "month";
-                        scaleAxis = 1;
                         graphTitle = "This Month's Energy";
                         endTime = Calendar.getInstance();
                         startTime = Calendar.getInstance();
@@ -124,7 +145,6 @@ public class DataFragment extends Fragment {
                     case R.id.radio_year:
                         Log.i("radioButtonTest", "clicked year button");
                         buttonClicked = "year";
-                        scaleAxis = 1;
                         graphTitle = "This Year's Energy";
                         endTime = Calendar.getInstance();
                         startTime = Calendar.getInstance();
@@ -132,7 +152,6 @@ public class DataFragment extends Fragment {
                         increment = "day";
                         graphTitle = "This Year's Energy";
                         break;
-
                 }
                 dataSource = CarletonEnergyDataSource.getSingleton();
 
@@ -140,7 +159,7 @@ public class DataFragment extends Fragment {
                 // initialize our XYPlot reference:
                 plot = (XYPlot) fragView.findViewById(R.id.dataFragGraph);
 
-                ArrayList<Double> productionGraphData = dataSource.getGraphData(dependentVariable, startTime.getTime(), endTime.getTime(), increment);
+                ArrayList<Double> productionGraphData = dataSource.getGraphData("production1", startTime.getTime(), endTime.getTime(), increment);
                 ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", startTime.getTime(), endTime.getTime(), increment);
                 Log.i("graph_data", productionGraphData.size() + "");
                 Log.i("graph_data", productionGraphData.size() + "");
@@ -215,13 +234,17 @@ public class DataFragment extends Fragment {
                 //formatter.setFillPaint(lineFill);
                 //proFormatter.setFillPaint(null);
                 plot.getGraphWidget().setPaddingRight(2);
-                plot.addSeries(production, proFormatter);
 
+                if(productionChecked == true) {
+                    plot.addSeries(production, proFormatter);
+                }
 
                 LineAndPointFormatter conFormatter = new LineAndPointFormatter(Color.rgb(153, 0, 0), Color.rgb(153, 0, 0), null, null);
                 //conFormatter.setFillPaint(null);
-                plot.addSeries(consumption, conFormatter);
 
+                if(consumptionChecked == true) {
+                    plot.addSeries(consumption, conFormatter);
+                }
                 // draw a domain tick for each year:
                 //plot.setDomainStep(XYStepMode.SUBDIVIDE, 10);
 
