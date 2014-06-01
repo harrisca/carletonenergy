@@ -31,12 +31,7 @@ public class InfoFragment extends Fragment {
             case 2:
                 fragView.setBackgroundResource(R.drawable.background_sunset);
                 break;
-            case 3:
-                fragView.setBackgroundResource(R.drawable.background_evening);
-                break;
-            case 4:
-                fragView.setBackgroundResource(R.drawable.background_dusk);
-                break;
+
         }
 
 
@@ -55,6 +50,23 @@ public class InfoFragment extends Fragment {
     public void onDestroyView(){
         super.onDestroyView();
         fragView = null;
+    }
+
+
+    public void onResume(){
+        super.onResume();
+        SharedPreferences sharedPref = fragView.getContext().getSharedPreferences("preferences", 0);
+        switch (sharedPref.getInt("background", 0)){
+            case 0:
+                fragView.setBackgroundResource(R.drawable.background_dawn);
+                break;
+            case 1:
+                fragView.setBackgroundResource(R.drawable.background_day);
+                break;
+            case 2:
+                fragView.setBackgroundResource(R.drawable.background_sunset);
+                break;
+        }
     }
 
 

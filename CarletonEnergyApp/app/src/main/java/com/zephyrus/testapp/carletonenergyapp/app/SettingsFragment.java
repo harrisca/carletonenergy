@@ -32,12 +32,17 @@ public class SettingsFragment extends Fragment {
     int notificationToggle;
     Spinner spinner1;
     View fragView;
+    View fragWind;
+    View fragInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         fragView = inflater.inflate(R.layout.fragment_settings, container, false);
+        fragWind = inflater.inflate(R.layout.fragment_wind, container, false);
+        fragInfo = inflater.inflate(R.layout.fragment_info, container, false);
+
 
         sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);
         units = sharedPref.getInt("units", 0);
@@ -53,10 +58,10 @@ public class SettingsFragment extends Fragment {
                 fragView.setBackgroundResource(R.drawable.background_sunset);
                 break;
             case 3:
-                fragView.setBackgroundResource(R.drawable.background_evening);
-                break;
-            case 4:
-                fragView.setBackgroundResource(R.drawable.background_dusk);
+                Log.e("no", "plzno");
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("background", 0 );
+                editor.commit();
                 break;
         }
 
@@ -96,8 +101,6 @@ public class SettingsFragment extends Fragment {
         list.add("Color Scheme: Dawn");
         list.add("Color Scheme: Day");
         list.add("Color Scheme: Sunset");
-        list.add("Color Scheme: Evening");
-        list.add("Color Scheme: Dusk");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String> (fragView.getContext(), android.R.layout.simple_spinner_item,list);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -112,19 +115,24 @@ public class SettingsFragment extends Fragment {
                 switch (pos){
                     case 0:
                         fragView.setBackgroundResource(R.drawable.background_dawn);
+                        fragWind.setBackgroundResource(R.drawable.background_dawn);
+                        fragInfo.setBackgroundResource(R.drawable.background_dawn);
+
+
                         break;
                     case 1:
-                        fragView.setBackgroundResource(R.drawable.background_dusk);
+                        fragView.setBackgroundResource(R.drawable.background_day);
+                        fragWind.setBackgroundResource(R.drawable.background_day);
+                        fragInfo.setBackgroundResource(R.drawable.background_day);
+
                         break;
                     case 2:
                         fragView.setBackgroundResource(R.drawable.background_sunset);
+                        fragWind.setBackgroundResource(R.drawable.background_sunset);
+                        fragInfo.setBackgroundResource(R.drawable.background_sunset);
+
                         break;
-                    case 3:
-                        fragView.setBackgroundResource(R.drawable.background_evening);
-                        break;
-                    case 4:
-                        fragView.setBackgroundResource(R.drawable.background_dusk);
-                        break;
+
 
                 }
 
