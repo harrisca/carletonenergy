@@ -98,13 +98,6 @@ public class LoadActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_sync) {
-
-            Context context = getApplicationContext();
-            CharSequence text = getString(R.string.RefreshButton);
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
             return true;
         }
         return super.onOptionsItemSelected(item);
