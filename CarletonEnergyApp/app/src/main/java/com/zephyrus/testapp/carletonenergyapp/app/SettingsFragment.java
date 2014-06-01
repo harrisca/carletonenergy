@@ -16,7 +16,6 @@ import android.content.SharedPreferences;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
@@ -86,9 +85,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
-
-
         //Making a spinner
         Spinner spinner = (Spinner) fragView.findViewById(R.id.font_choice);
         spinner1 = (Spinner) fragView.findViewById(R.id.font_choice);
@@ -114,7 +110,7 @@ public class SettingsFragment extends Fragment {
                         fragView.setBackgroundResource(R.drawable.background_dawn);
                         break;
                     case 1:
-                        fragView.setBackgroundResource(R.drawable.background_dusk);
+                        fragView.setBackgroundResource(R.drawable.background_day);
                         break;
                     case 2:
                         fragView.setBackgroundResource(R.drawable.background_sunset);
@@ -164,7 +160,7 @@ public class SettingsFragment extends Fragment {
 
         long when = System.currentTimeMillis();
         NotificationManager nm=(NotificationManager)this.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent intent=new Intent(this.getActivity(), WindFragment.class);
+        Intent intent=new Intent(this.getActivity(), LiveFragment.class);
         PendingIntent pending=PendingIntent.getActivity(this.getActivity(), 0, intent, 0);
         Notification notification = new Notification.Builder(this.getActivity()).setContentTitle("Pwr").setContentText("Omg this worked? that cray")
                 .setSmallIcon(R.drawable.launcher)

@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 
-public class WindFragment extends Fragment {
+public class LiveFragment extends Fragment {
 
     private boolean windmillOneOnly;
     View fragView;

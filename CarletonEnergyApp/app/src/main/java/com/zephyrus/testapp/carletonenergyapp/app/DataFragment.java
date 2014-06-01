@@ -163,7 +163,7 @@ public class DataFragment extends Fragment {
 
                 Log.i("radioButtonTest", "starting to graph");
                 // initialize our XYPlot reference:
-                plot = (XYPlot) fragView.findViewById(R.id.dataFragGraph);
+                //plot = (XYPlot) fragView.findViewById(R.id.dataFragGraph);
 
                 ArrayList<Double> productionGraphData = dataSource.getGraphData("production1", startTime.getTime(), endTime.getTime(), increment);
                 ArrayList<Double> consumptionGraphData = dataSource.getGraphData("consumption", startTime.getTime(), endTime.getTime(), increment);

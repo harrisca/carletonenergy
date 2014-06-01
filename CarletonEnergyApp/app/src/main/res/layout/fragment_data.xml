@@ -1,7 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.zephyrus.testapp.carletonenergyapp.app.DataFragment"
     android:background="@drawable/background_dawn"
     android:id="@id/fragment_background">
@@ -11,42 +12,18 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="4">
-
-        <com.androidplot.xy.XYPlot
-            android:id="@+id/dataFragGraph"
-            android:layout_width="fill_parent"
-            android:layout_height="300dp"
-            androidPlot.title="Energy Data"
-            androidPlot.domainLabel="Time"
-            androidPlot.rangeLabel="Power (kW)"
-            androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"
-            androidPlot.domainLabelWidget.labelPaint.textSize="@dimen/domain_label_font_size"
-            androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_label_font_size"
-            androidPlot.graphWidget.marginTop="20dp"
-            androidPlot.graphWidget.marginLeft="15dp"
-            androidPlot.graphWidget.marginBottom="25dp"
-            androidPlot.graphWidget.marginRight="10dp"
-            androidPlot.graphWidget.rangeLabelPaint.textSize="@dimen/range_tick_label_font_size"
-            androidPlot.graphWidget.rangeOriginLabelPaint.textSize="@dimen/range_tick_label_font_size"
-            androidPlot.graphWidget.domainLabelPaint.textSize="@dimen/domain_tick_label_font_size"
-            androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_label_font_size"
-            androidPlot.legendWidget.textPaint.textSize="@dimen/legend_text_font_size"
-            androidPlot.legendWidget.iconSizeMetrics.heightMetric.value="15dp"
-            androidPlot.legendWidget.iconSizeMetrics.widthMetric.value="15dp"
-            androidPlot.legendWidget.heightMetric.value="25dp"
-            androidPlot.legendWidget.positionMetrics.anchor="right_bottom"
-            androidPlot.graphWidget.gridLinePaint.color="#000000"/>
+        android:background="@drawable/historic_graph">
 
         <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/rotation_label"
-            android:id="@+id/textView"
-            android:textStyle="italic"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="5dp" />
+            android:text="@string/label_graphable"
+            android:id="@id/graph_label"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20sp"
+            android:textStyle="bold"
+            android:textSize="25sp" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -54,7 +31,6 @@
             android:text="@string/production_label"
             android:id="@id/checkbox_windmill"
             android:layout_marginLeft="40dp"
-            android:textStyle="bold"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp" />
 
@@ -64,9 +40,19 @@
             android:text="@string/consumption_label"
             android:id="@id/checkbox_consumption"
             android:layout_marginLeft="40dp"
-            android:textStyle="bold"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp" />
+
+        <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/label_time_scale"
+            android:id="@id/radio_label"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20sp"
+            android:textStyle="bold"
+            android:textSize="25sp" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
@@ -102,8 +88,52 @@
             android:layout_height="wrap_content"
             android:text="@string/year_setting"
             android:id="@id/radio_year" />
+
         </RadioGroup>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_bar">
+
+            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/rotation_description"
+                android:id="@id/rotation_superlabel"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:layout_gravity="center_vertical" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:src="@drawable/divider"
+                android:layout_gravity="center_vertical" />
+
+            <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/rotation_label"
+                android:id="@id/rotation_label"
+                android:textStyle="italic"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:textIsSelectable="false" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

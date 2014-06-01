@@ -29,4 +29,9 @@
     <item name="radioOption_time" type="id" />
     <item name="windmill_anim" type="id" />
     <item name="fragment_background" type="id" />
+    <item name="title_about" type="id" />
+    <item name="rotation_label" type="id" />
+    <item name="rotation_superlabel" type="id" />
+    <item name="radio_label" type="id" />
+    <item name="graph_label" type="id" />
 </resources>

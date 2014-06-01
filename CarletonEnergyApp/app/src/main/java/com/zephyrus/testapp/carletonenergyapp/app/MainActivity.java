@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 
 
@@ -32,12 +31,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-
+    Boolean isSyncing;
     /**
      * The data source available to all fragments
      */
 
-    //CarletonEnergyDataSource dataSrc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +77,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
 
+        //jumps to a specified tab
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
             if(extras!=null){
                 setCurrentView(extras.getInt("jumpToTab"));
             }
         }
+
+        //sets isSyncing to false
+        isSyncing = false;
     }
 
     @Override
@@ -126,7 +128,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager.setCurrentItem(viewNum);
     }
 
-    public void manualSync(){ CarletonEnergyDataSource.getSingleton().sync();    }
+    //calls the datasource to sync and refreshes all screens
+    public void manualSync(){
+        if(!isSyncing) {
+            isSyncing = true;
+            CarletonEnergyDataSource.getSingleton().sync();
+            isSyncing = false;
+        }
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -145,7 +154,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             switch (position) {
                 case 0:
                     // Top Rated fragment activity
-                    return new WindFragment();
+                    return new LiveFragment();
                 case 1:
                     // Games fragment activity
                     return new DataFragment();
