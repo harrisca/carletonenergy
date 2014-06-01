@@ -42,6 +42,27 @@ public class WindFragment extends Fragment {
         //Log.i("units", "units in WindFrag: " + units);
 
 
+        switch (sharedPref.getInt("background", 0)){
+            case 0:
+                fragView.setBackgroundResource(R.drawable.background_dawn);
+                break;
+            case 1:
+                fragView.setBackgroundResource(R.drawable.background_dusk);
+                break;
+            case 2:
+                fragView.setBackgroundResource(R.drawable.background_sunset);
+                break;
+            case 3:
+                fragView.setBackgroundResource(R.drawable.background_evening);
+                break;
+            case 4:
+                fragView.setBackgroundResource(R.drawable.background_dusk);
+                break;
+        }
+
+
+
+
         //initializes fields
         windmillOneOnly = true;
         updateTextFields();

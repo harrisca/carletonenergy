@@ -42,6 +42,24 @@ public class SettingsFragment extends Fragment {
         sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);
         units = sharedPref.getInt("units", 0);
 
+        switch (sharedPref.getInt("background", 0)){
+            case 0:
+                fragView.setBackgroundResource(R.drawable.background_dawn);
+                break;
+            case 1:
+                fragView.setBackgroundResource(R.drawable.background_dusk);
+                break;
+            case 2:
+                fragView.setBackgroundResource(R.drawable.background_sunset);
+                break;
+            case 3:
+                fragView.setBackgroundResource(R.drawable.background_evening);
+                break;
+            case 4:
+                fragView.setBackgroundResource(R.drawable.background_dusk);
+                break;
+        }
+
         ToggleButton unitsToggle = (ToggleButton) fragView.findViewById(R.id.UnitsToggle);
         if(units==1){
             unitsToggle.setChecked(true);
@@ -89,7 +107,30 @@ public class SettingsFragment extends Fragment {
             {
 
                 Object item = parent.getItemAtPosition(pos);
-                System.out.println("it works...   ");
+
+                switch (pos){
+                    case 0:
+                        fragView.setBackgroundResource(R.drawable.background_dawn);
+                        break;
+                    case 1:
+                        fragView.setBackgroundResource(R.drawable.background_dusk);
+                        break;
+                    case 2:
+                        fragView.setBackgroundResource(R.drawable.background_sunset);
+                        break;
+                    case 3:
+                        fragView.setBackgroundResource(R.drawable.background_evening);
+                        break;
+                    case 4:
+                        fragView.setBackgroundResource(R.drawable.background_dusk);
+                        break;
+
+                }
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("background", pos );
+                editor.commit();
+                units = sharedPref.getInt("units", 0);
             }
 
             public void onNothingSelected(AdapterView<?> parent)
