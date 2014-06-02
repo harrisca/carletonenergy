@@ -13,7 +13,10 @@
     <string name="consumption_label">Campus Demand</string>
     <string name="production_label">Windmill Production</string>
     <string name="last_updated_label">LAST UPDATED </string>
-    <string name="rotation_label">Rotate device to generate fullscreen graph.</string>
+    <string name="rotation_label">\nrotate screen to see graph</string>
+    <string name="dataFrag_instructions">\n\nHistorical data can be viewed in a graph.\nUse the buttons below to select the data you would like to view.\n</string>
+    <string name="radioButtonLabel">Time frame:</string>
+    <string name="checkBoxLabel">View data about:</string>
     <string name="unit_mph">mph</string>
     <string name="kWH_consumption">kW</string>
     <string name="kWh_production">kW</string>
