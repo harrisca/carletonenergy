@@ -2,6 +2,7 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import java.util.Locale;
 
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -42,7 +43,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -119,7 +119,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
-
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
@@ -127,7 +126,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager.setCurrentItem(viewNum);
     }
 
-    //calls the datasource to sync and refreshes all screens
+    //calls the datasource to sync
     public void manualSync(){
         if(!isSyncing) {
             isSyncing = true;
@@ -148,23 +147,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         public Fragment getItem(int position) {
-
-
+            //creates the four different fragments associated with tabs
             switch (position) {
                 case 0:
-                    // Top Rated fragment activity
                     return new LiveFragment();
                 case 1:
-                    // Games fragment activity
                     return new HistoricFragment();
                 case 2:
-                    // Movies fragment activity
                     return new InfoFragment();
                 case 3:
-                    // Movies fragment activity
                     return new SettingsFragment();
             }
-
             return null;
         }
 
@@ -187,8 +180,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return null;
         }
 
+        //garbage collect
         public void destroyItem(ViewGroup collection, int position, Object o){
-            o = null;
+           o = null;
         }
     }
 }
