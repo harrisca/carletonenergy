@@ -2,6 +2,7 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import java.util.Locale;
 
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,13 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,  OnButtonClickedListener{
+
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -35,6 +39,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     /**
      * The data source available to all fragments
      */
+
+
+
+
 
 
     @Override
@@ -117,12 +125,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
     public void setCurrentView(int viewNum){
         mViewPager.setCurrentItem(viewNum);
@@ -137,6 +143,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
+    @Override
+    public void onButtonClicked() {
+        Intent intent = new Intent(this, MainActivity.class);
+        int jumpToData = 3;
+        intent.putExtra("jumpToTab",jumpToData);
+        startActivity(intent);
+        finish();
+
+        }
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -145,6 +162,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
 
         @Override

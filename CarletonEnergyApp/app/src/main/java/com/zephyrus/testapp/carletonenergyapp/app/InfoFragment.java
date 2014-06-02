@@ -70,4 +70,9 @@ public class InfoFragment extends Fragment {
     }
 
 
+    public interface OnArticleSelectedListener {
+        public void onArticleSelected();
+    }
+
+
 }

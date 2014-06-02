@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,17 @@ public class SettingsFragment extends Fragment {
     View fragView;
     View fragWind;
     View fragInfo;
+    OnButtonClickedListener mListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnButtonClickedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnButtonClickedListener ");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +92,7 @@ public class SettingsFragment extends Fragment {
                 editor.commit();
                 units = sharedPref.getInt("units", 0);
                 Log.i("units", "units in settings: " + units);
+                mListener.onButtonClicked();
             }
         });
         ToggleButton notificationButton = (ToggleButton) fragView.findViewById(R.id.notificationButton);
@@ -135,10 +148,16 @@ public class SettingsFragment extends Fragment {
 
                 }
 
+                int refresh = 0;
+
+                if(pos != sharedPref.getInt("background", 0)){refresh = 1;}
                 SharedPreferences.Editor editor = sharedPref.edit();
+
+
                 editor.putInt("background", pos );
                 editor.commit();
                 units = sharedPref.getInt("units", 0);
+                if(refresh==1){mListener.onButtonClicked();}
             }
 
             public void onNothingSelected(AdapterView<?> parent)
