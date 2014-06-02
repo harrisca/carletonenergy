@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 
@@ -117,12 +118,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
     public void setCurrentView(int viewNum){
         mViewPager.setCurrentItem(viewNum);

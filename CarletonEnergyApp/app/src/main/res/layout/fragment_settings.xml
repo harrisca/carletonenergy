@@ -30,7 +30,8 @@
             android:checked="false"
             android:textOff="Notifications: Off"
             android:textOn= "Notifications: On"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="20sp" />
 
         <Spinner
             android:layout_width="match_parent"
@@ -49,7 +50,7 @@
             android:textOff="Temperature Units: Celsius"
             android:textOn="Temperature Units: Fahrenheit"
             android:layout_weight="1"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 

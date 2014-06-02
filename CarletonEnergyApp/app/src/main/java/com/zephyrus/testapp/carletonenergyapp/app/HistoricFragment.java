@@ -317,5 +317,14 @@ public class HistoricFragment extends Fragment {
         else
             return false;
     }
+
+    public void jumpToGraph(){
+        Intent i = new Intent(this.getActivity(), GraphActivity.class).putExtra("buttonClickedStr", buttonClickedStr);
+        i.putExtra("productionChecked", productionChecked);
+        i.putExtra("consumptionChecked", consumptionChecked);
+        startActivity(i);
+        getActivity().finish();
+
+    }
 }
 
