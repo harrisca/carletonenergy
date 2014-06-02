@@ -26,6 +26,7 @@ public class CustomTextView extends TextView {
     }
 
     @Override
+    //set generic typefaces
     public void setTypeface(Typeface tf, int style) {
         if (style == Typeface.BOLD) {
             super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/source_sans_bd.ttf"));

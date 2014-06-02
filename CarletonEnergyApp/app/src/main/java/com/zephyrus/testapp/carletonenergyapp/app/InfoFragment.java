@@ -33,8 +33,6 @@ public class InfoFragment extends Fragment {
                 break;
 
         }
-
-
         return fragView;
     }
 
@@ -67,6 +65,11 @@ public class InfoFragment extends Fragment {
                 fragView.setBackgroundResource(R.drawable.background_sunset);
                 break;
         }
+    }
+
+
+    public interface OnArticleSelectedListener {
+        public void onArticleSelected();
     }
 
 

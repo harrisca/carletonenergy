@@ -101,7 +101,8 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bottom_bar">
+            android:background="@drawable/bottom_bar"
+            android:layout_gravity="center">
 
             <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
                 android:layout_width="wrap_content"
@@ -112,7 +113,8 @@
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:layout_marginLeft="30dp"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:clickable="false" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -124,13 +126,12 @@
             <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/rotation_label"
                 android:id="@id/rotation_label"
                 android:textStyle="italic"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:textIsSelectable="false" />
+                android:textIsSelectable="false"
+                android:layout_marginLeft="5dp"
+                android:textSize="16sp" />
 
         </LinearLayout>
 

@@ -1,8 +1,6 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
-import android.app.IntentService;
 import android.content.Intent;
-import android.content.Context;
 
 
 import android.app.Service;

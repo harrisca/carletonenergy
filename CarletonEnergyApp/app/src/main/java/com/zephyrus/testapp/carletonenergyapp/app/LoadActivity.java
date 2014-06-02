@@ -72,7 +72,7 @@ public class LoadActivity extends Activity {
         Log.i("Load: ", "Sync Successfully started");
         */
 
-        // show splash screen for 3 seconds
+        // show splash screen for 5 seconds
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

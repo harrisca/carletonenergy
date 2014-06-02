@@ -25,9 +25,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-//Displays a graph according to the buttons selected in DataFragment.
+//Displays a graph according to the buttons selected in HistoricFragment.
 //This screen is accessed by rotating the device from Portrait to Landscape while
-//on the DataFragment sceen.
+//on the HistoricFragment screen.
 
 public class GraphActivity extends Activity {
 
@@ -142,10 +142,9 @@ public class GraphActivity extends Activity {
         //Formatting our graph display
         XYGraphWidget gw = plot.getGraphWidget();
 
-        gw.getDomainOriginLinePaint().setColor(Color.BLACK);
-        gw.getRangeOriginLinePaint().setColor(Color.BLACK);
         gw.setSize(new SizeMetrics(50, SizeLayoutType.FILL, 50, SizeLayoutType.FILL));
-        gw.setPaddingRight(2);
+        gw.setPaddingRight(15);
+        gw.setPaddingLeft(2);
 
         LineAndPointFormatter proFormatter = new LineAndPointFormatter(Color.rgb(0,51,102), Color.rgb(0,51,102), null, null);
         LineAndPointFormatter conFormatter = new LineAndPointFormatter(Color.rgb(153,0,0), Color.rgb(153,0,0), null, null);

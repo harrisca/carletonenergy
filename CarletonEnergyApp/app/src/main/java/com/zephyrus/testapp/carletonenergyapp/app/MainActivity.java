@@ -2,6 +2,7 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import java.util.Locale;
 
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,13 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,  OnButtonClickedListener{
+
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -37,11 +41,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
 
 
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -117,18 +124,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
     public void setCurrentView(int viewNum){
         mViewPager.setCurrentItem(viewNum);
     }
 
-    //calls the datasource to sync and refreshes all screens
+    //calls the datasource to sync
     public void manualSync(){
         if(!isSyncing) {
             isSyncing = true;
@@ -136,6 +140,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             isSyncing = false;
         }
     }
+
+    @Override
+    public void onButtonClicked() {
+        Intent intent = new Intent(this, MainActivity.class);
+        int jumpToData = 3;
+        intent.putExtra("jumpToTab",jumpToData);
+        startActivity(intent);
+        finish();
+
+        }
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -148,24 +163,23 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+        @Override
         public Fragment getItem(int position) {
-
-
+            //creates the four different fragments associated with tabs
             switch (position) {
                 case 0:
-                    // Top Rated fragment activity
                     return new LiveFragment();
                 case 1:
-                    // Games fragment activity
                     return new HistoricFragment();
                 case 2:
-                    // Movies fragment activity
                     return new InfoFragment();
                 case 3:
-                    // Movies fragment activity
                     return new SettingsFragment();
             }
-
             return null;
         }
 
@@ -188,8 +202,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return null;
         }
 
+        //garbage collect
         public void destroyItem(ViewGroup collection, int position, Object o){
-            o = null;
+           o = null;
         }
     }
 }

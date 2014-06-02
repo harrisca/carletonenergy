@@ -98,11 +98,9 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="F"
                 android:id="@id/temperature_type"
-                android:textStyle="italic"
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:layout_alignTop="@id/temperature_display"
-                android:layout_alignLeft="@id/windspeed_unit"
-                android:layout_marginTop="8dp" />
+                android:layout_alignLeft="@id/windspeed_unit" />
 
             <com.zephyrus.testapp.carletonenergyapp.app.CustomTextView
                 android:layout_width="wrap_content"
@@ -198,7 +196,7 @@
                 android:id="@id/percent_wind_label"
                 android:layout_weight="0.5"
                 android:layout_marginLeft="10dp"
-                android:textSize="25sp" />
+                android:textSize="27sp" />
 
         </LinearLayout>
 
