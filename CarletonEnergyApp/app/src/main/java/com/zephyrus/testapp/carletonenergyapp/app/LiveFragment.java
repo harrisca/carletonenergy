@@ -19,7 +19,6 @@ import java.util.TimeZone;
 
 public class LiveFragment extends Fragment {
 
-    private boolean windmillOneOnly;
     View fragView;
     public static final String PREFS_NAME = "preferences";
     SharedPreferences sharedPref;
@@ -38,6 +37,7 @@ public class LiveFragment extends Fragment {
         //Log.i("units", "units in WindFrag: " + units);
 
 
+        //sets background
         switch (sharedPref.getInt("background", 0)){
             case 0:
                 fragView.setBackgroundResource(R.drawable.background_dawn);
@@ -50,14 +50,8 @@ public class LiveFragment extends Fragment {
                 break;
 
         }
-
-
-
-
         //initializes fields
-        windmillOneOnly = true;
         updateTextFields();
-        animateWindmill();
 
         return fragView;
     }
@@ -90,6 +84,7 @@ public class LiveFragment extends Fragment {
         fragView = null;
         }
 
+    //updates all data fields with current data from CEDS
     public void updateTextFields(){
         //Log.i("units", "updatingTextFields");
         CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
@@ -148,39 +143,6 @@ public class LiveFragment extends Fragment {
             if(a != null) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
-
-    public void animateWindmill(){
-        /*
-        ImageView windmill = (ImageView)fragView.findViewById(R.id.windmill_anim);
-        Animation anim = new RotateAnimation(30,360, windmill.getPivotX(), windmill.getPivotY());
-        anim.setDuration(2000);               // duration in ms
-        anim.setRepeatCount(-1);                // -1 = infinite repeated
-        anim.setRepeatMode(Animation.INFINITE);
-        windmill.startAnimation(anim);
-        */
-    }
-
-    /*
-    //switches windmill animation on tap
-    public void switchAnimation(View view){
-
-        if(windmillOneOnly == true) {
-            ImageView anim = (ImageView) fragView.findViewById(R.id.windmillAnim);
-            anim.setImageResource(R.drawable.windmill_second_anim);
-            ImageView post = (ImageView) fragView.findViewById(R.id.windmill_post);
-            post.setImageResource(R.drawable.windmill_stand_inverted);
-            windmillOneOnly = false;
-        }
-        else{
-            ImageView anim = (ImageView) fragView.findViewById(R.id.windmillAnim);
-            anim.setImageResource(R.drawable.windmill_anim);
-            ImageView post = (ImageView) fragView.findViewById(R.id.windmill_post);
-            post.setImageResource(R.drawable.windmill_stand);
-            windmillOneOnly = true;
-        }
-    }
-*/
-
 
     public void onResume(){
         Log.i("windresume", "started");

@@ -1,8 +1,6 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
-import android.app.IntentService;
 import android.content.Intent;
-import android.content.Context;
 
 
 import android.app.Service;
@@ -18,7 +16,7 @@ import android.util.Log;
 public class SyncService extends Service {
 
     private static final Object sSyncAdapterLock = new Object();
-    private static carlSyncAdapter sSyncAdapter = null;
+    private static CarlSyncAdapter sSyncAdapter = null;
 
     @Override
     public void onCreate() {
@@ -26,7 +24,7 @@ public class SyncService extends Service {
         synchronized (sSyncAdapterLock) {
             if (sSyncAdapter == null) {
                 Log.i("Service: ", "syncadapter created");
-                sSyncAdapter = new carlSyncAdapter(getApplicationContext(), true);
+                sSyncAdapter = new CarlSyncAdapter(getApplicationContext(), true);
             }
         }
     }
