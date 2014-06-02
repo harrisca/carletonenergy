@@ -1,6 +1,7 @@
 package com.zephyrus.testapp.carletonenergyapp.app;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -31,14 +32,31 @@ public class HistoricFragment extends Fragment {
     //private String graphTitle = "Energy Data";
     private View fragView;
     private RadioGroup rg;
+    SharedPreferences sharedPref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         fragView = inflater.inflate(R.layout.fragment_historic, container, false);
+        sharedPref = fragView.getContext().getSharedPreferences("preferences", 0);
+        //Log.i("units", "units in WindFrag: " + units);
 
-        if (!isPortrait()) {
+
+        switch (sharedPref.getInt("background", 0)) {
+            case 0:
+                fragView.setBackgroundResource(R.drawable.background_dawn);
+                break;
+            case 1:
+                fragView.setBackgroundResource(R.drawable.background_day);
+                break;
+            case 2:
+                fragView.setBackgroundResource(R.drawable.background_sunset);
+                break;
+        }
+
+
+            if (!isPortrait()) {
             Intent i = new Intent(this.getActivity(), GraphActivity.class).putExtra("buttonClickedStr", buttonClickedStr);
             i.putExtra("productionChecked", productionChecked);
             i.putExtra("consumptionChecked", consumptionChecked);

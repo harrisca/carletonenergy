@@ -56,6 +56,27 @@ public class LiveFragment extends Fragment {
         return fragView;
     }
 
+    public void refresh(){
+        sharedPref = fragView.getContext().getSharedPreferences(PREFS_NAME, 0);
+        units = sharedPref.getInt("units", 0);
+        //Log.i("units", "units in WindFrag: " + units);
+
+
+        switch (sharedPref.getInt("background", 0)){
+            case 0:
+                fragView.setBackgroundResource(R.drawable.background_dawn);
+                break;
+            case 1:
+                fragView.setBackgroundResource(R.drawable.background_day);
+                break;
+            case 2:
+                fragView.setBackgroundResource(R.drawable.background_sunset);
+                break;
+
+        }
+        updateTextFields();
+    }
+
     //clean up
     public void onDestroyView(){
         super.onDestroyView();
@@ -125,18 +146,7 @@ public class LiveFragment extends Fragment {
 
     public void onResume(){
         Log.i("windresume", "started");
-        SharedPreferences sharedPref = fragView.getContext().getSharedPreferences("preferences", 0);
-        switch (sharedPref.getInt("background", 0)){
-            case 0:
-                fragView.setBackgroundResource(R.drawable.background_dawn);
-                break;
-            case 1:
-                fragView.setBackgroundResource(R.drawable.background_day);
-                break;
-            case 2:
-                fragView.setBackgroundResource(R.drawable.background_sunset);
-                break;
-        }
+        fragView.invalidate();
         super.onResume();
     }
 }
