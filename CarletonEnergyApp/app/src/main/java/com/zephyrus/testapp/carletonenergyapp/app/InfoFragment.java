@@ -33,8 +33,6 @@ public class InfoFragment extends Fragment {
                 break;
 
         }
-
-
         return fragView;
     }
 
