@@ -25,7 +25,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.SimpleTimeZone;
 
-//This is a class for dealing with energy
+/*
+ * Collects and stores relevant wind and energy data for our app
+ */
 public class CarletonEnergyDataSource {
     public static CarletonEnergyDataSource singleton;
     private double currentTemperature;
@@ -36,7 +38,6 @@ public class CarletonEnergyDataSource {
     private long lastUpdated;
     private Context context;
     public static final String PREFS_NAME = "preferences";
-    int notificationToggle;
 
     public CarletonEnergyDataSource(Context context) {
         this.context = context;
@@ -51,8 +52,6 @@ public class CarletonEnergyDataSource {
             this.lastUpdated = time_l;
         }
 
-        //degreeUnits = sharedPref.getString("degreeUnits", "C");
-        //notificationToggle = sharedPref.getInt("notifications", 0);
     }
 
     public static CarletonEnergyDataSource getSingleton() {
@@ -189,41 +188,8 @@ public class CarletonEnergyDataSource {
                 Log.i("sync", "windmill1 " + getLiveProduction(1));
                 Log.i("sync", "temp " + getCurrentTemperature());
                 Log.i("sync", "wind " + getCurrentWindSpeed());
-
-                //Log.i("sync", "" + getGraphData("consumption", ));
             }
         }).start();
-
-    }
-
-    public void syncUnThreaded()  {
-
-                try {
-                    syncWeatherData();
-                } catch (IOException e) {
-                    Log.i("sync", "error syncing weather data");
-                    e.printStackTrace();
-                }
-                try {
-                    syncEnergyData();
-                } catch (IOException e) {
-                    Log.i("sync", "error syncing energy data");
-                    e.printStackTrace();
-                }
-
-                lastUpdated = System.currentTimeMillis();
-
-                DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
-
-                Log.i("sync", "synced at: " + lastUpdated);
-                Log.i("sync/time", "local time: " + df.format(lastUpdated));
-                Log.i("sync", "consumption " + getLiveConsumption());
-                Log.i("sync", "windmill1 " + getLiveProduction(1));
-                Log.i("sync", "temp " + getCurrentTemperature());
-                Log.i("sync", "wind " + getCurrentWindSpeed());
-
-                //Log.i("sync", "" + getGraphData("consumption", ));
 
     }
 
@@ -237,43 +203,32 @@ public class CarletonEnergyDataSource {
         //today.add(Calendar.MINUTE, -15);
         Calendar year_ago = Calendar.getInstance();
         year_ago.add(Calendar.YEAR, -1);
-        Calendar month_ago = Calendar.getInstance();
-        month_ago.add(Calendar.MONTH, -1);
+        Calendar week_ago = Calendar.getInstance();
+        week_ago.add(Calendar.MONTH, -1);
         Calendar day_ago = Calendar.getInstance();
         day_ago.add(Calendar.DATE, -1);
 
 
-
         String consumption_point = "carleton_campus_en_use";
-        //TODO: not sure production point we should be using - maybe both?
-        //String production_point = "carleton_turbine1_produced_power";
         String production_point = "carleton_wind_production";
 
+        //get the two live data points for first screen
 
-
-        // get data and store in separate files for each time-range and data point
-
-        // quarter-hourly consumption for past 24 hours
         String quarter_hourly_consumption = readEnergyJSON(day_ago.getTime(), today.getTime(), "quarterhour", consumption_point);
         Log.i("quarter_hourly_consumption", quarter_hourly_consumption);
         // update liveConsumption based on data from most recent complete 1/4 hour
         String[] consumption_list = quarter_hourly_consumption.split("[\n|\r]");
-        String recent_consumption_line = consumption_list[consumption_list.length - 2];
-        Log.i("syncEnergyData", recent_consumption_line);
-        // lucid data is returned in average kW over time period - this is ok for live
+        String recent_consumption_line = consumption_list[consumption_list.length - 5];
         liveConsumption = (Double.parseDouble(recent_consumption_line.substring(recent_consumption_line.indexOf(';') + 1, recent_consumption_line.length())));
-        Log.i("syncEnergyData", "liveConsumption: " + liveConsumption);
 
         // quarter-hourly windmill1 production for past 24 hours
         String quarter_hourly_production1 = readEnergyJSON(day_ago.getTime(), today.getTime(), "quarterhour", production_point);
-        Log.i("quarter_hourly_production1", quarter_hourly_production1);
         // update liveProduction based on data from most recent complete 1/4 hour
         String[] production1_list = quarter_hourly_production1.split("[\n|\r]");
-        String recent_production1_line = production1_list[production1_list.length - 2];
-        Log.i("syncEnergyData", recent_production1_line);
+        String recent_production1_line = production1_list[production1_list.length - 5];
         liveProduction1 = (Double.parseDouble(recent_production1_line.substring(recent_production1_line.indexOf(';') + 1, recent_production1_line.length())));
-        Log.i("energyData", "" + liveProduction1);
 
+        // update values stored in sharedPref for next time app loads
         SharedPreferences sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor ed = sharedPref.edit();
         ed.putFloat("liveConsumption", (float)liveConsumption);
@@ -281,74 +236,34 @@ public class CarletonEnergyDataSource {
         ed.commit();
 
 
-        // update graph data file
-        try {
-            DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("quarterhour_consumption_data", Context.MODE_PRIVATE));
-            out.writeUTF(quarter_hourly_consumption);
-            out.close();
-        } catch (IOException e) {
-            Log.i("syncEnergyData", "I/O Error");
-        }
-        try {
-            DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("quarterhour_production1_data", Context.MODE_PRIVATE));
-            out.writeUTF(quarter_hourly_production1);
-            out.close();
-        } catch (IOException e) {
-            Log.i("syncEnergyData", "I/O Error");
-        }
+        // get all the graph data and save in files
+        String[] time_units = {"day", "hour", "quarterhour"};
+        Date[] start_dates = {year_ago.getTime(), week_ago.getTime(), day_ago.getTime()};
+        String[] points = {consumption_point, production_point};
+        String[] dependent_variables = {"consumption", "production1"};
 
+        for (int i = 0; i < time_units.length; i++) {
+            String increment = time_units[i];
+            Date start = start_dates[i];
 
-        // daily consumption for past year
-        String daily_consumption = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", consumption_point);
-        try {
-            DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("day_consumption_data", Context.MODE_PRIVATE));
-            out.writeUTF(daily_consumption);
-            out.close();
-        } catch (IOException e) {
-            Log.i("syncEnergyData", "I/O Error");
+            for (int j = 0; j < points.length; j++) {
+                String data = readEnergyJSON(start, today.getTime(), increment, points[j]);
+
+                try {
+                    DataOutputStream out = new DataOutputStream(
+                            context.openFileOutput(increment + "_" + dependent_variables[j] +
+                                    "_data", Context.MODE_PRIVATE));
+                    out.writeUTF(data);
+                    out.close();
+                } catch (IOException e) {
+                    Log.i("syncEnergyData", "I/O Error");
+                }
+
+            }
+
         }
-
-        // daily windmill 1 production for past year
-        String daily_production1 = readEnergyJSON(year_ago.getTime(), today.getTime(), "day", production_point);
-        try {
-            DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("day_production1_data", Context.MODE_PRIVATE));
-            out.writeUTF(daily_production1);
-            out.close();
-        } catch (IOException e) {
-            Log.i("syncEnergyData", "I/O Error");
-        }
-
-        // hourly consumption for past month
-        String hourly_consumption = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", consumption_point);
-        try {
-            DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("hour_consumption_data", Context.MODE_PRIVATE));
-            out.writeUTF(hourly_consumption);
-            out.close();
-        } catch (IOException e) {
-            Log.i("syncEnergyData", "I/O Error");
-        }
-
-        // hourly windmill1 production for past month
-        String hourly_production1 = readEnergyJSON(month_ago.getTime(), today.getTime(), "hour", production_point);
-        try {
-            DataOutputStream out =
-                    new DataOutputStream(context.openFileOutput("hour_production1_data", Context.MODE_PRIVATE));
-            out.writeUTF(hourly_production1);
-            out.close();
-        } catch (IOException e) {
-            Log.i("syncEnergyData", "I/O Error");
-        }
-
 
         return 0;
-
-
-
     }
 
     /*
@@ -513,40 +428,5 @@ public class CarletonEnergyDataSource {
 
         return Integer.parseInt(output.substring(1));
     }
-
-    /*
-     * This is testing XML Parsing from a string
-     */
-//    private void readFeed() throws XmlPullParserException, IOException {
-//
-//        XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-//        factory.setNamespaceAware(true);
-//        XmlPullParser xpp = factory.newPullParser();
-//
-//        xpp.setInput(new StringReader(xml_string));
-//        int eventType = xpp.getEventType();
-//        boolean read_next = false;
-//        while (eventType != XmlPullParser.END_DOCUMENT) {
-//            if(eventType == XmlPullParser.START_DOCUMENT) {
-//                //System.out.println("Start document");
-//            } else if(eventType == XmlPullParser.START_TAG) {
-//                String tag_name = xpp.getName();
-//                if (tag_name.equals("temp_f")) {
-//                    Log.i("xml", "temp_f exists");
-//                    read_next = true;
-//                }
-//                //System.out.println("Start tag "+xpp.getName());
-//            } else if(eventType == XmlPullParser.END_TAG) {
-//                //System.out.println("End tag "+xpp.getName());
-//            } else if(eventType == XmlPullParser.TEXT && read_next) {
-//                //System.out.println(xpp.getText());
-//                read_next = false;
-//
-//            }
-//            eventType = xpp.next();
-//        }
-//        //System.out.println("End document");
-//
-//    }
 
 }
