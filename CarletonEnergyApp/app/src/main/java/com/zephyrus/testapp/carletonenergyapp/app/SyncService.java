@@ -16,7 +16,7 @@ import android.util.Log;
 public class SyncService extends Service {
 
     private static final Object sSyncAdapterLock = new Object();
-    private static CarlSyncAdapter sSyncAdapter = null;
+    private static carlSyncAdapter sSyncAdapter = null;
 
     @Override
     public void onCreate() {
@@ -24,7 +24,7 @@ public class SyncService extends Service {
         synchronized (sSyncAdapterLock) {
             if (sSyncAdapter == null) {
                 Log.i("Service: ", "syncadapter created");
-                sSyncAdapter = new CarlSyncAdapter(getApplicationContext(), true);
+                sSyncAdapter = new carlSyncAdapter(getApplicationContext(), true);
             }
         }
     }
