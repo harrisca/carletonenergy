@@ -217,14 +217,14 @@ public class CarletonEnergyDataSource {
         Log.i("quarter_hourly_consumption", quarter_hourly_consumption);
         // update liveConsumption based on data from most recent complete 1/4 hour
         String[] consumption_list = quarter_hourly_consumption.split("[\n|\r]");
-        String recent_consumption_line = consumption_list[consumption_list.length - 5];
+        String recent_consumption_line = consumption_list[consumption_list.length - 2];
         liveConsumption = (Double.parseDouble(recent_consumption_line.substring(recent_consumption_line.indexOf(';') + 1, recent_consumption_line.length())));
 
         // quarter-hourly windmill1 production for past 24 hours
         String quarter_hourly_production1 = readEnergyJSON(day_ago.getTime(), today.getTime(), "quarterhour", production_point);
         // update liveProduction based on data from most recent complete 1/4 hour
         String[] production1_list = quarter_hourly_production1.split("[\n|\r]");
-        String recent_production1_line = production1_list[production1_list.length - 5];
+        String recent_production1_line = production1_list[production1_list.length - 2];
         liveProduction1 = (Double.parseDouble(recent_production1_line.substring(recent_production1_line.indexOf(';') + 1, recent_production1_line.length())));
 
         // update values stored in sharedPref for next time app loads
