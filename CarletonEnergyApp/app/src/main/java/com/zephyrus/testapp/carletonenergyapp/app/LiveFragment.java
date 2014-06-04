@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,7 +114,7 @@ public class LiveFragment extends Fragment {
         //truncate energy demand and production to two decimal points and display
         TextView consumptionView = (TextView)fragView.findViewById(R.id.consumption_display);
         TextView productionView= (TextView)fragView.findViewById(R.id.production_display);
-        consumptionView.setText(data_format.format(source.getLiveConsumption()));
+        consumptionView.setText(data_format.format(source.getLiveDemand()));
         productionView.setText(data_format.format(source.getLiveProduction(1)));
 
         //displays time of last update
@@ -133,7 +132,7 @@ public class LiveFragment extends Fragment {
         //displays percent of energy demand met by wind production
         TextView percentWind = (TextView)fragView.findViewById(R.id.percent_wind_display);
         DecimalFormat percent_format = new DecimalFormat("#.#");
-        percentWind.setText(percent_format.format(100*source.getLiveProduction(1)/source.getLiveConsumption()) + "%");
+        percentWind.setText(percent_format.format(100*source.getLiveProduction(1)/(source.getLiveDemand()+source.getLiveProduction(1))) + "%");
 
     }
 

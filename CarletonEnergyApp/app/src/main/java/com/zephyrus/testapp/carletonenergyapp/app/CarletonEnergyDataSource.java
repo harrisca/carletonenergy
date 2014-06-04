@@ -3,7 +3,6 @@ package com.zephyrus.testapp.carletonenergyapp.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +68,7 @@ public class CarletonEnergyDataSource {
      * given windmill(s) in kW
      */
     public double getLiveProduction(int windmill) {
+        //we only use one windmill, but this is fully functional
         if (windmill == 1){
             return liveProduction1;
         }
@@ -85,11 +85,10 @@ public class CarletonEnergyDataSource {
      * Returns a double representing the most up-to-date live energy consumption for the
      * whole campus in kW
      */
-    public double getLiveConsumption() {
+    public double getLiveDemand() {
 
         return liveConsumption;
     }
-
 
     /*
      * Returns a double representing the current temp according to weather.carleton.edu in degrees C
@@ -184,7 +183,7 @@ public class CarletonEnergyDataSource {
                 DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 df.setTimeZone(SimpleTimeZone.getTimeZone("US/Central"));
 
-                Log.i("sync", "consumption " + getLiveConsumption());
+                Log.i("sync", "consumption " + getLiveDemand());
                 Log.i("sync", "windmill1 " + getLiveProduction(1));
                 Log.i("sync", "temp " + getCurrentTemperature());
                 Log.i("sync", "wind " + getCurrentWindSpeed());
@@ -258,11 +257,8 @@ public class CarletonEnergyDataSource {
                 } catch (IOException e) {
                     Log.i("syncEnergyData", "I/O Error");
                 }
-
             }
-
         }
-
         return 0;
     }
 
