@@ -37,6 +37,7 @@ public class SettingsFragment extends Fragment {
     OnButtonClickedListener mListener;
 
     @Override
+    //attach a button listener
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -103,9 +104,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
-
-
         //Making a spinner
         Spinner spinner = (Spinner) fragView.findViewById(R.id.font_choice);
         spinner1 = (Spinner) fragView.findViewById(R.id.font_choice);
@@ -116,6 +114,8 @@ public class SettingsFragment extends Fragment {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String> (fragView.getContext(), android.R.layout.simple_spinner_item,list);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        //set background adapters
 
         spinner1.setAdapter(dataAdapter);
         spinner1.setOnItemSelectedListener((new AdapterView.OnItemSelectedListener(){
@@ -129,23 +129,17 @@ public class SettingsFragment extends Fragment {
                         fragView.setBackgroundResource(R.drawable.background_dawn);
                         fragWind.setBackgroundResource(R.drawable.background_dawn);
                         fragInfo.setBackgroundResource(R.drawable.background_dawn);
-
-
                         break;
                     case 1:
                         fragView.setBackgroundResource(R.drawable.background_day);
                         fragWind.setBackgroundResource(R.drawable.background_day);
                         fragInfo.setBackgroundResource(R.drawable.background_day);
-
                         break;
                     case 2:
                         fragView.setBackgroundResource(R.drawable.background_sunset);
                         fragWind.setBackgroundResource(R.drawable.background_sunset);
                         fragInfo.setBackgroundResource(R.drawable.background_sunset);
-
                         break;
-
-
                 }
 
                 int refresh = 0;
@@ -167,8 +161,6 @@ public class SettingsFragment extends Fragment {
         }));
         spinner1.setSelection(sharedPref.getInt("background", 0));
 
-
-
         //notificationToggle = sharedPref.getInt("notifications",0);
         return fragView;
     }
@@ -182,10 +174,13 @@ public class SettingsFragment extends Fragment {
         }
     }
 
+    //clean up
     public void onDestroyView(){
         super.onDestroyView();
         fragView = null;
     }
+
+    //notifications do work, but they're not in use
     public void notificationTest(View view) {
 
         long when = System.currentTimeMillis();
@@ -199,11 +194,9 @@ public class SettingsFragment extends Fragment {
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notification.defaults |= Notification.DEFAULT_SOUND;
         nm.notify(0, notification);
-
-
-
     }
 
+    //unused
     public void onToggleClicked(View view) {
         // Is the toggle on?
         boolean on = ((ToggleButton) view).isChecked();
@@ -215,6 +208,7 @@ public class SettingsFragment extends Fragment {
         }
     }
 
+    //changes between Farenheit and Celsius
     public void unitChange(View view){
 
         SharedPreferences.Editor editor = sharedPref.edit();

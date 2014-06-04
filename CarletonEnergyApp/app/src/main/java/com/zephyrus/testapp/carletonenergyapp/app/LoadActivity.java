@@ -102,6 +102,7 @@ public class LoadActivity extends Activity {
     }
 
 
+    //unused automatic syncing code
     public static Account CreateSyncAccount(Context context) {
 
         // Create the account type and default account
