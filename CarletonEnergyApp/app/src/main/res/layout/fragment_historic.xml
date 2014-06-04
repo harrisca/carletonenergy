@@ -110,11 +110,11 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/rotation_description"
                 android:id="@id/rotation_superlabel"
-                android:textStyle="bold"
                 android:textSize="20sp"
                 android:layout_marginLeft="30dp"
                 android:layout_gravity="center_vertical"
-                android:clickable="false" />
+                android:clickable="false"
+                android:textStyle="italic" />
 
             <ImageView
                 android:layout_width="wrap_content"

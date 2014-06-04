@@ -20,6 +20,7 @@ public class InfoFragment extends Fragment {
 
         fragView = inflater.inflate(R.layout.fragment_info, container, false);
 
+        //sets background
         SharedPreferences sharedPref = fragView.getContext().getSharedPreferences("preferences", 0);
         switch (sharedPref.getInt("background", 0)){
             case 0:
@@ -37,6 +38,7 @@ public class InfoFragment extends Fragment {
     }
 
     @Override
+    //enforces portrait mode
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser) {
@@ -45,12 +47,14 @@ public class InfoFragment extends Fragment {
         }
     }
 
+    //garbage collect
     public void onDestroyView(){
         super.onDestroyView();
         fragView = null;
     }
 
 
+    //background setting
     public void onResume(){
         super.onResume();
         SharedPreferences sharedPref = fragView.getContext().getSharedPreferences("preferences", 0);

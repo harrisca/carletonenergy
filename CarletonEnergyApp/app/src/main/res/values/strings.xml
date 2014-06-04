@@ -34,5 +34,5 @@
     <string name="RefreshButton">Refreshing</string>
     <string name="label_graphable">Graph</string>
     <string name="label_time_scale">Time Scale</string>
-    <string name="rotation_description">GENERATE</string>
+    <string name="rotation_description">Generate:</string>
 </resources>

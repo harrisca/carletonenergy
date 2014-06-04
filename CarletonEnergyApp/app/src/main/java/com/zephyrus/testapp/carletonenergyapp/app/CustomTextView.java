@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+// custom textview class based on the Adobe open-source Source Sans Pro font
 public class CustomTextView extends TextView {
     public CustomTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -26,7 +27,7 @@ public class CustomTextView extends TextView {
     }
 
     @Override
-    //set generic typefaces
+    //set generic typefaces for bold/italic/regular
     public void setTypeface(Typeface tf, int style) {
         if (style == Typeface.BOLD) {
             super.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/source_sans_bd.ttf"));

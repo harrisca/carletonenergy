@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.SimpleTimeZone;
 
-
+// Sync adapter class - unfinished
 public class carlSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public static final String PREFS_NAME = "preferences";
@@ -49,12 +49,7 @@ public class carlSyncAdapter extends AbstractThreadedSyncAdapter {
             //logging
             Log.i("SYNCAdapt: ", "A sync started");
             syncUnThreaded(contentProviderClient);
-
-
-
     }
-
-
 
     public void syncUnThreaded(ContentProviderClient contentProviderClient)  {
 
@@ -71,7 +66,5 @@ public class carlSyncAdapter extends AbstractThreadedSyncAdapter {
             e.printStackTrace();
         }
 
-
     }
-
 }
