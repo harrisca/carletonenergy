@@ -80,24 +80,24 @@ public class LiveFragment extends Fragment {
     //clean up
     public void onDestroyView(){
         super.onDestroyView();
-
         fragView = null;
         }
 
-    //updates all data fields with current data from CEDS
+    //updates all data fields with current data from data source
     public void updateTextFields(){
-        //Log.i("units", "updatingTextFields");
         CarletonEnergyDataSource source = CarletonEnergyDataSource.getSingleton();
-
         fragView.invalidate();
 
+        //windspeed
         TextView windSpeedView = (TextView)fragView.findViewById(R.id.windspeed_display);
         windSpeedView.setText(Double.toString(source.getCurrentWindSpeed()));
 
+        //temperature
         TextView temperatureView = (TextView)fragView.findViewById(R.id.temperature_display);
         TextView temperatureUnit = (TextView)fragView.findViewById(R.id.temperature_type);
 
         Double temperature = source.getCurrentTemperature();
+        //celsius/farenheit modifier/
         if(units == 0){
             temperature = (temperature - 32.0)*5.0/9.0;
             temperatureUnit.setText("C");
@@ -105,21 +105,22 @@ public class LiveFragment extends Fragment {
         else {
             temperatureUnit.setText("F");
         }
+
+        //truncate temperature to one decimal point and display
         DecimalFormat temp_format = new DecimalFormat("#.#");
         temperatureView.setText(temp_format.format(temperature) + "°");
 
         DecimalFormat data_format = new DecimalFormat("#.##");
 
+        //truncate energy demand and production to two decimal points and display
         TextView consumptionView = (TextView)fragView.findViewById(R.id.consumption_display);
-        consumptionView.setText(data_format.format(source.getLiveConsumption()));
-
         TextView productionView= (TextView)fragView.findViewById(R.id.production_display);
+        consumptionView.setText(data_format.format(source.getLiveConsumption()));
         productionView.setText(data_format.format(source.getLiveProduction(1)));
 
+        //displays time of last update
         TextView lastUpdatedView = (TextView)fragView.findViewById(R.id.last_updated_display);
-        //DateFormat df = new SimpleDateFormat("K:mm'pm' MM/dd/yy");
         DateFormat df = new SimpleDateFormat("K:mm a 'on' MMM d");
-
         df.setTimeZone(TimeZone.getTimeZone("US/Central"));
 
         if (source.getTimeUpdated() != null) {
@@ -129,12 +130,14 @@ public class LiveFragment extends Fragment {
             lastUpdatedView.setText("Syncing...");
         }
 
+        //displays percent of energy demand met by wind production
         TextView percentWind = (TextView)fragView.findViewById(R.id.percent_wind_display);
         DecimalFormat percent_format = new DecimalFormat("#.#");
         percentWind.setText(percent_format.format(100*source.getLiveProduction(1)/source.getLiveConsumption()) + "%");
 
     }
 
+    //lock orientation to portrait mode
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -144,8 +147,8 @@ public class LiveFragment extends Fragment {
         }
     }
 
+    //refreshes screen
     public void onResume(){
-        Log.i("windresume", "started");
         fragView.invalidate();
         super.onResume();
     }

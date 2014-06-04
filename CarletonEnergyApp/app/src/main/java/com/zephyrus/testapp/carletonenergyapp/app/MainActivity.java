@@ -15,11 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,  OnButtonClickedListener{
-
-
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,14 +35,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
     Boolean isSyncing;
-    /**
-     * The data source available to all fragments
-     */
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +119,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
+    //sets the current tab to display (jump-to or on instantiate)
     public void setCurrentView(int viewNum){
         mViewPager.setCurrentItem(viewNum);
     }
@@ -135,20 +127,25 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     //calls the datasource to sync
     public void manualSync(){
         if(!isSyncing) {
+            Toast.makeText(this, "Syncing...", Toast.LENGTH_SHORT).show();
             isSyncing = true;
             CarletonEnergyDataSource.getSingleton().sync();
             isSyncing = false;
+            Toast.makeText(this, "Sync complete!", Toast.LENGTH_SHORT).show();
+            mViewPager.invalidate();
+        }
+        else{
+            Toast.makeText(this, "Still syncing...", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onButtonClicked() {
         Intent intent = new Intent(this, MainActivity.class);
-        int jumpToData = 3;
-        intent.putExtra("jumpToTab",jumpToData);
+        int jumpToSettings = 3;
+        intent.putExtra("jumpToTab",jumpToSettings);
         startActivity(intent);
         finish();
-
         }
 
 
@@ -183,9 +180,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return null;
         }
 
+        //4 tabs
         @Override
         public int getCount() { return 4;}
 
+        //generates tab titles
         @Override
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();

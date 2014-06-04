@@ -51,8 +51,6 @@ public class LoadActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
 
-
-
         // This should be the only time a new CarletonEnergyDataSource is instantiated
         final CarletonEnergyDataSource source = new CarletonEnergyDataSource(this);
         CarletonEnergyDataSource.setSingleton(source);
@@ -127,8 +125,6 @@ public class LoadActivity extends Activity {
         else {
             Log.i("Load: ", "Failed Sync");
         }
-
-
         return newAccount;
     }
 
